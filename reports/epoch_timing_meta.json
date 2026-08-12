@@ -1,0 +1,16 @@
+{
+  "device": "Quadro P5000",
+  "total_memory_MiB": 16265,
+  "torch": "2.4.1+cu121",
+  "crop": 112,
+  "n_classes": 2,
+  "parameter_counts_2class_head": {
+    "2d_single": 11177538,
+    "2d_tframe_logitavg": 11177538,
+    "tsm": 11177538,
+    "r3d_18": 33167298
+  },
+  "batch_rule": "largest that fits r3d_18, then applied to every arm",
+  "synthetic_data": true,
+  "epoch_time": "NOT COMPUTED. Requires the training tubelet count, which does not exist until Stage 1b extraction. epoch_seconds = ceil(tubelets / batch) x seconds_per_iteration, plus data loading."
+}
