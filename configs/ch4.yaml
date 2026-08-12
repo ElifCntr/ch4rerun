@@ -14,11 +14,11 @@ data:
   root: "~/Desktop/Drone-vs-Bird/videos-and-labels"
   # Filled in by tools/inventory.py --stage layout, then committed.
   # Left null so that nothing downstream can run on a guess.
-  video_dir: null
-  annotation_dir: null
-  video_extensions: null
-  annotation_extension: null
-  annotation_format: null   # one of: dvb_multibox_per_line, one_box_per_line
+  video_dir: "videos"
+  annotation_dir: "labels"
+  video_extensions: [".mp4", ".avi", ".mpg"]   # matched case-insensitively
+  annotation_extension: ".txt"
+  annotation_format: "dvb_multibox_per_line"   # 5 fields per object: x y w h class
   # Committed input. Defines the static subset as camera == static.
   # Judgement label, single rater, 10 Aug 2026. See the file header.
   camera_motion: "data/dvb_camera_motion.csv"

@@ -1,0 +1,103 @@
+{
+  "root": "/home/elif/Desktop/Drone-vs-Bird/videos-and-labels",
+  "counts": {
+    "files_total": 154,
+    "videos": 77,
+    "text_like_files": 77
+  },
+  "directory_contents": {
+    ".": {
+      "<dir> videos": 1,
+      "<dir> labels": 1
+    },
+    "labels": {
+      ".txt": 77
+    },
+    "videos": {
+      ".avi": 36,
+      ".mp4": 40,
+      ".mpg": 1
+    }
+  },
+  "video_directories": {
+    "videos": 77
+  },
+  "annotation_directories": {
+    "labels": 77
+  },
+  "video_extensions": {
+    ".avi": 36,
+    ".mp4": 40,
+    ".mpg": 1
+  },
+  "annotation_extensions": {
+    ".txt": 77
+  },
+  "static_camera_folders_found": [],
+  "pairing_by_stem": {
+    "paired": 77,
+    "video_without_annotation": [],
+    "annotation_without_video": []
+  },
+  "annotation_samples": [
+    {
+      "file": "GOPR5842_005.txt",
+      "sample_lines": [
+        "0 0",
+        "1 0",
+        "2 0",
+        "3 0",
+        "4 0"
+      ],
+      "sniffed_format": "dvb_multibox_per_line"
+    },
+    {
+      "file": "GOPR5845_004.txt",
+      "sample_lines": [
+        "0 0",
+        "1 0",
+        "2 0",
+        "3 0",
+        "4 0"
+      ],
+      "sniffed_format": "dvb_multibox_per_line"
+    },
+    {
+      "file": "2019_11_14_C0001_3922_matrice.txt",
+      "sample_lines": [
+        "0 1 1370 1213 50 34 drone",
+        "1 1 1370 1213 50 34 drone",
+        "2 1 1370 1213 50 34 drone",
+        "3 1 1370 1213 50 34 drone",
+        "4 1 1370 1213 50 34 drone"
+      ],
+      "sniffed_format": "unknown"
+    },
+    {
+      "file": "dji_mavick_close_buildings.txt",
+      "sample_lines": [
+        "0 1 946 461 36 16 drone",
+        "1 1 946 472 36 16 drone",
+        "2 1 947 485 36 16 drone",
+        "3 1 947 493 36 16 drone",
+        "4 1 950 507 34 15 drone"
+      ],
+      "sniffed_format": "unknown"
+    },
+    {
+      "file": "swarm_dji_phantom4_2.txt",
+      "sample_lines": [
+        "0 1 314 205 17 12 drone",
+        "1 2 309 198 14 13 drone 185 567 15 10 drone",
+        "2 2 302 192 14 13 drone 177 561 17 10 drone",
+        "3 2 295 186 14 13 drone 170 555 17 10 drone",
+        "4 2 288 181 14 13 drone 163 549 17 10 drone"
+      ],
+      "sniffed_format": "unknown"
+    }
+  ],
+  "sniffed_format_agreement": {
+    "dvb_multibox_per_line": 2,
+    "unknown": 3
+  }
+}

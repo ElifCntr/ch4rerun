@@ -1,0 +1,1 @@
+No usable creation timestamps. The dataset copy did not preserve them, so this check cannot establish continuity either way. It can still falsify it, by a mismatch in resolution or frame rate. Report that and stop rather than inferring from duration alone.
