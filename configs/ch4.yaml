@@ -41,6 +41,12 @@ test_set:
   # Stage 1a never passes it. Do not set anything here to loosen the guard.
   note: "Test partition is unreachable outside an explicit allow_test call."
 
+measurement:
+  # REPORTING GRID, not a choice of parameter. These are the candidate window
+  # lengths, used only to report cumulative drift at each. Nothing here
+  # selects a T for the classifier.
+  drift_windows: [3, 5, 8, 16]
+
 reports:
   dir: "reports"
   # Strips are NOT committed. The sampling manifest and the completed scoring
