@@ -1,0 +1,51 @@
+# Chapter 4 rerun configuration.
+#
+# This file holds paths, seeds and provenance. It holds NO method parameters.
+# min_area, max_area, T, stride, coverage thresholds, morphology kernels and
+# padding fraction are absent by design. They are Stage 1a measurements
+# followed by a ruling, not defaults.
+
+project:
+  name: ch4rerun
+  stage: "1a"
+
+data:
+  # The only place the dataset path is written. Never copied into this project.
+  root: "~/Desktop/Drone-vs-Bird/videos-and-labels"
+  # Filled in by tools/inventory.py --stage layout, then committed.
+  # Left null so that nothing downstream can run on a guess.
+  video_dir: null
+  annotation_dir: null
+  video_extensions: null
+  annotation_extension: null
+  annotation_format: null   # one of: dvb_multibox_per_line, one_box_per_line
+  # Committed input. Defines the static subset as camera == static.
+  # Judgement label, single rater, 10 Aug 2026. See the file header.
+  camera_motion: "data/dvb_camera_motion.csv"
+
+splits:
+  # Written by tools/build_split.py once every integrity check passes.
+  file: "data/splits/dvb_splits_v2.0-static.csv"
+  # Source inputs for the build, both required.
+  v1_manifest: null         # path to dvb_splits_v1.0 manifest csv
+  partitions: "data/splits/partitions_v2.0-static.tsv"
+  expected: "data/splits/expected_v2.0.json"
+
+seed:
+  value: 0
+  deterministic: true
+  cudnn_benchmark: false
+
+test_set:
+  # Hard guard. src/splits.py raises unless a caller passes allow_test=True.
+  # Stage 1a never passes it. Do not set anything here to loosen the guard.
+  note: "Test partition is unreachable outside an explicit allow_test call."
+
+reports:
+  dir: "reports"
+  # Strips are NOT committed. The sampling manifest and the completed scoring
+  # sheets are. Any strip promoted to a chapter figure is committed here.
+  strips_dir: "reports/strips"
+  strip_manifest_dir: "data/strip_manifests"
+  scoring_sheet_dir: "reports/scoring_sheets"
+  figures_dir: "figures"

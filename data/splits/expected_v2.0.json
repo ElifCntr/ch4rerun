@@ -1,0 +1,31 @@
+{
+  "source": "Manager v3, 11 Aug 2026. Asserted, not advisory.",
+  "note": "build_split.py exits non-zero with a diff on any mismatch. Do not reconcile silently.",
+  "camera_motion": {
+    "total": 77,
+    "static": 37,
+    "dynamic": 40
+  },
+  "static_subset": {
+    "videos": 37,
+    "boxes": 30788
+  },
+  "videos": {
+    "train": 24,
+    "val": 6,
+    "test": 7
+  },
+  "boxes": {
+    "train": 18624,
+    "val": 5259,
+    "test": 6905
+  },
+  "session_overlap_allowed": 0,
+  "scenes_required_in_train": [
+    "meadow",
+    "industrial",
+    "gopro_fisheye",
+    "seaside",
+    "lake"
+  ]
+}

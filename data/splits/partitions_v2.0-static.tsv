@@ -1,0 +1,41 @@
+# Partition assignment as issued by Manager v3, 11 Aug 2026.
+# Video names only. Session, scene and box counts are resolved
+# and measured by tools/build_split.py, never transcribed.
+video	split
+gopro_000	train
+gopro_001	train
+gopro_002	train
+gopro_003	train
+gopro_006	train
+gopro_007	train
+gopro_008	train
+2019_09_02_C0002_2527_inspire	train
+2019_09_02_C0002_3700_mavic	train
+2019_09_02_GOPR5871_1058_solo	train
+2019_10_16_C0003_1700_matrice	train
+GOPR5847_003	train
+GOPR5847_004	train
+GOPR5844_002	train
+GOPR5844_004	train
+GOPR5845_001	train
+GOPR5845_004	train
+GOPR5848_002	train
+GOPR5848_004	train
+00_01_52_to_00_01_58	train
+00_02_45_to_00_03_10_cut	train
+00_06_10_to_00_06_27	train
+00_09_30_to_00_10_09	train
+00_10_09_to_00_10_40	train
+gopro_005	val
+2019_11_14_C0001_3922_matrice	val
+GOPR5843_002	val
+GOPR5843_005	val
+GOPR5846_002	val
+GOPR5846_005	val
+gopro_004	test
+2019_08_19_C0001_5319_phantom	test
+2019_08_19_GOPR5869_1530_phantom	test
+2019_08_19_GP015869_1520_inspire	test
+GOPR5842_002	test
+GOPR5842_005	test
+GOPR5842_007	test

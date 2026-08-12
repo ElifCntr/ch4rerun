@@ -1,0 +1,30 @@
+# Large binaries only. Configs, manifests, logs, results, CSVs and reports are
+# committed on purpose.
+
+*.pt
+*.pth
+*.ckpt
+*.npy
+*.npz
+*.mp4
+*.MP4
+*.avi
+*.mov
+*.MOV
+*.mkv
+
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.env
+
+# Strip images are NOT committed (ruled 11 Aug 2026). They regenerate exactly
+# from data/strip_manifests/ plus the code plus the data.
+reports/strips/
+
+# Committed regardless, because nothing can regenerate them:
+#   data/strip_manifests/   sampling manifests (video, tubelet, frames, T, stride, seed)
+#   reports/scoring_sheets/ completed sheets carrying manual judgement
+#   figures/                any strip promoted to a chapter figure
+!figures/
+!figures/**
