@@ -27,7 +27,7 @@ splits:
   # Written by tools/build_split.py once every integrity check passes.
   file: "data/splits/dvb_splits_v2.0-static.csv"
   # Source inputs for the build, both required.
-  v1_manifest: null         # path to dvb_splits_v1.0 manifest csv
+  v1_manifest: "data/provenance/dvb_splits_v1.csv"   # committed input
   partitions: "data/splits/partitions_v2.0-static.tsv"
   expected: "data/splits/expected_v2.0.json"
 

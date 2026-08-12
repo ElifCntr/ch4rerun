@@ -1,0 +1,20 @@
+Chapter 4 split verification. Every figure is asserted.
+
+camera-motion labels: 77 rows, 37 static, 40 dynamic
+static subset boxes, manifest column: 30788
+boxes counted from label files: {'train': 18624, 'val': 5259, 'test': 6905}
+boxes from manifest column:     {'train': 18624, 'val': 5259, 'test': 6905}
+expected:                       {'train': 18624, 'val': 5259, 'test': 6905}
+
+sessions per partition:
+  train: ['gopro_path', 'gopro_treesite', 'ind_2019_09_02', 'ind_2019_10_16', 'lake_5847', 'meadow_5844', 'meadow_5845', 'meadow_5848', 'seaside_cuts']
+  val: ['gopro_005', 'ind_2019_11_14', 'meadow_5843', 'meadow_5846']
+  test: ['gopro_004', 'ind_2019_08_19', 'meadow_5842']
+
+scenes per partition:
+  train: ['gopro_fisheye', 'industrial', 'lake', 'meadow', 'seaside']
+  val: ['gopro_fisheye', 'industrial', 'meadow']
+  test: ['gopro_fisheye', 'industrial', 'meadow']
+
+DISCREPANCIES:
+  none, all assertions hold
