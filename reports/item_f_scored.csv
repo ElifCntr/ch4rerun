@@ -1,0 +1,31 @@
+strip_id,kind,call,correct,cue_repaired,cue_provenance,note,scene,video,resolution,fps,centre_frame,equiv_side,T,padding_fraction
+F0000,background,background,True,appearance,"background call, rater states appearance",,gopro_fisheye,gopro_006,1920x1080,29.970933447224024,26,15.297,8,0.3
+F0001,background,background,True,appearance,"background call, rater states appearance",,industrial,2019_10_16_C0003_1700_matrice,3840x2160,25.0,1386,41.231,8,0.3
+F0002,background,background,True,appearance,"background call, rater states appearance",,industrial,2019_11_14_C0001_3922_matrice,3840x2160,25.0,1385,47.371,8,0.3
+F0003,drone,drone,True,both,repaired from note 'b',b,industrial,2019_09_02_GOPR5871_1058_solo,1920x1080,25.0,597,10.4881,8,0.3
+F0004,background,background,True,appearance,"background call, rater states appearance",,industrial,2019_11_14_C0001_3922_matrice,3840x2160,25.0,1357,42.426,8,0.3
+F0005,background,background,True,appearance,"background call, rater states appearance",,industrial,2019_09_02_C0002_3700_mavic,3840x2160,25.0,15,40.398,8,0.3
+F0006,background,background,True,appearance,"background call, rater states appearance",,seaside,00_06_10_to_00_06_27,1920x1080,29.97002997002997,49,41.024,8,0.3
+F0007,background,background,True,appearance,"background call, rater states appearance",,meadow,GOPR5846_005,1920x1080,29.97000099996667,428,38.833,8,0.3
+F0008,drone,cannot_tell,False,,"n/a, no call was made",,meadow,GOPR5844_004,1920x1080,29.96985007769486,3,11.9583,8,0.3
+F0009,drone,cannot_tell,False,,"n/a, no call was made",,gopro_fisheye,gopro_001,1920x1080,25.0,444,7.9373,8,0.3
+F0010,drone,drone,True,appearance,repaired from note 'a',a,seaside,00_09_30_to_00_10_09,1920x1080,29.97002997002997,430,61.0819,8,0.3
+F0011,background,background,True,appearance,"background call, rater states appearance",,lake,GOPR5847_004,1920x1080,29.970501184446306,9,37.881,8,0.3
+F0012,drone,drone,True,appearance,repaired from note 'a',a,seaside,00_06_10_to_00_06_27,1920x1080,29.97002997002997,471,46.2061,8,0.3
+F0013,drone,drone,True,,CONFLICT: cue 'appearance' vs note 'b',b,lake,GOPR5847_003,1920x1080,29.96979154066368,381,15.2971,8,0.3
+F0014,drone,drone,True,appearance,repaired from note 'a',a,industrial,2019_09_02_C0002_3700_mavic,3840x2160,25.0,816,40.398,8,0.3
+F0015,drone,drone,True,appearance,repaired from note 'a',a,industrial,2019_11_14_C0001_3922_matrice,3840x2160,25.0,1688,33.1964,8,0.3
+F0016,drone,drone,True,appearance,repaired from note 'a',a,meadow,GOPR5846_005,1920x1080,29.97000099996667,88,18.1659,8,0.3
+F0017,drone,drone,True,both,repaired from note 'b',b,gopro_fisheye,gopro_001,1920x1080,25.0,126,17.7482,8,0.3
+F0018,background,background,True,appearance,"background call, rater states appearance",,gopro_fisheye,gopro_006,1920x1080,29.970933447224024,335,35.623,8,0.3
+F0019,drone,drone,True,appearance,repaired from note 'a',a,seaside,00_02_45_to_00_03_10_cut,1920x1080,50.0,166,20.7846,8,0.3
+F0020,background,background,True,appearance,"background call, rater states appearance",,seaside,00_06_10_to_00_06_27,1920x1080,29.97002997002997,183,11.832,8,0.3
+F0021,drone,cannot_tell,False,,"n/a, no call was made",,meadow,GOPR5848_002,1920x1080,29.970648094151535,173,11.4891,8,0.3
+F0022,background,background,True,appearance,"background call, rater states appearance",,industrial,2019_10_16_C0003_1700_matrice,3840x2160,25.0,1376,41.231,8,0.3
+F0023,drone,drone,True,appearance,repaired from note 'a',a,lake,GOPR5847_004,1920x1080,29.970501184446306,231,59.4643,8,0.3
+F0024,background,background,True,appearance,"background call, rater states appearance",,seaside,00_09_30_to_00_10_09,1920x1080,29.97002997002997,820,8.485,8,0.3
+F0025,background,background,True,appearance,"background call, rater states appearance",,meadow,GOPR5843_005,1920x1080,29.970632584188987,562,13.416,8,0.3
+F0026,background,background,True,appearance,"background call, rater states appearance",,seaside,00_01_52_to_00_01_58,1920x1080,29.97002997002997,166,26.721,8,0.3
+F0027,drone,cannot_tell,False,,"n/a, no call was made",,gopro_fisheye,gopro_006,1920x1080,29.970933447224024,799,7.4833,8,0.3
+F0028,background,background,True,appearance,"background call, rater states appearance",,lake,GOPR5847_003,1920x1080,29.96979154066368,487,11.832,8,0.3
+F0029,drone,drone,True,appearance,repaired from note 'a',a,lake,GOPR5847_003,1920x1080,29.96979154066368,38,23.9792,8,0.3

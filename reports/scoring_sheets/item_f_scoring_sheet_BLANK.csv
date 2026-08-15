@@ -1,0 +1,41 @@
+# Item F motion-separability sheet. Randomised order, no label on any image.
+# call: drone / background / cannot_tell
+# cue:  appearance / motion / both  -- what decided it. Leave blank for cannot_tell.
+#   appearance  a single frame would have told you
+#   motion      only the change across frames told you
+#   both        either alone would have sufficed
+# note: optional free text.
+sheet_row,strip_id,call,cue,note
+1,F0028,,,
+2,F0000,,,
+3,F0024,,,
+4,F0013,,,
+5,F0003,,,
+6,F9001,,,
+7,F0010,,,
+8,F0005,,,
+9,F0007,,,
+10,F9000,,,
+11,F0022,,,
+12,F0027,,,
+13,F0017,,,
+14,F0021,,,
+15,F0014,,,
+16,F0018,,,
+17,F0008,,,
+18,F0015,,,
+19,F0001,,,
+20,F0025,,,
+21,F0020,,,
+22,F0012,,,
+23,F0004,,,
+24,F0019,,,
+25,F0029,,,
+26,F9002,,,
+27,F0023,,,
+28,F0002,,,
+29,F0026,,,
+30,F0011,,,
+31,F0016,,,
+32,F0009,,,
+33,F0006,,,

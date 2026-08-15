@@ -64,6 +64,38 @@ padding:
   # centred on the centre-frame box centre. A definition, not a measurement.
   fractions: [0.0, 0.1, 0.2, 0.3, 0.5, 0.75, 1.0]
 
+item_e:
+  # Ruled 12 Aug 2026. Two padding conditions, not one and not a grid.
+  # A is inherited and resolution-preserving; B holds retention near 0.9
+  # where item H shows it reachable. At T=16, 0.9 is NOT reachable and
+  # p=1.0 gives 0.807, the best available. The report must say so.
+  t_values: [3, 5, 8, 16]
+  strides: [1, 2]                 # stride 1 scored first, 2 is confirmation
+  condition_a_padding: 0.3
+  condition_b_padding:
+    "3": 0.3                      # coincides with A, generated once
+    "5": 0.5
+    "8": 0.75
+    "16": 1.0
+  tubelets_per_scene: 3
+  duplicate_fraction: 0.10        # intra-rater consistency check
+
+ruled:
+  # Values RULED and no longer open, decided on evidence not inherited.
+  T: 8                     # 12 Aug, from item E plus the TSM boundary-padding
+                           # and frame-contamination arguments
+  padding_fraction: 0.3    # 12 Aug; item E found no usability gain from the
+                           # retention-matched 0.75 at T=8
+  batch_size: 162          # largest that fits r3d_18 at T=8, used for all arms
+  stride: null             # NOT ruled; the T=8 stride-2 pass follows item F
+
+item_f:
+  t: 8
+  padding_fraction: 0.3
+  drone_tubelets: 15
+  background_tubelets: 15
+  duplicate_fraction: 0.10
+
 reports:
   dir: "reports"
   # Strips are NOT committed. The sampling manifest and the completed scoring
