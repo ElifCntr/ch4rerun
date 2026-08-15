@@ -59,6 +59,10 @@ PAGE = """<!DOCTYPE html>
          font-weight:600; }
  .hint { color:#8a8a8a; font-size:13px; margin-top:14px; }
  #export { background:#2c4a7c; border-color:#6aa9ff; }
+ input:focus { outline:2px solid #d08b3a; }
+ #typing { display:none; background:#4a3410; border:1px solid #d08b3a;
+           color:#ffe2b8; padding:7px 12px; border-radius:5px;
+           margin:8px 0; font-size:13px; }
 </style>
 <div id="warn"></div>
 <header>
@@ -80,6 +84,8 @@ PAGE = """<!DOCTYPE html>
   <span class="meta" id="ufOf"></span>
   <input type="text" id="note" placeholder="note (optional) — where did it fail?">
 </div>
+<div id="typing">Typing a note. Keyboard shortcuts are OFF. Press
+  <kbd>Esc</kbd> or click the image to turn them back on.</div>
 <div class="nav">
   <button id="prev"><kbd>&larr;</kbd>back</button>
   <button id="next">skip<kbd style="margin-left:6px">&rarr;</kbd></button>
@@ -135,7 +141,14 @@ window.onbeforeunload = () => {
   if (Object.keys(state).length && sinceExport > 0) return "Unexported scores.";
 };
 
+function blurInputs() {
+  if (document.activeElement && document.activeElement.tagName === "INPUT")
+    document.activeElement.blur();
+  $("typing").style.display = "none";
+}
+
 function render() {
+  blurInputs();
   const r = ROWS[i], s = state[r.strip_id] || {};
   $("img").src = "strips/" + r.strip_id + ".png";
   $("pos").textContent = "row " + (i + 1) + " of " + ROWS.length;
@@ -172,8 +185,19 @@ document.querySelectorAll(".btns button").forEach(b =>
 $("prev").onclick = () => { if (i > 0) i--; render(); };
 $("next").onclick = () => { if (i < ROWS.length - 1) i++; render(); };
 
+document.addEventListener("focusin", ev => {
+  if (ev.target.tagName === "INPUT") $("typing").style.display = "block";
+});
+document.addEventListener("focusout", () => {
+  $("typing").style.display = "none";
+});
+$("img").onclick = blurInputs;
+
 document.onkeydown = ev => {
-  if (ev.target.tagName === "INPUT") return;
+  if (ev.target.tagName === "INPUT") {
+    if (ev.key === "Escape" || ev.key === "Enter") { blurInputs(); }
+    return;
+  }
   const map = {1:"usable", 2:"degrades", 3:"not_usable", 4:"cannot_tell"};
   if (map[ev.key]) { score(map[ev.key]); ev.preventDefault(); }
   else if (ev.key === "ArrowLeft") { if (i > 0) i--; render(); }
@@ -214,10 +238,12 @@ PAGE_F = PAGE.replace(
   <button data-v="background"><kbd>2</kbd>background</button>
   <button data-v="cannot_tell"><kbd>3</kbd>cannot tell</button>
 </div>
+<div class="meta" style="margin-top:4px">what decided your call?</div>
 <div class="btns" id="cues">
   <button data-c="appearance"><kbd>a</kbd>appearance</button>
   <button data-c="motion"><kbd>m</kbd>motion</button>
   <button data-c="both"><kbd>b</kbd>both</button>
+  <button data-c="neither"><kbd>n</kbd>neither</button>
 </div>""").replace("""<div class="row">
   <label class="meta" id="ufLabel">usable frames</label>
   <input type="number" id="uf" min="0" step="1" style="width:90px">
@@ -252,7 +278,7 @@ PAGE_F = PAGE.replace(
 'a.download = "item_f_scoring_sheet_COMPLETED.csv";').replace(
 """  const map = {1:"usable", 2:"degrades", 3:"not_usable", 4:"cannot_tell"};
   if (map[ev.key]) { score(map[ev.key]); ev.preventDefault(); }""",
-"""  const cmap = {a:"appearance", m:"motion", b:"both"};
+"""  const cmap = {a:"appearance", m:"motion", b:"both", n:"neither"};
   if (cmap[ev.key]) {
     const r = ROWS[i], st = state[r.strip_id] || {};
     st.cue = cmap[ev.key]; state[r.strip_id] = st; save(); render();
@@ -274,16 +300,20 @@ document.querySelectorAll("#cues button").forEach(b =>
   For <b>degrades</b>, type how many frames are usable before pressing 2.
   Blur that still reads as a drone counts as usable. usable and not usable
   fill the count automatically.<br>""",
-"""  Is this a drone or background clutter? Then say what decided it:
+"""  Is this a drone or background clutter? Then: <b>what decided your call?</b>
   <b>appearance</b> if a single frame would have told you, <b>motion</b> if
-  only the change across frames did, <b>both</b> if either alone sufficed.
-  Set the cue first (a / m / b), then the call (1 / 2 / 3), which advances.<br>""")
+  only the change across frames did, <b>both</b> if either alone sufficed,
+  <b>neither</b> if you could not say. The question applies to background
+  calls as much as drone calls.<br>
+  Set the cue first (a / m / b / n), then the call (1 / 2 / 3), which
+  advances.<br>""")
 
 
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--config", default="configs/ch4.yaml")
-    ap.add_argument("--item", choices=["e", "f"], default="e")
+    ap.add_argument("--item", choices=["e", "f", "stride2"],
+                    default="e")
     args = ap.parse_args()
     cfg = load_config(args.config)
 
@@ -294,8 +324,9 @@ def main() -> None:
     lines = [l for l in sheet.read_text(encoding="utf-8").splitlines()
              if not l.lstrip().startswith("#")]
     # T comes from the manifest so the page can show "of N" beside the count.
+    man_item = "e" if it == "stride2" else it
     man = repo_path(cfg, cfg["reports"]["strip_manifest_dir"]) \
-        / f"item_{it}_sampling_manifest.csv"
+        / f"item_{man_item}_sampling_manifest.csv"
     T_by_id = {r["strip_id"]: int(r["T"]) for r in csv.DictReader(
         open(man, encoding="utf-8"))}
     dup = repo_path(cfg, cfg["reports"]["strip_manifest_dir"]) \
@@ -309,6 +340,12 @@ def main() -> None:
 
     page = (PAGE_F if it == "f" else PAGE).replace("__ROWS__",
                                                     json.dumps(rows))
+    if it == "stride2":
+        page = page.replace("Item E crop-retention scoring",
+                            "Stride-2 pass, T=8 crop retention")
+        page = page.replace("item_e_scoring_sheet_COMPLETED.csv",
+                            "item_stride2_scoring_sheet_COMPLETED.csv")
+        page = page.replace("ch4_item_e_scores_v1", "ch4_stride2_scores_v1")
     target = out / f"item_{it}_scorer.html"
     target.write_text(page, encoding="utf-8")
 
