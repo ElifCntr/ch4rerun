@@ -1,0 +1,163 @@
+ITEM B SPLIT, per resolution and per scene
+Source reports/instances_boxes.csv, splits ['train', 'val'], n=23883
+Retrieval only. No threshold is set here and no value is chosen.
+
+BOX area is the annotated rectangle, which may extend past the frame edge. VISIBLE area is the part inside the frame, which is what a connected component can actually be. Both reported; which the sweep filters on is a ruling, not a finding.
+
+POOLED  (n=23883, clipped=0.2%)
+  box area px^2      min=15  p1=24  p25=120  p50=336  p75=1443  p99=2.171e+04  max=8.499e+04
+  vis area px^2      min=15  p1=24  p25=120  p50=336  p75=1440  p99=2.171e+04  max=8.499e+04
+  box equiv side px  min=3.873  p1=4.899  p25=10.95  p50=18.33  p75=37.99  p99=147.3  max=291.5
+  vis equiv side px  min=3.873  p1=4.899  p25=10.95  p50=18.33  p75=37.95  p99=147.3  max=291.5
+  box area fraction  min=7.23e-06  p1=1.16e-05  p25=5.3e-05  p50=0.00013  p75=0.000338  p99=0.00965  max=0.041
+  vis area fraction  min=7.23e-06  p1=1.16e-05  p25=5.3e-05  p50=0.00013  p75=0.000338  p99=0.00965  max=0.041
+
+BY RESOLUTION
+
+  1920x1080  (n=18730, clipped=0.0%)
+  box area px^2      min=15  p1=20  p25=90  p50=208  p75=572  p99=2.193e+04  max=8.499e+04
+  vis area px^2      min=15  p1=20  p25=90  p50=208  p75=572  p99=2.193e+04  max=8.499e+04
+  box equiv side px  min=3.873  p1=4.472  p25=9.487  p50=14.42  p75=23.92  p99=148.1  max=291.5
+  vis equiv side px  min=3.873  p1=4.472  p25=9.487  p50=14.42  p75=23.92  p99=148.1  max=291.5
+  box area fraction  min=7.23e-06  p1=9.64e-06  p25=4.34e-05  p50=0.0001  p75=0.000276  p99=0.0106  max=0.041
+  vis area fraction  min=7.23e-06  p1=9.65e-06  p25=4.34e-05  p50=0.0001  p75=0.000276  p99=0.0106  max=0.041
+
+  3840x2160  (n=5153, clipped=0.9%)
+  box area px^2      min=198  p1=269.7  p25=1050  p50=2040  p75=6570  p99=1.918e+04  max=2.2e+04
+  vis area px^2      min=198  p1=269.7  p25=1044  p50=2028  p75=6570  p99=1.918e+04  max=2.2e+04
+  box equiv side px  min=14.07  p1=16.42  p25=32.4  p50=45.17  p75=81.06  p99=138.5  max=148.3
+  vis equiv side px  min=14.07  p1=16.42  p25=32.31  p50=45.03  p75=81.06  p99=138.5  max=148.3
+  box area fraction  min=2.39e-05  p1=3.25e-05  p25=0.000127  p50=0.000246  p75=0.000792  p99=0.00231  max=0.00265
+  vis area fraction  min=2.39e-05  p1=3.25e-05  p25=0.000126  p50=0.000245  p75=0.000792  p99=0.00231  max=0.00265
+
+BY SCENE
+
+  gopro_fisheye  (n=9311, clipped=0.0%)
+  box area px^2      min=15  p1=20  p25=42  p50=99  p75=234  p99=5778  max=1.537e+04
+  vis area px^2      min=15  p1=20  p25=42  p50=99  p75=234  p99=5778  max=1.537e+04
+  box equiv side px  min=3.873  p1=4.472  p25=6.481  p50=9.95  p75=15.3  p99=76.01  max=124
+  vis equiv side px  min=3.873  p1=4.472  p25=6.481  p50=9.95  p75=15.3  p99=76.01  max=124
+  box area fraction  min=7.23e-06  p1=9.64e-06  p25=2.03e-05  p50=4.77e-05  p75=0.000113  p99=0.00279  max=0.00741
+  vis area fraction  min=7.23e-06  p1=9.65e-06  p25=2.03e-05  p50=4.77e-05  p75=0.000113  p99=0.00279  max=0.00741
+
+  industrial  (n=5879, clipped=0.8%)
+  box area px^2      min=42  p1=80  p25=759  p50=1736  p75=4937  p99=1.918e+04  max=2.2e+04
+  vis area px^2      min=42  p1=80  p25=748  p50=1728  p75=4937  p99=1.918e+04  max=2.2e+04
+  box equiv side px  min=6.481  p1=8.944  p25=27.55  p50=41.67  p75=70.26  p99=138.5  max=148.3
+  vis equiv side px  min=6.481  p1=8.944  p25=27.35  p50=41.57  p75=70.26  p99=138.5  max=148.3
+  box area fraction  min=2.03e-05  p1=3.18e-05  p25=0.000101  p50=0.000209  p75=0.000595  p99=0.00231  max=0.00265
+  vis area fraction  min=2.03e-05  p1=3.18e-05  p25=0.000101  p50=0.000208  p75=0.000595  p99=0.00231  max=0.00265
+
+  lake  (n=1154, clipped=0.0%)
+  box area px^2      min=54  p1=63  p25=234  p50=550  p75=1124  p99=4498  max=4774
+  vis area px^2      min=54  p1=63  p25=234  p50=550  p75=1124  p99=4498  max=4774
+  box equiv side px  min=7.348  p1=7.937  p25=15.3  p50=23.45  p75=33.52  p99=67.07  max=69.09
+  vis equiv side px  min=7.348  p1=7.937  p25=15.3  p50=23.45  p75=33.52  p99=67.07  max=69.09
+  box area fraction  min=2.6e-05  p1=3.04e-05  p25=0.000113  p50=0.000265  p75=0.000542  p99=0.00217  max=0.0023
+  vis area fraction  min=2.6e-05  p1=3.04e-05  p25=0.000113  p50=0.000265  p75=0.000542  p99=0.00217  max=0.0023
+
+  meadow  (n=4812, clipped=0.1%)
+  box area px^2      min=72  p1=99  p25=234  p50=374  p75=891  p99=1.05e+04  max=1.962e+04
+  vis area px^2      min=72  p1=99  p25=234  p50=374  p75=891  p99=1.05e+04  max=1.962e+04
+  box equiv side px  min=8.485  p1=9.95  p25=15.3  p50=19.34  p75=29.85  p99=102.5  max=140.1
+  vis equiv side px  min=8.485  p1=9.95  p25=15.3  p50=19.34  p75=29.85  p99=102.5  max=140.1
+  box area fraction  min=3.47e-05  p1=4.77e-05  p25=0.000113  p50=0.00018  p75=0.00043  p99=0.00507  max=0.00946
+  vis area fraction  min=3.47e-05  p1=4.77e-05  p25=0.000113  p50=0.00018  p75=0.00043  p99=0.00507  max=0.00946
+
+  seaside  (n=2727, clipped=0.1%)
+  box area px^2      min=91  p1=120  p25=220  p50=646  p75=3160  p99=6.034e+04  max=8.499e+04
+  vis area px^2      min=91  p1=120  p25=220  p50=646  p75=3160  p99=6.034e+04  max=8.499e+04
+  box equiv side px  min=9.539  p1=10.95  p25=14.83  p50=25.42  p75=56.21  p99=245.7  max=291.5
+  vis equiv side px  min=9.539  p1=10.95  p25=14.83  p50=25.42  p75=56.21  p99=245.7  max=291.5
+  box area fraction  min=4.39e-05  p1=5.79e-05  p25=0.000106  p50=0.000312  p75=0.00152  p99=0.0291  max=0.041
+  vis area fraction  min=4.39e-05  p1=5.79e-05  p25=0.000106  p50=0.000312  p75=0.00152  p99=0.0291  max=0.041
+
+BY SCENE x RESOLUTION
+
+  gopro_fisheye @ 1920x1080  (n=9311, clipped=0.0%)
+  box area px^2      min=15  p1=20  p25=42  p50=99  p75=234  p99=5778  max=1.537e+04
+  vis area px^2      min=15  p1=20  p25=42  p50=99  p75=234  p99=5778  max=1.537e+04
+  box equiv side px  min=3.873  p1=4.472  p25=6.481  p50=9.95  p75=15.3  p99=76.01  max=124
+  vis equiv side px  min=3.873  p1=4.472  p25=6.481  p50=9.95  p75=15.3  p99=76.01  max=124
+  box area fraction  min=7.23e-06  p1=9.64e-06  p25=2.03e-05  p50=4.77e-05  p75=0.000113  p99=0.00279  max=0.00741
+  vis area fraction  min=7.23e-06  p1=9.65e-06  p25=2.03e-05  p50=4.77e-05  p75=0.000113  p99=0.00279  max=0.00741
+
+  industrial @ 1920x1080  (n=726, clipped=0.1%)
+  box area px^2      min=42  p1=63.25  p25=99  p50=120  p75=151.2  p99=225  max=225
+  vis area px^2      min=42  p1=63.25  p25=99  p50=120  p75=143  p99=225  max=225
+  box equiv side px  min=6.481  p1=7.953  p25=9.95  p50=10.95  p75=12.3  p99=15  max=15
+  vis equiv side px  min=6.481  p1=7.953  p25=9.95  p50=10.95  p75=11.96  p99=15  max=15
+  box area fraction  min=2.03e-05  p1=3.05e-05  p25=4.77e-05  p50=5.79e-05  p75=7.29e-05  p99=0.000109  max=0.000109
+  vis area fraction  min=2.03e-05  p1=3.05e-05  p25=4.77e-05  p50=5.79e-05  p75=6.9e-05  p99=0.000109  max=0.000109
+
+  industrial @ 3840x2160  (n=5153, clipped=0.9%)
+  box area px^2      min=198  p1=269.7  p25=1050  p50=2040  p75=6570  p99=1.918e+04  max=2.2e+04
+  vis area px^2      min=198  p1=269.7  p25=1044  p50=2028  p75=6570  p99=1.918e+04  max=2.2e+04
+  box equiv side px  min=14.07  p1=16.42  p25=32.4  p50=45.17  p75=81.06  p99=138.5  max=148.3
+  vis equiv side px  min=14.07  p1=16.42  p25=32.31  p50=45.03  p75=81.06  p99=138.5  max=148.3
+  box area fraction  min=2.39e-05  p1=3.25e-05  p25=0.000127  p50=0.000246  p75=0.000792  p99=0.00231  max=0.00265
+  vis area fraction  min=2.39e-05  p1=3.25e-05  p25=0.000126  p50=0.000245  p75=0.000792  p99=0.00231  max=0.00265
+
+  lake @ 1920x1080  (n=1154, clipped=0.0%)
+  box area px^2      min=54  p1=63  p25=234  p50=550  p75=1124  p99=4498  max=4774
+  vis area px^2      min=54  p1=63  p25=234  p50=550  p75=1124  p99=4498  max=4774
+  box equiv side px  min=7.348  p1=7.937  p25=15.3  p50=23.45  p75=33.52  p99=67.07  max=69.09
+  vis equiv side px  min=7.348  p1=7.937  p25=15.3  p50=23.45  p75=33.52  p99=67.07  max=69.09
+  box area fraction  min=2.6e-05  p1=3.04e-05  p25=0.000113  p50=0.000265  p75=0.000542  p99=0.00217  max=0.0023
+  vis area fraction  min=2.6e-05  p1=3.04e-05  p25=0.000113  p50=0.000265  p75=0.000542  p99=0.00217  max=0.0023
+
+  meadow @ 1920x1080  (n=4812, clipped=0.1%)
+  box area px^2      min=72  p1=99  p25=234  p50=374  p75=891  p99=1.05e+04  max=1.962e+04
+  vis area px^2      min=72  p1=99  p25=234  p50=374  p75=891  p99=1.05e+04  max=1.962e+04
+  box equiv side px  min=8.485  p1=9.95  p25=15.3  p50=19.34  p75=29.85  p99=102.5  max=140.1
+  vis equiv side px  min=8.485  p1=9.95  p25=15.3  p50=19.34  p75=29.85  p99=102.5  max=140.1
+  box area fraction  min=3.47e-05  p1=4.77e-05  p25=0.000113  p50=0.00018  p75=0.00043  p99=0.00507  max=0.00946
+  vis area fraction  min=3.47e-05  p1=4.77e-05  p25=0.000113  p50=0.00018  p75=0.00043  p99=0.00507  max=0.00946
+
+  seaside @ 1920x1080  (n=2727, clipped=0.1%)
+  box area px^2      min=91  p1=120  p25=220  p50=646  p75=3160  p99=6.034e+04  max=8.499e+04
+  vis area px^2      min=91  p1=120  p25=220  p50=646  p75=3160  p99=6.034e+04  max=8.499e+04
+  box equiv side px  min=9.539  p1=10.95  p25=14.83  p50=25.42  p75=56.21  p99=245.7  max=291.5
+  vis equiv side px  min=9.539  p1=10.95  p25=14.83  p50=25.42  p75=56.21  p99=245.7  max=291.5
+  box area fraction  min=4.39e-05  p1=5.79e-05  p25=0.000106  p50=0.000312  p75=0.00152  p99=0.0291  max=0.041
+  vis area fraction  min=4.39e-05  p1=5.79e-05  p25=0.000106  p50=0.000312  p75=0.00152  p99=0.0291  max=0.041
+
+SWEEP ENDPOINTS, measured
+  max_area sweeps UPWARD from the maximum annotated box area, per resolution (ruled 15 Aug):
+    1920x1080 box      max=84987 px^2  equiv_side=291.5 px  frac=4.099e-02
+    1920x1080 visible  max=84987 px^2  equiv_side=291.5 px  frac=4.099e-02
+    3840x2160 box      max=22005 px^2  equiv_side=148.3 px  frac=2.653e-03
+    3840x2160 visible  max=22005 px^2  equiv_side=148.3 px  frac=2.653e-03
+  min_area sweeps log-spaced from NO FILTER upward. The smallest annotated box per resolution is where the first real drone would be lost:
+    1920x1080 box      min=15 px^2  equiv_side=3.9 px  frac=7.234e-06
+    1920x1080 visible  min=15 px^2  equiv_side=3.9 px  frac=7.234e-06
+    3840x2160 box      min=198 px^2  equiv_side=14.1 px  frac=2.387e-05
+    3840x2160 visible  min=198 px^2  equiv_side=14.1 px  frac=2.387e-05
+
+PER-RESOLUTION SMALL TAIL, the figure the pooled p1 hides
+  1920x1080  n=18730  min=3.87  p1=4.47  p25=9.49 px equiv side
+  3840x2160  n=5153  min=14.07  p1=16.42  p25=32.40 px equiv side
+
+CROSS-CHECK against the recorded item B values
+  OK   n: recomputed 23883 vs recorded 23883
+  OK   pooled equiv side p1: recomputed 4.899 vs recorded 4.9
+  OK   pooled equiv side p25: recomputed 10.9545 vs recorded 11
+  OK   pooled equiv side p50: recomputed 18.3303 vs recorded 18.3
+  OK   pooled equiv side p75: recomputed 37.9868 vs recorded 38
+  OK   pooled equiv side p99: recomputed 147.336 vs recorded 147.3
+  OK   pooled median area fraction: recomputed 0.000130208 vs recorded 0.00013
+  DIFF smallest box area px^2: recomputed 15 vs recorded 12
+  OK   1920x1080 n: recomputed 18730 vs recorded 18730
+  OK   3840x2160 n: recomputed 5153 vs recorded 5153
+  OK   1920x1080 median equiv side: recomputed 14.4222 vs recorded 14.4
+  OK   3840x2160 median equiv side: recomputed 45.1664 vs recorded 45.2
+  OK   1920x1080 median area fraction: recomputed 0.000100309 vs recorded 0.0001
+  OK   3840x2160 median area fraction: recomputed 0.000245949 vs recorded 0.000246
+  OK   gopro_fisheye median equiv side: recomputed 9.9499 vs recorded 9.9
+  OK   meadow median equiv side: recomputed 19.3391 vs recorded 19.3
+  OK   lake median equiv side: recomputed 23.4521 vs recorded 23.5
+  OK   seaside median equiv side: recomputed 25.4165 vs recorded 25.4
+  OK   industrial median equiv side: recomputed 41.6653 vs recorded 41.7
+
+DISAGREEMENTS FOUND (1): ['smallest box area px^2']
+Reported, not reconciled. A recomputed figure that differs means the inputs differ from what was measured.
