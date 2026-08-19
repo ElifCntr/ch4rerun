@@ -7,7 +7,7 @@
 
 project:
   name: ch4rerun
-  stage: "1a"
+  stage: "1b-E"
 
 data:
   # The only place the dataset path is written. Never copied into this project.
@@ -80,27 +80,57 @@ item_e:
   tubelets_per_scene: 3
   duplicate_fraction: 0.10        # intra-rater consistency check
 
+# ---------------------------------------------------------------- ruled ----
+# Every value below was ruled on a committed measurement or declared with a
+# stated rationale, between 12 and 18 August 2026. None is inherited from the
+# original Chapter 4 code. Nothing reads a default if a key is missing.
 ruled:
-  # Values RULED and no longer open, decided on evidence not inherited.
-  T: 8                     # 12 Aug, from item E plus the TSM boundary-padding
-                           # and frame-contamination arguments
-  padding_fraction: 0.3    # 12 Aug; item E found no usability gain from the
-                           # retention-matched 0.75 at T=8
-  batch_size: 162          # largest that fits r3d_18 at T=8, used for all arms
-  stride: null             # NOT ruled; the T=8 stride-2 pass follows item F
+  window:
+    T: 8                      # item E, item H, stride pass; 12 Aug
+    stride: 1                 # stride pass, dominated on every axis; 12 Aug
+    padding_fraction: 0.3     # item E found no benefit at 0.75; 12 Aug
+    crop_px: 112              # r3d_18's Kinetics weights; ruled
+    batch: 162                # largest fitting r3d_18 at T=8; measured 12 Aug
 
-item_f:
-  t: 8
-  padding_fraction: 0.3
-  drone_tubelets: 15
-  background_tubelets: 15
-  duplicate_fraction: 0.10
+  bgs:
+    method: "mog2"            # dominates ViBe and KNN everywhere; 18 Aug
+    history: 6960             # non-binding on every clip, so the method is
+                              # alpha = 1/(2*nframes), growing window, no
+                              # forgetting. Described, not tuned.
+    learning_rate: null       # NEVER passed. Passing it makes history inert.
+    detect_shadows: false
+    use_opencl: false         # pinned for reproducibility, not checked
+    morphology: null          # 3x3 opening cost 43 points of recall; 18 Aug
+    warmup_frames: 0          # every candidate lost on the honest measure
 
-reports:
-  dir: "reports"
-  # Strips are NOT committed. The sampling manifest and the completed scoring
-  # sheets are. Any strip promoted to a chapter figure is committed here.
-  strips_dir: "reports/strips"
-  strip_manifest_dir: "data/strip_manifests"
-  scoring_sheet_dir: "reports/scoring_sheets"
-  figures_dir: "figures"
+  proposals:
+    min_area_frac: 7.23e-06   # measured 1080p minimum annotated box area
+    max_area_px:              # measured maximum annotated box area
+      "1920x1080": 84987
+      "3840x2160": 22005
+    positive_coverage: 0.5    # coverage = intersection over GT area
+    negative_coverage: 0.0    # exactly zero overlap
+    assignment: "greedy_one_to_one"
+    # ignore band is 0 < coverage < positive_coverage, discarded
+
+  negatives:
+    ratio: 2
+    bands: 10
+    band_edge_rule: "deciles_of_positive_area_frac"
+
+  training:
+    optimiser: "sgd"
+    momentum: 0.9
+    weight_decay: 1.0e-4
+    base_lr: 1.0e-3
+    lr_steps: [10, 20]
+    lr_gamma: 0.1
+    epoch_ceiling: 30         # ceiling, not a target; early stopping decides
+    patience: 5               # on subset val AP, no minimum delta
+    seeds: [1, 2, 3]
+
+  augmentation:
+    hflip_p: 0.5
+    brightness: [0.9, 1.1]
+    contrast: [0.9, 1.1]
+    per: "tubelet"            # one draw, all 8 frames identically
