@@ -1,0 +1,23 @@
+VAL EARLY-STOPPING SUBSET
+seed 20260818 (fixed, not a run seed), target fraction 10%, T=8 lead 3 trail 4
+split access via src.splits.load_split, partitions ['val'], allow_test never passed
+
+PER VIDEO
+   video                                     frames   valid   picked    pct    boxes  boxes_in_subset
+   2019_11_14_C0001_3922_matrice               2601    2594      259  10.0%     2524              247
+   GOPR5843_002                                 424     417       42  10.1%      393               40
+   GOPR5843_005                                 571     564       56   9.9%      524               53
+   GOPR5846_002                                 686     679       68  10.0%      629               62
+   GOPR5846_005                                 450     443       44   9.9%      379               37
+   gopro_005                                    811     804       80  10.0%      810               80
+
+   TOTAL frames 5,543, valid centres 5,501, picked 549
+   ACHIEVED FRACTION 9.9800% of valid centres, 9.9044% of all val frames
+   Target was 10.00%. On target.
+
+   VAL BOXES total 5,259, in subset 519 (9.87%)
+   Positives per evaluation will be this box count times proposal recall. Using the pooled train+val figure of 0.7455 gives about 387, against the roughly 392 the ruling anticipated. VAL'S OWN RECALL MAY DIFFER, since val is not a scaled-down train at the proposal stage, so treat this as an estimate until the first real evaluation.
+
+   Frames excluded at each video's ends because a T=8 window needs centre-3 to centre+4: 42 across 6 videos.
+
+THIS SUBSET IS FIXED. It does not vary by arm or by run seed. Varying it would let early stopping differ by arm and would contaminate the comparison.

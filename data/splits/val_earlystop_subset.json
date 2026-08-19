@@ -1,0 +1,16 @@
+{
+  "seed": 20260818,
+  "target_fraction": 0.1,
+  "achieved_fraction_of_valid": 0.099800036357026,
+  "frames_picked": 549,
+  "valid_centres": 5501,
+  "all_val_frames": 5543,
+  "val_boxes_total": 5259,
+  "val_boxes_in_subset": 519,
+  "T": 8,
+  "lead": 3,
+  "trail": 4,
+  "stratified_by": "video",
+  "split_access": "src.splits.load_split(['val'])",
+  "note": "Fixed across all arms and all run seeds by design."
+}
