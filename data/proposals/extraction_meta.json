@@ -1,0 +1,90 @@
+{
+  "method": "mog2",
+  "history": 6960,
+  "history_note": "non-binding on every clip; effective method is alpha = 1/(2*nframes), growing window, no forgetting",
+  "learning_rate": "never passed",
+  "detect_shadows": false,
+  "morphology": "none",
+  "warmup": "none",
+  "min_area_frac": 7.23e-06,
+  "max_area_px_by_resolution": {
+    "1920x1080": 84987.0,
+    "3840x2160": 22005.0
+  },
+  "positive_coverage": 0.5,
+  "negative_coverage": 0.0,
+  "ignore_band": "0 < coverage < 0.5",
+  "assignment": "greedy one-to-one by coverage",
+  "T": 8,
+  "lead": 3,
+  "trail": 4,
+  "ground_truth_source": "label files via tools/measure_instances.read_boxes",
+  "annotation_dir": "/home/elif/Desktop/Drone-vs-Bird/videos-and-labels/labels",
+  "annotation_format": "dvb_multibox_per_line",
+  "window_validity_source": "decoded frame count, probed per video",
+  "frame_count_mismatches": [
+    {
+      "video": "00_01_52_to_00_01_58",
+      "inventory": 177,
+      "decoded": 175
+    },
+    {
+      "video": "00_06_10_to_00_06_27",
+      "inventory": 499,
+      "decoded": 497
+    },
+    {
+      "video": "00_09_30_to_00_10_09",
+      "inventory": 1167,
+      "decoded": 1165
+    },
+    {
+      "video": "00_10_09_to_00_10_40",
+      "inventory": 926,
+      "decoded": 924
+    }
+  ],
+  "opencl_in_use": false,
+  "opencv_version": "5.0.0",
+  "splits": [
+    "train",
+    "val",
+    "test"
+  ],
+  "include_test": true,
+  "frames": 31646,
+  "seconds": 936.6,
+  "fps": 33.79,
+  "by_split": {
+    "test": {
+      "videos": 7,
+      "frames": 7227,
+      "positive": 6014,
+      "negative": 2544081,
+      "ignored": 3199,
+      "gt_boxes_in_valid_window": 6877,
+      "gt_matched": 6014,
+      "gt_recall": 0.874509
+    },
+    "train": {
+      "videos": 24,
+      "frames": 18876,
+      "positive": 13183,
+      "negative": 4510220,
+      "ignored": 5012,
+      "gt_boxes_in_valid_window": 18515,
+      "gt_matched": 13183,
+      "gt_recall": 0.712017
+    },
+    "val": {
+      "videos": 6,
+      "frames": 5543,
+      "positive": 4384,
+      "negative": 707819,
+      "ignored": 717,
+      "gt_boxes_in_valid_window": 5242,
+      "gt_matched": 4384,
+      "gt_recall": 0.836322
+    }
+  }
+}

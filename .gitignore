@@ -28,3 +28,4 @@ reports/strips/
 #   figures/                any strip promoted to a chapter figure
 !figures/
 !figures/**
+data/proposals/proposals.csv

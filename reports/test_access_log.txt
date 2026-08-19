@@ -1,1 +1,20 @@
 2026-08-12T11:04:14+00:00	continuity check	gopro_004	container metadata only, no frames decoded, no annotations read
+
+2026-08-18  tools/check_decode_4k.py
+  UNFLAGGED TEST ACCESS, self-reported. Decoded 400 frames each from
+  2019_08_19_GOPR5869_1530_phantom, 2019_08_19_GP015869_1520_inspire and
+  2019_08_19_C0001_5319_phantom to measure decode throughput for the
+  streaming evaluation path.
+  No annotation file was read. No content-derived quantity was measured.
+  Throughput depends on codec and resolution, not on frame content.
+  Cause: the script selected videos by preferring val and test splits and
+  read the inventory and split CSVs directly rather than going through
+  src/splits.py, so allow_test was never consulted.
+  Fix: restrict the benchmark to train and val videos, which cover both
+  resolution groups, or route the selection through src/splits.py.
+
+2026-08-19  tools/extract_proposals.py --include-test
+  Authorised test access. 1b-E extraction, authorised 18 Aug 2026. Decoded the test partition and emitted proposal coordinates with labels. allow_test=True passed explicitly through src.splits.load_split.
+
+2026-08-19  tools/extract_proposals.py --include-test
+  Authorised test access, 1b-E extraction authorised 18 Aug 2026. Decoded the test partition, read its annotations, and emitted proposal coordinates with labels. allow_test=True passed explicitly through src.splits.load_split.
