@@ -1,0 +1,71 @@
+BGS PASS OPERATING CURVES
+Source reports/bgs_pass_mog2, variants ['none']
+Read off the dump. Nothing is chosen here.
+
+VARIANT NONE  (23883 boxes, 24419 frames)
+  min_area   blobs/frame  recall@0.5  recall@0.7   tubelets/frame   h/epoch
+         0     16520.59     0.7623     0.4940        16520.59   19050.22
+         4      1712.46     0.7623     0.4940         1712.46   1974.67
+         9       647.45     0.7622     0.4940          647.45    746.58
+        15       345.78     0.7455     0.4898          345.78    398.72
+        24       193.23     0.7159     0.4779          193.23    222.82
+        40       102.42     0.6757     0.4612          102.42    118.10
+        64        59.47     0.6020     0.4289           59.47     68.57
+       100        36.63     0.5161     0.3941           36.63     42.24
+       160        22.95     0.4239     0.3439           22.95     26.46
+       250        14.88     0.3550     0.2993           14.88     17.16
+       400         9.85     0.2810     0.2404            9.85     11.36
+       640         6.42     0.2086     0.1841            6.42      7.41
+      1000         4.05     0.1460     0.1333            4.05      4.67
+
+AREA-FRACTION ARM (single normalised limit across resolutions)
+  VARIANT NONE
+    min_frac     blobs/frame  recall@0.5  recall@0.7
+            0     16520.59     0.7623     0.4940
+        2e-06       894.08     0.7623     0.4940
+        5e-06       323.15     0.7601     0.4938
+     7.23e-06       200.17     0.7455     0.4898
+      1.2e-05       101.47     0.7126     0.4765
+        2e-05        55.35     0.6559     0.4538
+      3.5e-05        28.47     0.5518     0.4032
+        6e-05        14.96     0.4068     0.3267
+       0.0001         7.76     0.2930     0.2490
+
+PER RESOLUTION, absolute limit, recall at each coverage
+  none   1920x1080   n=18730
+    min_area    0  0.7088  0.4148
+    min_area    9  0.7087  0.4148
+    min_area   15  0.6875  0.4093
+    min_area   24  0.6497  0.3942
+    min_area   40  0.5985  0.3729
+    min_area  100  0.3957  0.2874
+  none   3840x2160   n=5153
+    min_area    0  0.9565  0.7821
+    min_area    9  0.9565  0.7821
+    min_area   15  0.9565  0.7821
+    min_area   24  0.9565  0.7821
+    min_area   40  0.9565  0.7821
+    min_area  100  0.9540  0.7821
+
+PER SCENE, absolute limit, recall at the first coverage threshold (0.5)
+  VARIANT NONE
+    scene            n      ma=0  ma=9  ma=15  ma=24  ma=40  ma=100
+    gopro_fisheye    9311  0.6200  0.6198  0.5771  0.5027  0.4237  0.2314
+    industrial       5879  0.8643  0.8643  0.8643  0.8622  0.8544  0.8398
+    lake             1154  0.8744  0.8744  0.8744  0.8718  0.8024  0.6586
+    meadow           4812  0.8040  0.8040  0.8040  0.8038  0.7880  0.5360
+    seaside          2727  0.9069  0.9069  0.9069  0.9069  0.8992  0.6953
+
+COVERAGE DISTRIBUTION, no size limit
+  none   n=23883  p0=0.000  p5=0.212  p10=0.320  p25=0.500  p50=0.694  p75=0.852  p95=0.988  p100=1.000
+         fraction with zero coverage: 0.0094
+
+UPPER LIMIT, what it removes
+  Blobs per frame at or above each fraction of the frame
+    none   0.00265:0.2261   0.041:0.0024   0.1:0.0012   0.5:0.0012   0.9:0.0012
+  4K max annotated fraction is 2.65e-03, 1080p is 4.10e-02.
+
+NOTES
+  blobs/frame uses bin_lo, so it undercounts inside the straddling bin. Bins are about 3 per cent wide.
+  h/epoch applies 0.170 s per tubelet per epoch, measured 12 Aug for the whole twelve-run matrix at T=8, and assumes every surviving blob becomes a tubelet. It is an UPPER BOUND on training tubelets, since negative capping has not been applied and is unruled.
+  Frames here are train+val only, 30 videos.

@@ -29,3 +29,5 @@ reports/strips/
 !figures/
 !figures/**
 data/proposals/proposals.csv
+data/tubelets/
+.idea/

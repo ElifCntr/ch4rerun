@@ -1,0 +1,34 @@
+{
+  "method": "vibe",
+  "history": null,
+  "seed": 20260818,
+  "vibe_params": {
+    "method": "ViBe",
+    "N": 20,
+    "R": 20,
+    "Nmin": 2,
+    "phi": 16,
+    "seed": 20260818,
+    "colour": "grayscale",
+    "source": "Barnich & Van Droogenbroeck 2011, Appendix A",
+    "deviations": [
+      "classify-then-update, not interleaved",
+      "grayscale only, paper gives no colour radius",
+      "scatter collisions resolved last-write-wins"
+    ],
+    "frames_seen": 0
+  },
+  "morphology": "none (ruled out 18 Aug 2026)",
+  "learning_rate": "never passed; OpenCV default -1",
+  "detect_shadows": false,
+  "opencl_in_use": false,
+  "opencv_version": "5.0.0",
+  "videos": 30,
+  "frames": 24419,
+  "seconds": 8383.1,
+  "fps": 2.91,
+  "splits": [
+    "train",
+    "val"
+  ]
+}

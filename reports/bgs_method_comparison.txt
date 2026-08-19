@@ -1,0 +1,100 @@
+THREE-METHOD COMPARISON
+Methods present: ['mog2', 'vibe', 'knn']
+Boxes common to all: 23,883
+Ruled normalised lower limit: 7.23e-06
+
+
+1. UNION TEST. Is the ceiling method-specific or intrinsic?
+  At coverage 0.5, limit 7.23e-06:
+    mog2   alone          0.7455
+    vibe   alone          0.3654
+    knn    alone          0.5770
+    UNION (any method)     0.7572
+    INTERSECTION (all)     0.3653
+    union minus best single +0.0117
+    A small gain means the methods miss the SAME boxes and the ceiling is intrinsic to motion proposals.
+    A large gain means it is method-specific.
+    found ONLY by mog2   0.1802
+    found ONLY by vibe   0.0000
+    found ONLY by knn    0.0116
+    missed by ALL          0.2428
+    boxes missed by all, by scene (share of that scene):
+      gopro_fisheye     3750 / 9311   = 0.4027
+      industrial         768 / 5879   = 0.1306
+      lake               144 / 1154   = 0.1248
+      meadow             932 / 4812   = 0.1937
+      seaside            204 / 2727   = 0.0748
+
+  At coverage 0.7, limit 7.23e-06:
+    mog2   alone          0.4898
+    vibe   alone          0.1554
+    knn    alone          0.3389
+    UNION (any method)     0.5033
+    INTERSECTION (all)     0.1545
+    union minus best single +0.0135
+    A small gain means the methods miss the SAME boxes and the ceiling is intrinsic to motion proposals.
+    A large gain means it is method-specific.
+    found ONLY by mog2   0.1639
+    found ONLY by vibe   0.0005
+    found ONLY by knn    0.0126
+    missed by ALL          0.4967
+    boxes missed by all, by scene (share of that scene):
+      gopro_fisheye     5726 / 9311   = 0.6150
+      industrial        1705 / 5879   = 0.2900
+      lake               658 / 1154   = 0.5702
+      meadow            3004 / 4812   = 0.6243
+      seaside            770 / 2727   = 0.2824
+
+2. RECALL AGAINST THE NORMALISED LOWER LIMIT
+  MOG2  (23,883 boxes, 24,419 frames)
+    min_frac    blobs/frame  recall@0.5  recall@0.7
+            0     16520.59      0.7623      0.4940
+        2e-06       894.08      0.7623      0.4940
+        5e-06       323.15      0.7601      0.4938
+     7.23e-06       200.17      0.7455      0.4898
+      1.2e-05       101.47      0.7126      0.4765
+        2e-05        55.35      0.6559      0.4538
+      3.5e-05        28.47      0.5518      0.4032
+        6e-05        14.96      0.4068      0.3267
+       0.0001         7.76      0.2930      0.2490
+
+  VIBE  (23,883 boxes, 24,419 frames)
+    min_frac    blobs/frame  recall@0.5  recall@0.7
+            0      2354.50      0.3675      0.1556
+        2e-06       199.81      0.3675      0.1556
+        5e-06        73.42      0.3669      0.1555
+     7.23e-06        44.90      0.3654      0.1554
+      1.2e-05        22.23      0.3549      0.1532
+        2e-05        11.58      0.3227      0.1448
+      3.5e-05         5.31      0.2734      0.1370
+        6e-05         2.38      0.2091      0.1244
+       0.0001         1.08      0.1580      0.0989
+
+  KNN  (23,883 boxes, 24,419 frames)
+    min_frac    blobs/frame  recall@0.5  recall@0.7
+            0      8671.28      0.5856      0.3394
+        2e-06       773.78      0.5856      0.3394
+        5e-06       312.67      0.5805      0.3392
+     7.23e-06       203.72      0.5770      0.3389
+      1.2e-05       111.05      0.5666      0.3349
+        2e-05        65.00      0.5210      0.3171
+      3.5e-05        35.77      0.4282      0.2834
+        6e-05        19.55      0.3286      0.2435
+       0.0001        10.98      0.2374      0.1872
+
+3. COVERAGE DISTRIBUTION, no size limit
+  mog2   p5=0.212  p25=0.500  p50=0.694  p75=0.852  p95=0.988   zero-coverage 0.0094
+  vibe   p5=0.036  p25=0.170  p50=0.385  p75=0.602  p95=0.847   zero-coverage 0.0283
+  knn    p5=0.111  p25=0.343  p50=0.573  p75=0.769  p95=0.956   zero-coverage 0.0157
+
+4. PER SCENE at the ruled limit 7.23e-06, coverage 0.5
+  scene            n         mog2     vibe      knn     union
+  gopro_fisheye    9311   0.5771   0.2391   0.3894    0.5973
+  industrial       5879   0.8643   0.5457   0.7841    0.8694
+  lake             1154   0.8744   0.2990   0.5494    0.8752
+  meadow           4812   0.8040   0.2972   0.5345    0.8063
+  seaside          2727   0.9069   0.5567   0.8577    0.9252
+
+5. PER RESOLUTION at the ruled limit
+  1920x1080   n= 18730  mog2 0.6875  vibe 0.2950  knn 0.4938   union 0.7017
+  3840x2160   n=  5153  mog2 0.9565  vibe 0.6212  knn 0.8795   union 0.9592

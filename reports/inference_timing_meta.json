@@ -1,0 +1,13 @@
+{
+  "device": "Quadro P5000",
+  "total_memory_mib": 16265,
+  "torch": "2.4.1+cu121",
+  "T": 8,
+  "n_classes": 2,
+  "seeds": 3,
+  "matrix_inference_sec_per_tubelet": 0.032399500156161345,
+  "matrix_training_sec_per_tubelet_per_epoch": 0.17,
+  "measured_inference_over_training": 0.1905852950362432,
+  "assumed_ratio": 0.3333333333333333,
+  "note": "Model definitions imported from tools/epoch_timing.py, not rebuilt, so the ratio is against identical models. Synthetic tensors, so data loading is excluded and every figure is a floor."
+}

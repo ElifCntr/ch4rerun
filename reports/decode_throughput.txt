@@ -1,0 +1,19 @@
+DECODE THROUGHPUT FOR THE STREAMING PATH
+Plain sequential decode. No subtractor, no matching.
+Buffered figures hold a rolling 8-frame window, which is what evaluation does.
+
+RESOLUTION 1920x1080
+  2019_08_19_GOPR5869_1530_phantom             test   400 frames   plain   613.6 fps   buffered   665.4 fps
+  2019_08_19_GP015869_1520_inspire             test   400 frames   plain   679.4 fps   buffered   674.0 fps
+  GROUP: plain 644.8 fps, buffered 669.7 fps
+
+RESOLUTION 3840x2160
+  2019_08_19_C0001_5319_phantom                test   400 frames   plain   118.0 fps   buffered   122.1 fps
+  2019_11_14_C0001_3922_matrice                val    400 frames   plain   100.1 fps   buffered   100.6 fps
+  GROUP: plain 108.3 fps, buffered 110.4 fps
+
+FULL STREAMING PASS COST, per split
+  val      0.48 min
+  test     0.56 min
+
+This is decode only. The forward pass is timed separately by tools/inference_timing.py and is the dominant cost.

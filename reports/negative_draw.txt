@@ -1,0 +1,25 @@
+TRAINING NEGATIVE DRAW
+split train, ratio 2x, 10 bands, seeds [1, 2, 3]
+positives 13,183, coverage-0 pool 4,510,220
+
+Band edges are DECILES OF THE POSITIVE normalised area, so the negative size profile matches the positive one by construction. These are STRATIFICATION bands, not the benchmark-derived REPORTING bands.
+
+   band   area_frac range                 positives   quota   available   drawn   shortfall
+      0   7.234e-06 .. 1.591e-05       1,278   2,556   2,872,881   2,556           0
+      1   1.591e-05 .. 2.363e-05       1,316   2,632     635,217   2,632           0
+      2   2.363e-05 .. 3.520e-05       1,353   2,706     381,865   2,706           0
+      3   3.520e-05 .. 4.844e-05       1,326   2,652     196,896   2,652           0
+      4   4.844e-05 .. 6.137e-05       1,317   2,634     103,122   2,634           0
+      5   6.137e-05 .. 8.632e-05       1,310   2,620     108,350   2,620           0
+      6   8.632e-05 .. 1.254e-04       1,327   2,654      79,114   2,654           0
+      7   1.254e-04 .. 2.315e-04       1,318   2,636      69,677   2,636           0
+      8   2.315e-04 .. 6.385e-04       1,318   2,636      43,497   2,636           0
+      9   6.385e-04 .. 1.663e-02       1,320   2,640      19,601   2,640           0
+
+   TOTAL quota 26,366, drawable 26,366, shortfall 0
+
+   seed 1: 26,366 negatives drawn
+   seed 2: 26,366 negatives drawn
+   seed 3: 26,366 negatives drawn
+   union across seeds 76,544, common to all 69
+   Seeds draw independently from the same pool, so some overlap is expected and is not a fault.

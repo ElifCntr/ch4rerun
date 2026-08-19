@@ -1,0 +1,19 @@
+{
+  "method": "knn",
+  "history": 6960,
+  "seed": null,
+  "vibe_params": null,
+  "morphology": "none (ruled out 18 Aug 2026)",
+  "learning_rate": "never passed; OpenCV default -1",
+  "detect_shadows": false,
+  "opencl_in_use": false,
+  "opencv_version": "5.0.0",
+  "videos": 30,
+  "frames": 24419,
+  "seconds": 536.9,
+  "fps": 45.48,
+  "splits": [
+    "train",
+    "val"
+  ]
+}

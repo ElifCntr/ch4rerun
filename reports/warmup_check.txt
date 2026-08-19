@@ -1,0 +1,75 @@
+WARM-UP CHECK, variant none, coverage threshold 0.5
+Source reports/bgs_pass/matched.csv, 23883 annotated boxes
+
+LIMITATION: only frames containing an annotated drone appear here, so each video's curve starts at its first annotation, not frame 0.
+
+1. AGAINST FRAME INDEX. If warm-up helps, the early bins are worse and then flatten.
+   frame range        n     blobs/frame   median cov   recall@0.5
+   0-25               427       19754.4        0.286       0.2998
+   25-50              628       21535.0        0.609       0.6529
+   50-75              749       14480.3        0.663       0.7170
+   75-100             768       13911.2        0.675       0.7500
+   100-150           1550       13494.2        0.702       0.8019
+   150-200           1505       13423.3        0.667       0.7601
+   200-300           3015       12797.3        0.691       0.7784
+   300-400           2916       14471.1        0.696       0.8059
+   400-600           3902       15062.0        0.733       0.8942
+   600-900           2790       15074.8        0.714       0.7251
+   900-1400          2220       20177.0        0.667       0.6937
+   1400+             3413       21980.9        0.742       0.7085
+
+2. CANDIDATE WARM-UPS. Recall both ways, so a rise from discarding hard frames is visible.
+   warmup   boxes kept   dropped   recall on kept   recall on ALL boxes   blobs/frame
+        0        23883         0           0.7623                0.7623       16163.5
+       10        23723       160           0.7662                0.7611       16239.9
+       25        23456       427           0.7707                0.7569       16098.1
+       50        22828      1055           0.7739                0.7397       15948.5
+       75        22079      1804           0.7759                0.7172       15998.4
+      100        21311      2572           0.7768                0.6931       16073.6
+      150        19761      4122           0.7748                0.6411       16275.9
+      200        18256      5627           0.7760                0.5932       16511.1
+      300        15241      8642           0.7755                0.4949       17245.7
+
+   Baseline recall with no warm-up: 0.7623
+   'recall on ALL boxes' charges discarded boxes as misses, which is the honest figure if the chapter still claims to detect drones in those frames.
+
+3. FIRST ANNOTATED FRAME PER VIDEO. A warm-up up to this value costs that video nothing.
+       0   00_02_45_to_00_03_10_cut
+       0   00_10_09_to_00_10_40
+       0   2019_09_02_C0002_2527_inspire
+       0   2019_09_02_GOPR5871_1058_solo
+       0   2019_11_14_C0001_3922_matrice
+       0   GOPR5844_004
+       0   gopro_000
+       0   gopro_001
+       0   gopro_002
+       0   gopro_003
+       0   gopro_005
+       0   gopro_007
+       0   gopro_008
+      10   GOPR5848_002
+      18   GOPR5843_005
+      23   2019_10_16_C0003_1700_matrice
+      23   GOPR5847_004
+      24   GOPR5847_003
+      29   GOPR5845_004
+      31   GOPR5843_002
+      34   00_01_52_to_00_01_58
+      37   00_09_30_to_00_10_09
+      38   GOPR5846_005
+      39   GOPR5846_002
+      42   GOPR5845_001
+      47   GOPR5848_004
+      51   GOPR5844_002
+      82   2019_09_02_C0002_3700_mavic
+     260   00_06_10_to_00_06_27
+     424   gopro_006
+   median first annotated frame: 20, min 0, max 424
+
+4. WHO PAYS. Boxes dropped by each warm-up, by scene.
+   scene            n      w=25  w=50  w=100  w=200
+   gopro_fisheye    9311  0.027  0.054  0.107  0.215
+   industrial       5879  0.013  0.030  0.067  0.152
+   lake             1154  0.003  0.046  0.133  0.306
+   meadow           4812  0.010  0.041  0.144  0.352
+   seaside          2727  0.018  0.047  0.121  0.251

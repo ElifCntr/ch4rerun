@@ -1,0 +1,96 @@
+{
+  "split": "train",
+  "ratio": 2,
+  "bands": 10,
+  "band_edge_rule": "deciles of the positive normalised area",
+  "seeds": [
+    1,
+    2,
+    3
+  ],
+  "positives": 13183,
+  "coverage_zero_pool": 4510220,
+  "quota_total": 26366,
+  "drawn_total": 26366,
+  "shortfall_total": 0,
+  "per_band": [
+    {
+      "band": 0,
+      "positives": 1278,
+      "quota": 2556,
+      "available": 2872881,
+      "shortfall": 0
+    },
+    {
+      "band": 1,
+      "positives": 1316,
+      "quota": 2632,
+      "available": 635217,
+      "shortfall": 0
+    },
+    {
+      "band": 2,
+      "positives": 1353,
+      "quota": 2706,
+      "available": 381865,
+      "shortfall": 0
+    },
+    {
+      "band": 3,
+      "positives": 1326,
+      "quota": 2652,
+      "available": 196896,
+      "shortfall": 0
+    },
+    {
+      "band": 4,
+      "positives": 1317,
+      "quota": 2634,
+      "available": 103122,
+      "shortfall": 0
+    },
+    {
+      "band": 5,
+      "positives": 1310,
+      "quota": 2620,
+      "available": 108350,
+      "shortfall": 0
+    },
+    {
+      "band": 6,
+      "positives": 1327,
+      "quota": 2654,
+      "available": 79114,
+      "shortfall": 0
+    },
+    {
+      "band": 7,
+      "positives": 1318,
+      "quota": 2636,
+      "available": 69677,
+      "shortfall": 0
+    },
+    {
+      "band": 8,
+      "positives": 1318,
+      "quota": 2636,
+      "available": 43497,
+      "shortfall": 0
+    },
+    {
+      "band": 9,
+      "positives": 1320,
+      "quota": 2640,
+      "available": 19601,
+      "shortfall": 0
+    }
+  ],
+  "per_seed_drawn": {
+    "1": 26366,
+    "2": 26366,
+    "3": 26366
+  },
+  "union_across_seeds": 76544,
+  "common_to_all_seeds": 69,
+  "note": "Coordinates only. No crops written. Negatives come solely from the coverage-exactly-0 pool. No hard negative mining."
+}
