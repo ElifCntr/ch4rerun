@@ -2,7 +2,7 @@
 """
 Size the ruled storage plan.
 
-The manager needs two figures. Free disk is a shell command. This gives the
+Two figures are needed. Free disk is a shell command. This gives the
 other one, per-split proposal counts, and adds a measurement that may remove
 the frame store entirely.
 

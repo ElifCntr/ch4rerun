@@ -1,6 +1,6 @@
 """Validation for the ViBe transcription. Run before any sweep uses it.
 
-Three things the manager named, plus the checks that make them meaningful.
+Three things named in the ruling, plus the checks that make them meaningful.
 
 1. DETERMINISM BOTH WAYS. Same seed must give identical output, because the
    rerun's whole protocol rests on reproducibility. Different seeds must give

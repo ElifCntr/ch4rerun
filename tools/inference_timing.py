@@ -12,7 +12,7 @@ figure produced here is divided against the 0.170 s per tubelet per epoch
 training coefficient, so any difference in model definition would silently
 corrupt the ratio. Identical definitions by construction, not by care.
 
-TWO DIFFERENCES FROM TRAINING, both deliberate and both noted by the manager.
+TWO DIFFERENCES FROM TRAINING, both deliberate and both noted in the ruling.
   - eval() and no_grad(), so no activations are stored for backward.
   - The batch ceiling is found FORWARD-ONLY and is therefore not the training
     ceiling of 162. Inference should fit far more.

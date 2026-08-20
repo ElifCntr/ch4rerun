@@ -5,7 +5,7 @@ Covers item B first half (size distribution of annotated instances), item C
 so they are separate scripts and are not run from here.
 
 NOTHING IN THIS FILE CHOOSES A PARAMETER. The only numeric inputs are the
-manager's candidate window lengths for cumulative drift, which are a reporting
+the candidate window lengths for cumulative drift, which are a reporting
 grid rather than a choice, and they live in the config.
 
 TRACK ASSOCIATION, ruled 12 August 2026.

@@ -1,9 +1,10 @@
 # Chapter 4 rerun configuration.
 #
-# This file holds paths, seeds and provenance. It holds NO method parameters.
-# min_area, max_area, T, stride, coverage thresholds, morphology kernels and
-# padding fraction are absent by design. They are Stage 1a measurements
-# followed by a ruling, not defaults.
+# This file holds paths, seeds, provenance, and the RULED method parameters.
+# A method parameter appears here only once it has been ruled, on a committed
+# measurement or with a stated rationale. Anything still open is ABSENT, not
+# defaulted, and src/ruled.py raises rather than supplying a value. See the
+# `ruled:` block below.
 
 project:
   name: ch4rerun
@@ -134,3 +135,18 @@ ruled:
     brightness: [0.9, 1.1]
     contrast: [0.9, 1.1]
     per: "tubelet"            # one draw, all 8 frames identically
+item_f:
+  t: 8
+  padding_fraction: 0.3
+  drone_tubelets: 15
+  background_tubelets: 15
+  duplicate_fraction: 0.10
+
+reports:
+  dir: "reports"
+  # Strips are NOT committed. The sampling manifest and the completed scoring
+  # sheets are. Any strip promoted to a chapter figure is committed here.
+  strips_dir: "reports/strips"
+  strip_manifest_dir: "data/strip_manifests"
+  scoring_sheet_dir: "reports/scoring_sheets"
+  figures_dir: "figures"

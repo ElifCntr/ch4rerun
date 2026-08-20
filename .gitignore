@@ -31,3 +31,5 @@ reports/strips/
 data/proposals/proposals.csv
 data/tubelets/
 .idea/
+__pycache__/
+*.pyc

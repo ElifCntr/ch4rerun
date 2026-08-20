@@ -1,6 +1,6 @@
 # gopro continuity check, 12 August 2026
 
-Ordered by Manager v3, 11 Aug, to test whether `gopro_004` (test) and
+Ruled 11 Aug, to test whether `gopro_004` (test) and
 `gopro_005` (val) are one continuous recording split across the partition
 boundary.
 

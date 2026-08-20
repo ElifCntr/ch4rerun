@@ -1,5 +1,5 @@
 {
-  "source": "Manager v3, 11 Aug 2026. Asserted, not advisory.",
+  "source": "Ruled 11 Aug 2026. Asserted, not advisory.",
   "note": "build_split.py exits non-zero with a diff on any mismatch. Do not reconcile silently.",
   "camera_motion": {
     "total": 77,
