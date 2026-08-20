@@ -2,50 +2,47 @@
 """
 1b-E extraction, stage one: proposal coordinates with labels.
 
-Authorised 18 August. Emits COORDINATES ONLY. No crops are written here; the
-negative draw runs offline on this output and crop materialisation follows
-from the capped list.
+Emits COORDINATES ONLY. No crops are written here; the negative draw runs
+offline on this output and crop materialisation follows from the capped list.
 
-TWO FIXES OVER RUN 1.
+NO RULED VALUE IS CARRIED IN THIS FILE. Every parameter comes from the ruled
+block of configs/ch4.yaml through src.ruled, which has no defaults and raises
+on a missing key. An earlier version hardcoded history, the area limits and
+the coverage thresholds here, which contradicted the repository's own rule and
+was found by review on 19 August 2026. A silent default is how the original
+Chapter 4 pipeline acquired a history of 200 and a min_area of 50 that nobody
+had chosen.
 
-  1. GROUND TRUTH NOW COMES FROM THE LABEL FILES, through read_boxes() in
-     tools/measure_instances.py, the same parser that produced
-     instances_boxes.csv. Run 1 read that CSV instead, and it is an item B
-     output covering TRAIN AND VAL ONLY, so every test proposal was labelled
-     negative by default and the whole test partition was void. Importing the
-     parser rather than writing a second one keeps a single definition of the
-     annotation format.
-  2. WINDOW VALIDITY NOW USES THE DECODED FRAME COUNT, not the inventory's.
-     Run 1 decoded 31,646 frames against an inventory total of 31,654, so at
-     least one video yields fewer frames than cv2_frame_count claims, and up
-     to four frames per affected video were treated as valid T=8 centres when
-     their trailing frames do not exist. Each video is now probed by decoding
-     first, which costs about two minutes across the set.
+WHAT THE RULED VALUES MEAN, for a reader who has the config open.
+  bgs.history is non-binding on every clip, since alpha is
+    1/min(2*nframes, history) and the longest clip is 3,481 frames, so the
+    method is alpha = 1/(2*nframes), a growing-window estimate with no
+    forgetting. Declared and described, not tuned.
+  bgs.learning_rate is null and is NEVER passed to apply(). Passing any rate
+    makes history inert, measured 15 August by tools/validate_mog2.py.
+  proposals.min_area_frac is the measured 1080p minimum annotated box area
+    fraction. proposals.max_area_px is the measured maximum, per resolution.
 
-RULED SETTINGS, all measured or rationale-declared, none inherited.
-  MOG2, history 6960. Since alpha = 1/min(2*nframes, history) and the longest
-    clip is 3,481 frames, 6960 is non-binding on every clip, so the method is
-    alpha = 1/(2*nframes), a growing-window estimate with no forgetting.
-  learningRate NEVER passed. Passing it makes history inert (measured 15 Aug).
-  detectShadows false. OpenCL pinned off. No morphology. No warm-up.
-  Lower limit 7.23e-06 of frame area, the measured 1080p minimum annotated box
-    area fraction. Upper limit PER RESOLUTION at the measured maximum.
+LABELLING.
+  POSITIVE  coverage >= proposals.positive_coverage, coverage being
+            intersection over ground-truth area, assigned greedily one-to-one.
+  NEGATIVE  coverage exactly proposals.negative_coverage, i.e. no overlap.
+  IGNORED   between the two, discarded and never trained as background.
 
-LABELLING, ruled 18 August.
-  POSITIVE  coverage >= 0.5, coverage being intersection over ground-truth
-            area, assigned greedily one-to-one per the 10 August ruling.
-  NEGATIVE  coverage exactly 0, no overlap with any annotated drone.
-  IGNORED   0 < coverage < 0.5, discarded and never trained as background.
+READING OF THE ONE-TO-ONE RULE, stated because two rulings meet here. Greedy
+one-to-one assigns at most one proposal per ground-truth box. A proposal that
+wins an assignment is POSITIVE. One that does not is labelled by its own best
+coverage, so 0 gives NEGATIVE and anything above 0 gives IGNORED. A second
+blob overlapping an already-matched drone is ignored, never a negative.
 
-READING OF THE ONE-TO-ONE RULE, stated because the two rulings meet here.
-Greedy one-to-one assigns at most one proposal per ground-truth box. A
-proposal that wins an assignment is POSITIVE. A proposal that does not is
-labelled by its own best coverage: 0 gives NEGATIVE, anything above 0 gives
-IGNORED. So a second blob overlapping an already-matched drone is ignored,
-never a negative, which is what the ignore band exists for.
+WINDOW VALIDITY uses the DECODED frame count, probed per video, not
+cv2_frame_count, which overcounts by two on four seaside_cuts clips.
+
+GROUND TRUTH comes from the label files via read_boxes() in
+tools/measure_instances.py, the parser that produced instances_boxes.csv.
 
 TEST requires --include-test, which passes allow_test=True and appends to
-reports/test_access_log.txt. Without it, requesting test raises.
+reports/test_access_log.txt.
 
 Usage:
     python tools/extract_proposals.py --data-root <path> --include-test
@@ -69,15 +66,18 @@ sys.path.insert(0, str(HERE.parents[1]))      # repo root
 
 from measure_instances import read_boxes  # noqa: E402
 from src.config import load_config  # noqa: E402
+from src.ruled import require_all, ruled  # noqa: E402
 from src.splits import load_split  # noqa: E402
 
-HISTORY = 6960
-MIN_FRAC = 7.23e-06
-MAX_AREA_PX = {"1920x1080": 84987.0, "3840x2160": 22005.0}  # measured maxima
-POS_COV = 0.5
-T = 8
-LEAD = (T - 1) // 2
-TRAIL = T - 1 - LEAD
+NEEDED = [
+    "window.T", "window.padding_fraction",
+    "bgs.method", "bgs.history", "bgs.learning_rate",
+    "bgs.detect_shadows", "bgs.use_opencl", "bgs.morphology",
+    "bgs.warmup_frames",
+    "proposals.min_area_frac", "proposals.max_area_px",
+    "proposals.positive_coverage", "proposals.negative_coverage",
+    "proposals.assignment",
+]
 
 
 def dotted(cfg, key):
@@ -131,8 +131,6 @@ def open_video(root, rel):
 
 
 def decoded_length(root, rel):
-    """Actual number of decodable frames. The inventory's cv2_frame_count
-    disagrees for at least one video, and window validity depends on this."""
     cap = open_video(root, rel)
     if cap is None:
         return None
@@ -143,44 +141,79 @@ def decoded_length(root, rel):
     return n
 
 
+def make_subtractor(method, history, detect_shadows):
+    if method == "mog2":
+        return cv2.createBackgroundSubtractorMOG2(
+            history=history, detectShadows=detect_shadows)
+    if method == "knn":
+        return cv2.createBackgroundSubtractorKNN(
+            history=history, detectShadows=detect_shadows)
+    raise ValueError(f"ruled.bgs.method '{method}' is not supported here")
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--data-root", required=True)
+    ap.add_argument("--data-root", default=None,
+                    help="overrides data.root from the config")
     ap.add_argument("--config", default="configs/ch4.yaml")
-    ap.add_argument("--splits",
-                    default="data/splits/dvb_splits_v2.0-static.csv")
-    ap.add_argument("--inventory", default="reports/video_inventory.csv")
     ap.add_argument("--out", default="data/proposals")
     ap.add_argument("--report", default="reports")
-    ap.add_argument("--include-test", action="store_true",
-                    help="passes allow_test=True and logs the access")
-    ap.add_argument("--ann-dir", default=None, help="overrides the config")
-    ap.add_argument("--ann-ext", default=None)
-    ap.add_argument("--ann-fmt", default=None)
+    ap.add_argument("--include-test", action="store_true")
     args = ap.parse_args()
 
     cfg = load_config(args.config)
-    ann_dir = Path(args.data_root) / (
-        args.ann_dir or dotted(cfg, "data.annotation_dir"))
-    ann_ext = args.ann_ext or dotted(cfg, "data.annotation_extension")
-    ann_fmt = args.ann_fmt or dotted(cfg, "data.annotation_format")
+    require_all(cfg, NEEDED)        # fails listing EVERY missing key
+
+    T = ruled(cfg, "window.T")
+    lead = (T - 1) // 2
+    trail = T - 1 - lead
+    history = ruled(cfg, "bgs.history")
+    lr = ruled(cfg, "bgs.learning_rate", allow_null=True)
+    morph = ruled(cfg, "bgs.morphology", allow_null=True)
+    warmup = ruled(cfg, "bgs.warmup_frames")
+    min_frac = ruled(cfg, "proposals.min_area_frac")
+    max_px = ruled(cfg, "proposals.max_area_px")
+    pos_cov = ruled(cfg, "proposals.positive_coverage")
+    neg_cov = ruled(cfg, "proposals.negative_coverage")
+    assign = ruled(cfg, "proposals.assignment")
+
+    if lr is not None:
+        print("FAIL ruled.bgs.learning_rate is not null. Passing a rate to "
+              "apply() makes history inert (measured 15 Aug). Extraction "
+              "will not proceed on a config that sets one.")
+        sys.exit(1)
+    if morph is not None:
+        print(f"FAIL ruled.bgs.morphology is '{morph}'. Morphology was ruled "
+              "out on 18 Aug and this script implements none.")
+        sys.exit(1)
+    if assign != "greedy_one_to_one":
+        print(f"FAIL ruled.proposals.assignment is '{assign}', and this "
+              "script implements greedy_one_to_one only.")
+        sys.exit(1)
+
+    root = args.data_root or dotted(cfg, "data.root")
+    root = os.path.expanduser(root)
+    ann_dir = Path(root) / dotted(cfg, "data.annotation_dir")
+    ann_ext = dotted(cfg, "data.annotation_extension")
+    ann_fmt = dotted(cfg, "data.annotation_format")
+    splits_file = dotted(cfg, "splits.file")
     if not ann_dir.exists():
         print(f"FAIL annotation directory not found: {ann_dir}")
-        print("     pass --ann-dir if it is not relative to --data-root")
         sys.exit(1)
 
     parts = ["train", "val"] + (["test"] if args.include_test else [])
-    part = load_split(args.splits, parts, allow_test=args.include_test)
+    part = load_split(splits_file, parts, allow_test=args.include_test)
     split_of = {r["video"]: p for p, rows in part.items() for r in rows}
     scene_of = {r["video"]: r.get("scene", "") for rows in part.values()
                 for r in rows}
 
-    cv2.ocl.setUseOpenCL(False)
+    cv2.ocl.setUseOpenCL(bool(ruled(cfg, "bgs.use_opencl")))
     os.makedirs(args.out, exist_ok=True)
     os.makedirs(args.report, exist_ok=True)
 
     inv = {}
-    with open(args.inventory, newline="") as fh:
+    with open(os.path.join(args.report, "video_inventory.csv"),
+              newline="") as fh:
         for r in csv.DictReader(fh):
             inv[r["video"]] = {
                 "path": r["path"],
@@ -205,14 +238,15 @@ def main():
     for vi, name in enumerate(videos, 1):
         d = inv[name]
         res = d["res"]
-        if res not in MAX_AREA_PX:
-            print(f"FAIL no measured maximum for resolution {res} ({name})")
+        if res not in max_px:
+            print(f"FAIL ruled.proposals.max_area_px has no entry for "
+                  f"resolution {res} ({name})")
             sys.exit(1)
         fw, fh_ = (int(x) for x in res.split("x"))
         fa = float(fw * fh_)
-        lo, hi = MIN_FRAC * fa, MAX_AREA_PX[res]
+        lo, hi = min_frac * fa, float(max_px[res])
 
-        n_dec = decoded_length(args.data_root, d["path"])
+        n_dec = decoded_length(root, d["path"])
         if n_dec is None:
             print(f"FAIL cannot open {name}")
             sys.exit(1)
@@ -220,18 +254,18 @@ def main():
             mismatches.append({"video": name,
                                "inventory": d["inventory_frames"],
                                "decoded": n_dec})
-        first_valid, last_valid = LEAD, n_dec - 1 - TRAIL
+        first_valid = max(lead, warmup)
+        last_valid = n_dec - 1 - trail
 
         try:
             frames_gt = read_boxes(ann_dir / f"{name}{ann_ext}", ann_fmt)
         except FileNotFoundError:
-            print(f"FAIL no annotation file for {name} at "
-                  f"{ann_dir / (name + ann_ext)}")
+            print(f"FAIL no annotation file for {name}")
             sys.exit(1)
 
-        cap = open_video(args.data_root, d["path"])
-        sub = cv2.createBackgroundSubtractorMOG2(
-            history=HISTORY, detectShadows=False)
+        cap = open_video(root, d["path"])
+        sub = make_subtractor(ruled(cfg, "bgs.method"), history,
+                              bool(ruled(cfg, "bgs.detect_shadows")))
         n_pos = n_neg = n_ign = n_raw = 0
         gt_seen = gt_matched = 0
         t0, fi = time.time(), 0
@@ -239,7 +273,7 @@ def main():
             ok, frame = cap.read()
             if not ok:
                 break
-            mask = sub.apply(frame)          # learningRate deliberately absent
+            mask = sub.apply(frame)     # no learningRate, ruled null
             nlab, _, st, _ = cv2.connectedComponentsWithStats(
                 (mask > 0).astype(np.uint8), connectivity=8)
             st = st[1:] if nlab > 1 else np.empty((0, 5), dtype=np.int32)
@@ -253,15 +287,15 @@ def main():
                 gt_seen += len(gts)
                 cov = coverage_matrix(st, gts)
                 best = cov.max(axis=1) if cov.size else np.zeros(st.shape[0])
-                pairs = greedy_assign(cov, POS_COV)
+                pairs = greedy_assign(cov, pos_cov)
                 gt_matched += len(pairs)
                 for k in range(st.shape[0]):
                     if k in pairs:
                         label, gi = "positive", pairs[k]
                         c = float(cov[k, pairs[k]])
                         n_pos += 1
-                    elif best[k] == 0.0:
-                        label, gi, c = "negative", -1, 0.0
+                    elif best[k] <= neg_cov:
+                        label, gi, c = "negative", -1, float(best[k])
                         n_neg += 1
                     else:
                         label, gi, c = "ignored", -1, float(best[k])
@@ -320,16 +354,10 @@ def main():
         }
 
     meta = {
-        "method": "mog2", "history": HISTORY,
-        "history_note": "non-binding on every clip; effective method is "
-                        "alpha = 1/(2*nframes), growing window, no forgetting",
-        "learning_rate": "never passed", "detect_shadows": False,
-        "morphology": "none", "warmup": "none",
-        "min_area_frac": MIN_FRAC, "max_area_px_by_resolution": MAX_AREA_PX,
-        "positive_coverage": POS_COV, "negative_coverage": 0.0,
-        "ignore_band": "0 < coverage < 0.5",
-        "assignment": "greedy one-to-one by coverage",
-        "T": T, "lead": LEAD, "trail": TRAIL,
+        "ruled_source": f"{args.config} :: ruled",
+        "ruled_values": {k: ruled(cfg, k, allow_null=True) for k in NEEDED},
+        "ignore_band": f"{neg_cov} < coverage < {pos_cov}",
+        "lead": lead, "trail": trail,
         "ground_truth_source": "label files via "
                                "tools/measure_instances.read_boxes",
         "annotation_dir": str(ann_dir), "annotation_format": ann_fmt,
@@ -354,7 +382,8 @@ def main():
                 f"18 Aug 2026. Decoded the test partition, read its "
                 f"annotations, and emitted proposal coordinates with labels. "
                 f"allow_test=True passed explicitly through "
-                f"src.splits.load_split.\n")
+                f"src.splits.load_split. Parameters from "
+                f"{args.config} :: ruled.\n")
 
     print()
     if mismatches:
