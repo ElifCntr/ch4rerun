@@ -240,6 +240,25 @@ def main() -> None:
     if unexpected:
         fail.append(f"train carries unexpected scenes: {sorted(unexpected)}")
 
+    # VAL AND TEST MUST CARRY THE SAME SCENES. Val was carved to mirror
+    # test's scene mix, so a threshold selected on val transfers to a
+    # scene-matched partition. Nothing checked this until now, and the
+    # property is load-bearing for every evaluated number in the chapter.
+    val_scenes = {r["scene"] for r in rows if r["split"] == "val"}
+    test_scenes = {r["scene"] for r in rows if r["split"] == "test"}
+    if val_scenes != test_scenes:
+        fail.append(
+            "val and test must carry the same scenes; val has "
+            f"{sorted(val_scenes)} and test has {sorted(test_scenes)}. "
+            "Threshold selection on val assumes a scene-matched test set.")
+    # Scenes present only in train contribute training diversity but no
+    # evaluated numbers, so they are reported rather than asserted.
+    train_only = {r["scene"] for r in rows if r["split"] == "train"} - val_scenes
+    if train_only:
+        note.append(
+            f"scenes appearing only in train, never evaluated: "
+            f"{sorted(train_only)}")
+
     # ------------------------------------------------------------- report ---
     out_dir = repo_path(cfg, cfg["reports"]["dir"])
     out_dir.mkdir(parents=True, exist_ok=True)
