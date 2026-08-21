@@ -1,0 +1,29 @@
+ITEM D CEILING COMPARISON, RECOMPUTED
+Source reports/item_d_stationarity_tracks.csv, 46 tracks.
+Runs beginning before frame 3 are excluded: they cannot be a T=8 window centre, so extraction never proposes them, and their computed ceiling is degenerate.
+
+AS ORIGINALLY REPORTED, every track included
+  30 of 46 tracks fit inside the ceiling, 16 do not
+
+EXCLUDED, runs starting before frame 3
+  2 tracks
+    2019_09_02_C0002_2527_inspire                start   0  run   13  ceiling    0.20
+    gopro_000                                    start   2  run   58  ceiling    0.40
+  of these, 0 fit and 2 do not, which is the artefact: a ceiling below one frame cannot be satisfied
+
+CORRECTED, start-of-clip runs excluded
+  30 of 44 tracks fit inside the ceiling, 14 do not (31.8%)
+
+  anchored run, frames   p10=5.60  p25=22.25  p50=33.50  p75=60.50  p90=88.30
+  ceiling, frames        p10=18.93  p25=31.75  p50=60.30  p75=87.52  p90=234.21
+  anchored run, s        p10=0.19  p25=0.74  p50=1.17  p75=2.18  p90=3.08
+  ceiling, s             p10=0.67  p25=1.07  p50=2.01  p75=3.02  p90=8.63
+
+  tracks exceeding the ceiling, by scene
+    gopro_fisheye     6 of  11
+    industrial        2 of   9
+    lake              2 of   2
+    meadow            1 of  11
+    seaside           3 of  11
+
+READING. The corrected count is the one the write-up quotes. The original is kept beside it because the correction only means something against it. Neither figure bears on the abandonment of the absorption-target derivation, which rests on the ramp cap and on a single target in seconds not being uniformly achievable.
