@@ -1,0 +1,60 @@
+UPPER AREA LIMIT, THE TWO MEASURED ANCHORS
+Source reports/bgs_pass_mog2, 23,835 ground-truth boxes, 30 videos, 24,419 frames (train and val).
+Nothing is chosen here beyond the stated midpoint proposal.
+
+EXCLUDED: 48 boxes on frames below 3, which cannot be a T=8 window centre and are never proposed by extraction. Largest covering blob among them 1.0000e+00. This is where the initialisation blob lives; including it makes the two anchors the same object.
+    00_02_45_to_00_03_10_cut                     frame  0  1.0000e+00
+    00_10_09_to_00_10_40                         frame  0  1.0000e+00
+    2019_09_02_C0002_2527_inspire                frame  0  1.0000e+00
+    2019_09_02_GOPR5871_1058_solo                frame  0  1.0000e+00
+    2019_11_14_C0001_3922_matrice                frame  0  1.0000e+00
+    GOPR5844_004                                 frame  0  1.0000e+00
+    gopro_000                                    frame  0  1.0000e+00
+    gopro_000                                    frame  0  1.0000e+00
+
+LOWER ANCHOR, largest best-covering blob as a frame fraction
+  all boxes        n=23,835  max=1.6629e-02  p99.9=1.0224e-02  p99=4.2275e-03
+  covered >= 0.5   n=18,185  max=1.6629e-02  p99.9=1.2854e-02  p99=7.2810e-03
+  covered >= 0.7   n=11,782  max=1.6629e-02  p99.9=1.4416e-02  p99=7.7991e-03
+  The 0.5 row is the binding one: those boxes become positives, so their covers must survive the limit.
+
+  largest covering blob by resolution and scene, covered >= 0.5
+    resolution  1920x1080       max=1.6629e-02
+    resolution  3840x2160       max=9.1603e-03
+    scene       gopro_fisheye   max=3.9781e-03
+    scene       industrial      max=9.1603e-03
+    scene       lake            max=5.6858e-04
+    scene       meadow          max=2.5400e-03
+    scene       seaside         max=1.6629e-02
+
+UPPER ANCHOR, upper tail of ALL blobs
+  The initialisation blob is identified by COUNT, not by assumption: at most one per video is the signature of a once-per-video artefact. That floor is 0.001229 blobs per frame.
+   frame fraction   blobs/frame   blobs total   per video
+           0.001       0.68439        16,712      557.07
+           0.002       0.32286         7,884      262.80
+         0.00265       0.22609         5,521      184.03
+           0.005       0.10828         2,644       88.13
+            0.01       0.01347           329       10.97
+            0.02       0.00360            88        2.93
+           0.041       0.00238            58        1.93
+            0.06       0.00123            30        1.00
+            0.08       0.00123            30        1.00
+             0.1       0.00123            30        1.00
+             0.2       0.00123            30        1.00
+             0.3       0.00123            30        1.00
+             0.5       0.00123            30        1.00
+             0.7       0.00123            30        1.00
+             0.9       0.00123            30        1.00
+
+ANCHORS ARE SEPARATED.
+  lower  1.6629e-02   largest cover of a box at coverage >= 0.5
+  upper  6.0000e-02   blobs reach one per video
+  gap    3.6x
+
+  PROPOSED max_area_frac = 3.1587e-02
+    margin above the largest known cover: 1.9x
+    margin below the initialisation blob: 1.9x
+    Geometric midpoint, so the multiplicative margin is equal on both sides and no factor is invented.
+    At this value the limit would reject 76 blobs in train and val, 0.00311 per frame.
+
+  CAVEAT CARRIED: the lower anchor comes from a dump that records only the BEST cover per box, and it is train and val only. Test was not in the 1b-M dumps and is 4K-heavy, so a larger cover may exist there. The margin above the known maximum is what absorbs that.

@@ -1,38 +1,41 @@
 #!/usr/bin/env python3
 """
-Item 5. Training negative draw, one list per run seed. Coordinates only.
+Training negative draw, one list per run seed. Coordinates only.
 
-Ruled 10 August and 18 August:
+STRATIFIED BY SIZE BAND x SCENE, ruled 19 August. The earlier version
+stratified by size band alone, and negatives concentrate in whichever videos
+the subtractor finds noisy, so two videos supplied about 56 per cent of the
+draw while positives were spread across 24. The risk is a network that learns
+two videos' background rather than "not a drone", surfacing as a val-test gap
+that reads like overfitting and is not.
+
+The same reasoning was already ruled for the item F negative sample on
+12 August, where scene stratification was required because unmatched proposals
+cluster in cluttered scenes for structural reasons. It simply had not been
+carried into the training draw.
+
+RULES, unchanged except for the added axis:
   - training loader only; val and test stay uncapped
   - negatives drawn ONLY from the coverage-exactly-0 pool
-  - size-stratified, with band edges taken from the drone size distribution,
-    quotas set so the negative size profile matches the positive one
-  - ratio 2x
-  - drawn once offline, committed, shared across all four arms, VARYING BY
-    SEED and never by arm
+  - quota per cell = ratio x (positives in that cell), so BOTH the size profile
+    and the scene profile of the negatives match the positives by construction
+  - shortfalls recorded, NEVER backfilled; redistributing a deficit would undo
+    the matching the stratification exists to produce
+  - drawn once, committed, shared across all four arms, VARYING BY SEED
   - no hard negative mining
-  - shortfalls recorded, NEVER backfilled
 
-BAND EDGES, declared with a rationale rather than invented. The edges are the
-DECILES of the POSITIVE proposals' normalised area within this split. Two
-consequences follow by construction rather than by tuning. The bands come from
-the measured drone size distribution as ruled, since positives are drone
-proposals. And a quota of ratio x (positives in band) makes the negative size
-profile match the positive one exactly, which is what the ruling asks for,
-without any edge being chosen by hand. Ten bands is the only free choice; it
-gives about 1,300 positives per band, enough that a per-band quota is not
-itself noisy.
+BAND EDGES are the DECILES of the positive normalised area, taken GLOBALLY
+rather than per scene. Per-scene deciles would make a band mean a different
+size in each scene, and the size profile being matched is a property of the
+drone distribution, not of any one scene. These are STRATIFICATION bands and
+are not the benchmark-derived REPORTING bands.
 
-These are STRATIFICATION BANDS. They are not the REPORTING BANDS, which are
-benchmark-derived (COCO, AI-TOD) and used only for per-size-band recall. The
-11 August ruling forbids the two sharing a name or edges by accident.
+Ratio and band count come from the ruled block of configs/ch4.yaml.
 
-Two passes over proposals.csv so memory stays small: pass one reads the
-normalised areas and row offsets, pass two emits only the drawn rows.
+Two passes over proposals.csv so memory stays small.
 
 Usage:
     python tools/draw_negatives.py
-    python tools/draw_negatives.py --ratio 2 --seeds 1,2,3 --bands 10
 """
 
 import argparse
@@ -41,34 +44,41 @@ import json
 import os
 import sys
 from collections import defaultdict
+from pathlib import Path
 
 import numpy as np
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+from src.config import load_config  # noqa: E402
+from src.ruled import ruled  # noqa: E402
 
 
 def main():
     ap = argparse.ArgumentParser()
+    ap.add_argument("--config", default="configs/ch4.yaml")
     ap.add_argument("--proposals", default="data/proposals/proposals.csv")
     ap.add_argument("--split", default="train")
-    ap.add_argument("--ratio", type=int, default=2, help="ruled 18 Aug")
-    ap.add_argument("--seeds", default="1,2,3", help="ruled 18 Aug")
-    ap.add_argument("--bands", type=int, default=10)
     ap.add_argument("--out", default="data/negatives")
     ap.add_argument("--report", default="reports")
     args = ap.parse_args()
 
-    seeds = [int(s) for s in args.seeds.split(",")]
+    cfg = load_config(args.config)
+    ratio = ruled(cfg, "negatives.ratio")
+    n_bands = ruled(cfg, "negatives.bands")
+    seeds = ruled(cfg, "training.seeds")
+
     os.makedirs(args.out, exist_ok=True)
     os.makedirs(args.report, exist_ok=True)
-
     if not os.path.exists(args.proposals):
         print(f"FAIL missing {args.proposals}")
-        print("     It is not committed by design; regenerate with "
+        print("     Not committed by design; regenerate with "
               "tools/extract_proposals.py")
         sys.exit(1)
 
-    # pass 1: normalised areas for positives, and areas plus row numbers for
-    # the coverage-0 negatives
-    pos_area, neg_area, neg_row = [], [], []
+    # pass 1: positives by (area, scene); negatives by (area, scene, row)
+    pos_area, pos_scene = [], []
+    neg_area, neg_scene, neg_row, neg_video = [], [], [], []
     with open(args.proposals, newline="") as fh:
         rd = csv.reader(fh)
         header = next(rd)
@@ -79,142 +89,140 @@ def main():
             lab = row[ix["label"]]
             if lab == "positive":
                 pos_area.append(float(row[ix["area_frac"]]))
+                pos_scene.append(row[ix["scene"]])
             elif lab == "negative":
                 neg_area.append(float(row[ix["area_frac"]]))
+                neg_scene.append(row[ix["scene"]])
+                neg_video.append(row[ix["video"]])
                 neg_row.append(n)
 
-    pos_area = np.asarray(pos_area, dtype=np.float64)
-    neg_area = np.asarray(neg_area, dtype=np.float64)
+    pos_area = np.asarray(pos_area)
+    neg_area = np.asarray(neg_area)
     neg_row = np.asarray(neg_row, dtype=np.int64)
+    pos_scene = np.asarray(pos_scene)
+    neg_scene = np.asarray(neg_scene)
+    neg_video = np.asarray(neg_video)
     if pos_area.size == 0 or neg_area.size == 0:
-        print(f"FAIL no positives or no negatives in split '{args.split}'")
+        print(f"FAIL no positives or negatives in split '{args.split}'")
         sys.exit(1)
 
-    # band edges: deciles of the positive normalised area
-    qs = np.linspace(0, 100, args.bands + 1)
-    edges = np.percentile(pos_area, qs)
-    edges[0], edges[-1] = -np.inf, np.inf
+    edges = np.percentile(pos_area, np.linspace(0, 100, n_bands + 1))
+    inner = edges[1:-1]
+    pos_band = np.digitize(pos_area, inner, right=False)
+    neg_band = np.digitize(neg_area, inner, right=False)
+    scenes = sorted(set(pos_scene) | set(neg_scene))
 
-    pos_counts = np.histogram(pos_area, bins=np.r_[
-        pos_area.min() - 1, edges[1:-1], pos_area.max() + 1])[0]
-    neg_band = np.digitize(neg_area, edges[1:-1], right=False)
+    L = ["TRAINING NEGATIVE DRAW, stratified by size band x scene",
+         f"split {args.split}, ratio {ratio}x, {n_bands} bands, "
+         f"{len(scenes)} scenes, seeds {seeds}",
+         f"positives {pos_area.size:,}, coverage-0 pool {neg_area.size:,}",
+         "",
+         "Quota per cell is ratio x positives in that cell, so the negative "
+         "size AND scene profiles match the positive ones by construction. "
+         "Band edges are global deciles of the positive normalised area.",
+         "",
+         "   band  scene            positives   quota   available   drawn  "
+         " short"]
 
-    lines = ["TRAINING NEGATIVE DRAW",
-             f"split {args.split}, ratio {args.ratio}x, "
-             f"{args.bands} bands, seeds {seeds}",
-             f"positives {pos_area.size:,}, coverage-0 pool "
-             f"{neg_area.size:,}",
-             "",
-             "Band edges are DECILES OF THE POSITIVE normalised area, so the "
-             "negative size profile matches the positive one by construction. "
-             "These are STRATIFICATION bands, not the benchmark-derived "
-             "REPORTING bands.",
-             "",
-             "   band   area_frac range                 positives   quota   "
-             "available   drawn   shortfall"]
+    cells, quota_tot, drawn_tot = [], 0, 0
+    for b in range(n_bands):
+        for sc in scenes:
+            pmask = (pos_band == b) & (pos_scene == sc)
+            npos = int(pmask.sum())
+            if npos == 0:
+                continue
+            idx = np.flatnonzero((neg_band == b) & (neg_scene == sc))
+            q = npos * ratio
+            drawable = min(q, idx.size)
+            cells.append({"band": b, "scene": sc, "positives": npos,
+                          "quota": q, "available": int(idx.size),
+                          "idx": idx})
+            quota_tot += q
+            drawn_tot += drawable
+            L.append(f"   {b:>4}  {sc:<15} {npos:>9,}  {q:>6,}  "
+                     f"{idx.size:>10,}  {drawable:>6,}  {max(0, q - drawable):>6,}")
 
-    quotas, avail = [], []
-    for b in range(args.bands):
-        lo = edges[b] if np.isfinite(edges[b]) else pos_area.min()
-        hi = edges[b + 1] if np.isfinite(edges[b + 1]) else pos_area.max()
-        q = int(pos_counts[b]) * args.ratio
-        a = int((neg_band == b).sum())
-        quotas.append(q)
-        avail.append(a)
-        lines.append(f"   {b:>4}   {lo:.3e} .. {hi:.3e}   {pos_counts[b]:>9,}"
-                     f"   {q:>5,}   {a:>9,}   {min(q, a):>5,}   "
-                     f"{max(0, q - a):>9,}")
+    L.append("")
+    L.append(f"   TOTAL quota {quota_tot:,}, drawable {drawn_tot:,}, "
+             f"shortfall {quota_tot - drawn_tot:,}")
+    if quota_tot != drawn_tot:
+        L.append("   SHORTFALL RECORDED AND NOT BACKFILLED. A deficit is not "
+                 "redistributed to other cells, because that would undo the "
+                 "profile matching the stratification exists to produce.")
+    L.append("")
 
-    total_quota = sum(quotas)
-    total_drawn = sum(min(q, a) for q, a in zip(quotas, avail))
-    lines.append("")
-    lines.append(f"   TOTAL quota {total_quota:,}, drawable {total_drawn:,}, "
-                 f"shortfall {total_quota - total_drawn:,}")
-    if total_quota != total_drawn:
-        lines.append("   SHORTFALL RECORDED AND NOT BACKFILLED, per the "
-                     "10 August ruling. The deficit is not redistributed to "
-                     "other bands, because that would change the size "
-                     "profile the stratification exists to preserve.")
-    lines.append("")
-
-    # draw per seed
     chosen = {}
     for seed in seeds:
         rng = np.random.default_rng(seed)
-        picks = []
-        for b in range(args.bands):
-            idx = np.flatnonzero(neg_band == b)
-            k = min(quotas[b], idx.size)
-            if k:
-                picks.append(rng.choice(idx, size=k, replace=False))
-        sel = np.sort(np.concatenate(picks)) if picks else np.array([],
-                                                                   dtype=int)
-        chosen[seed] = set(neg_row[sel].tolist())
-        lines.append(f"   seed {seed}: {len(chosen[seed]):,} negatives drawn")
+        picks = [rng.choice(c["idx"], size=min(c["quota"], c["idx"].size),
+                            replace=False)
+                 for c in cells if c["idx"].size]
+        sel = np.sort(np.concatenate(picks)) if picks else np.array([], int)
+        chosen[seed] = sel
+        L.append(f"   seed {seed}: {sel.size:,} negatives drawn")
 
-    overlap = set.intersection(*chosen.values()) if len(chosen) > 1 else set()
-    union = set.union(*chosen.values())
-    lines.append(f"   union across seeds {len(union):,}, "
-                 f"common to all {len(overlap):,}")
-    lines.append("   Seeds draw independently from the same pool, so some "
-                 "overlap is expected and is not a fault.")
+    # concentration check, the reason for this change
+    L.append("")
+    L.append("CONCENTRATION BY VIDEO, seed "
+             f"{seeds[0]}. Band-only stratification put 56 per cent in two "
+             "videos.")
+    v, c = np.unique(neg_video[chosen[seeds[0]]], return_counts=True)
+    order = np.argsort(-c)
+    top = c[order][:5].sum() / c.sum()
+    for i in order[:8]:
+        L.append(f"   {v[i]:<44} {c[i]:>7,}  {c[i] / c.sum():>6.2%}")
+    L.append(f"   top two {c[order][:2].sum() / c.sum():.2%}, "
+             f"top five {top:.2%}, across {v.size} videos")
+    L.append("")
+    L.append("SCENE PROFILE, positives against negatives")
+    for sc in scenes:
+        pf = (pos_scene == sc).mean()
+        nf = (neg_scene[chosen[seeds[0]]] == sc).mean()
+        L.append(f"   {sc:<15} positives {pf:>7.2%}   negatives {nf:>7.2%}")
 
-    # pass 2: emit the drawn rows
-    writers, files = {}, {}
-    for seed in seeds:
-        p = os.path.join(args.out, f"negatives_seed{seed}.csv")
-        files[seed] = open(p, "w", newline="")
-        writers[seed] = csv.writer(files[seed])
-
-    wrote = defaultdict(int)
+    # pass 2: emit
+    want = {s: set(neg_row[chosen[s]].tolist()) for s in seeds}
+    files = {s: open(os.path.join(args.out, f"negatives_seed{s}.csv"),
+                     "w", newline="") for s in seeds}
+    writers = {s: csv.writer(files[s]) for s in seeds}
     with open(args.proposals, newline="") as fh:
         rd = csv.reader(fh)
         header = next(rd)
-        for seed in seeds:
-            writers[seed].writerow(header)
+        for s in seeds:
+            writers[s].writerow(header)
         for n, row in enumerate(rd):
-            for seed in seeds:
-                if n in chosen[seed]:
-                    writers[seed].writerow(row)
-                    wrote[seed] += 1
-    for seed in seeds:
-        files[seed].close()
+            for s in seeds:
+                if n in want[s]:
+                    writers[s].writerow(row)
+    for s in seeds:
+        files[s].close()
 
-    for seed in seeds:
-        if wrote[seed] != len(chosen[seed]):
-            print(f"FAIL seed {seed} wrote {wrote[seed]} rows for "
-                  f"{len(chosen[seed])} selections")
-            sys.exit(1)
-
+    union = set().union(*want.values())
     meta = {
-        "split": args.split, "ratio": args.ratio, "bands": args.bands,
-        "band_edge_rule": "deciles of the positive normalised area",
-        "seeds": seeds,
+        "split": args.split, "ratio": ratio, "bands": n_bands,
+        "stratified_by": ["size_band", "scene"],
+        "band_edge_rule": "global deciles of the positive normalised area",
+        "seeds": list(seeds),
         "positives": int(pos_area.size),
         "coverage_zero_pool": int(neg_area.size),
-        "quota_total": int(total_quota), "drawn_total": int(total_drawn),
-        "shortfall_total": int(total_quota - total_drawn),
-        "per_band": [{"band": b,
-                      "positives": int(pos_counts[b]),
-                      "quota": int(quotas[b]),
-                      "available": int(avail[b]),
-                      "shortfall": int(max(0, quotas[b] - avail[b]))}
-                     for b in range(args.bands)],
-        "per_seed_drawn": {str(s): len(chosen[s]) for s in seeds},
+        "quota_total": int(quota_tot), "drawn_total": int(drawn_tot),
+        "shortfall_total": int(quota_tot - drawn_tot),
+        "cells": [{k: (int(c[k]) if k != "scene" else c[k])
+                   for k in ("band", "scene", "positives", "quota",
+                             "available")} for c in cells],
+        "per_seed_drawn": {str(s): int(chosen[s].size) for s in seeds},
         "union_across_seeds": len(union),
-        "common_to_all_seeds": len(overlap),
-        "note": "Coordinates only. No crops written. Negatives come solely "
-                "from the coverage-exactly-0 pool. No hard negative mining.",
+        "note": "Coordinates only. Negatives from the coverage-0 pool only. "
+                "No hard negative mining. Shortfalls never backfilled.",
     }
     with open(os.path.join(args.out, "negatives_meta.json"), "w") as fh:
         json.dump(meta, fh, indent=2)
 
-    txt = "\n".join(lines)
+    txt = "\n".join(L)
     with open(os.path.join(args.report, "negative_draw.txt"), "w") as fh:
         fh.write(txt)
     print(txt)
-    print(f"\nwritten to {args.out}/negatives_seed*.csv and "
-          f"{args.report}/negative_draw.txt")
+    print(f"\nwritten to {args.out}/negatives_seed*.csv")
 
 
 if __name__ == "__main__":

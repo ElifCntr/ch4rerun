@@ -2,95 +2,371 @@
   "split": "train",
   "ratio": 2,
   "bands": 10,
-  "band_edge_rule": "deciles of the positive normalised area",
+  "stratified_by": [
+    "size_band",
+    "scene"
+  ],
+  "band_edge_rule": "global deciles of the positive normalised area",
   "seeds": [
     1,
     2,
     3
   ],
-  "positives": 13183,
-  "coverage_zero_pool": 4510220,
-  "quota_total": 26366,
-  "drawn_total": 26366,
-  "shortfall_total": 0,
-  "per_band": [
+  "positives": 13347,
+  "coverage_zero_pool": 4513722,
+  "quota_total": 26694,
+  "drawn_total": 24156,
+  "shortfall_total": 2538,
+  "cells": [
     {
       "band": 0,
-      "positives": 1278,
-      "quota": 2556,
-      "available": 2872881,
-      "shortfall": 0
+      "scene": "gopro_fisheye",
+      "positives": 1146,
+      "quota": 2292,
+      "available": 1983816
+    },
+    {
+      "band": 0,
+      "scene": "industrial",
+      "positives": 121,
+      "quota": 242,
+      "available": 567672
+    },
+    {
+      "band": 0,
+      "scene": "lake",
+      "positives": 44,
+      "quota": 88,
+      "available": 154791
+    },
+    {
+      "band": 0,
+      "scene": "meadow",
+      "positives": 19,
+      "quota": 38,
+      "available": 152818
+    },
+    {
+      "band": 0,
+      "scene": "seaside",
+      "positives": 4,
+      "quota": 8,
+      "available": 68333
     },
     {
       "band": 1,
-      "positives": 1316,
-      "quota": 2632,
-      "available": 635217,
-      "shortfall": 0
+      "scene": "gopro_fisheye",
+      "positives": 768,
+      "quota": 1536,
+      "available": 375334
+    },
+    {
+      "band": 1,
+      "scene": "industrial",
+      "positives": 140,
+      "quota": 280,
+      "available": 138632
+    },
+    {
+      "band": 1,
+      "scene": "lake",
+      "positives": 76,
+      "quota": 152,
+      "available": 33058
+    },
+    {
+      "band": 1,
+      "scene": "meadow",
+      "positives": 194,
+      "quota": 388,
+      "available": 24075
+    },
+    {
+      "band": 1,
+      "scene": "seaside",
+      "positives": 82,
+      "quota": 164,
+      "available": 9569
     },
     {
       "band": 2,
-      "positives": 1353,
-      "quota": 2706,
-      "available": 381865,
-      "shortfall": 0
+      "scene": "gopro_fisheye",
+      "positives": 719,
+      "quota": 1438,
+      "available": 246235
+    },
+    {
+      "band": 2,
+      "scene": "industrial",
+      "positives": 169,
+      "quota": 338,
+      "available": 105478
+    },
+    {
+      "band": 2,
+      "scene": "lake",
+      "positives": 68,
+      "quota": 136,
+      "available": 22267
+    },
+    {
+      "band": 2,
+      "scene": "meadow",
+      "positives": 176,
+      "quota": 352,
+      "available": 12801
+    },
+    {
+      "band": 2,
+      "scene": "seaside",
+      "positives": 276,
+      "quota": 552,
+      "available": 5083
     },
     {
       "band": 3,
-      "positives": 1326,
-      "quota": 2652,
-      "available": 196896,
-      "shortfall": 0
+      "scene": "gopro_fisheye",
+      "positives": 445,
+      "quota": 890,
+      "available": 113454
+    },
+    {
+      "band": 3,
+      "scene": "industrial",
+      "positives": 300,
+      "quota": 600,
+      "available": 62685
+    },
+    {
+      "band": 3,
+      "scene": "lake",
+      "positives": 67,
+      "quota": 134,
+      "available": 10246
+    },
+    {
+      "band": 3,
+      "scene": "meadow",
+      "positives": 294,
+      "quota": 588,
+      "available": 4056
+    },
+    {
+      "band": 3,
+      "scene": "seaside",
+      "positives": 226,
+      "quota": 452,
+      "available": 2235
     },
     {
       "band": 4,
-      "positives": 1317,
-      "quota": 2634,
-      "available": 103122,
-      "shortfall": 0
+      "scene": "gopro_fisheye",
+      "positives": 318,
+      "quota": 636,
+      "available": 57555
+    },
+    {
+      "band": 4,
+      "scene": "industrial",
+      "positives": 407,
+      "quota": 814,
+      "available": 38600
+    },
+    {
+      "band": 4,
+      "scene": "lake",
+      "positives": 106,
+      "quota": 212,
+      "available": 5381
+    },
+    {
+      "band": 4,
+      "scene": "meadow",
+      "positives": 388,
+      "quota": 776,
+      "available": 1673
+    },
+    {
+      "band": 4,
+      "scene": "seaside",
+      "positives": 115,
+      "quota": 230,
+      "available": 1111
     },
     {
       "band": 5,
-      "positives": 1310,
-      "quota": 2620,
-      "available": 108350,
-      "shortfall": 0
+      "scene": "gopro_fisheye",
+      "positives": 192,
+      "quota": 384,
+      "available": 52471
+    },
+    {
+      "band": 5,
+      "scene": "industrial",
+      "positives": 531,
+      "quota": 1062,
+      "available": 46752
+    },
+    {
+      "band": 5,
+      "scene": "lake",
+      "positives": 190,
+      "quota": 380,
+      "available": 6625
+    },
+    {
+      "band": 5,
+      "scene": "meadow",
+      "positives": 260,
+      "quota": 520,
+      "available": 1399
+    },
+    {
+      "band": 5,
+      "scene": "seaside",
+      "positives": 159,
+      "quota": 318,
+      "available": 1003
     },
     {
       "band": 6,
-      "positives": 1327,
-      "quota": 2654,
-      "available": 79114,
-      "shortfall": 0
+      "scene": "gopro_fisheye",
+      "positives": 460,
+      "quota": 920,
+      "available": 31715
+    },
+    {
+      "band": 6,
+      "scene": "industrial",
+      "positives": 290,
+      "quota": 580,
+      "available": 40858
+    },
+    {
+      "band": 6,
+      "scene": "lake",
+      "positives": 93,
+      "quota": 186,
+      "available": 4615
+    },
+    {
+      "band": 6,
+      "scene": "meadow",
+      "positives": 200,
+      "quota": 400,
+      "available": 491
+    },
+    {
+      "band": 6,
+      "scene": "seaside",
+      "positives": 295,
+      "quota": 590,
+      "available": 585
     },
     {
       "band": 7,
-      "positives": 1318,
-      "quota": 2636,
-      "available": 69677,
-      "shortfall": 0
+      "scene": "gopro_fisheye",
+      "positives": 337,
+      "quota": 674,
+      "available": 24039
+    },
+    {
+      "band": 7,
+      "scene": "industrial",
+      "positives": 242,
+      "quota": 484,
+      "available": 39297
+    },
+    {
+      "band": 7,
+      "scene": "lake",
+      "positives": 120,
+      "quota": 240,
+      "available": 4742
+    },
+    {
+      "band": 7,
+      "scene": "meadow",
+      "positives": 312,
+      "quota": 624,
+      "available": 497
+    },
+    {
+      "band": 7,
+      "scene": "seaside",
+      "positives": 328,
+      "quota": 656,
+      "available": 473
     },
     {
       "band": 8,
-      "positives": 1318,
-      "quota": 2636,
-      "available": 43497,
-      "shortfall": 0
+      "scene": "gopro_fisheye",
+      "positives": 311,
+      "quota": 622,
+      "available": 8332
+    },
+    {
+      "band": 8,
+      "scene": "industrial",
+      "positives": 77,
+      "quota": 154,
+      "available": 29614
+    },
+    {
+      "band": 8,
+      "scene": "lake",
+      "positives": 243,
+      "quota": 486,
+      "available": 3013
+    },
+    {
+      "band": 8,
+      "scene": "meadow",
+      "positives": 323,
+      "quota": 646,
+      "available": 276
+    },
+    {
+      "band": 8,
+      "scene": "seaside",
+      "positives": 380,
+      "quota": 760,
+      "available": 248
     },
     {
       "band": 9,
-      "positives": 1320,
-      "quota": 2640,
-      "available": 19601,
-      "shortfall": 0
+      "scene": "gopro_fisheye",
+      "positives": 265,
+      "quota": 530,
+      "available": 2277
+    },
+    {
+      "band": 9,
+      "scene": "industrial",
+      "positives": 324,
+      "quota": 648,
+      "available": 16556
+    },
+    {
+      "band": 9,
+      "scene": "meadow",
+      "positives": 147,
+      "quota": 294,
+      "available": 61
+    },
+    {
+      "band": 9,
+      "scene": "seaside",
+      "positives": 600,
+      "quota": 1200,
+      "available": 92
     }
   ],
   "per_seed_drawn": {
-    "1": 26366,
-    "2": 26366,
-    "3": 26366
+    "1": 24156,
+    "2": 24156,
+    "3": 24156
   },
-  "union_across_seeds": 76544,
-  "common_to_all_seeds": 69,
-  "note": "Coordinates only. No crops written. Negatives come solely from the coverage-exactly-0 pool. No hard negative mining."
+  "union_across_seeds": 63335,
+  "note": "Coordinates only. Negatives from the coverage-0 pool only. No hard negative mining. Shortfalls never backfilled."
 }

@@ -1,0 +1,30 @@
+UPPER AREA LIMIT, WHAT IT COSTS
+Source reports/bgs_pass_mog2/matched.csv, 23,883 ground-truth boxes, no size filter applied in the dump.
+
+A box is COUNTED as lost when its best-covering blob reaches the coverage threshold but EXCEEDS the per-resolution maximum, so the upper limit rejects it.
+
+UPPER BOUND, not an exact loss: the dump stores only the BEST covering blob per box, so a smaller second-best blob might still have covered a box counted here. Nothing in the committed dumps can see that.
+
+  RESOLUTION 1920x1080, maximum 84,987 px2
+    boxes 18,730, best-covering blob over the maximum 14 (0.0747%)
+    at coverage >= 0.5: 14 lost (0.0747% of this resolution)
+    at coverage >= 0.7: 14 lost (0.0747% of this resolution)
+
+  RESOLUTION 3840x2160, maximum 22,005 px2
+    boxes 5,153, best-covering blob over the maximum 199 (3.8618%)
+    at coverage >= 0.5: 199 lost (3.8618% of this resolution)
+    at coverage >= 0.7: 199 lost (3.8618% of this resolution)
+
+POOLED: 213 of 23,883 boxes (0.8918%) have a best cover above the maximum.
+  at coverage >= 0.5: 213 (0.8918% of all boxes)
+  at coverage >= 0.7: 213 (0.8918% of all boxes)
+
+BY SCENE, at coverage >= 0.5
+  gopro_fisheye       10 of  9,311  0.1074%
+  industrial         200 of  5,879  3.4019%
+  lake                 0 of  1,154  0.0000%
+  meadow               1 of  4,812  0.0208%
+  seaside              2 of  2,727  0.0733%
+
+READING. A negligible figure makes this a method-section footnote. A material one is a named recall loss, and reopening the upper limit becomes a decision with a measured basis, requiring re-extraction.
+For reference the lower limit sits at 7.23e-06 of frame area and its cost is already measured at 1.7 points.

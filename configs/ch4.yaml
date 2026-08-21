@@ -106,9 +106,11 @@ ruled:
 
   proposals:
     min_area_frac: 7.23e-06   # measured 1080p minimum annotated box area
-    max_area_px:              # measured maximum annotated box area
-      "1920x1080": 84987
-      "3840x2160": 22005
+    max_area_frac: 3.1587e-02   # geometric midpoint of two measured anchors:
+                                # largest cover of a box at coverage >= 0.5
+                                # (1.6629e-02) and the fraction at which blobs
+                                # reach one per video (6.0e-02), the frame-0
+                                # initialisation blob
     positive_coverage: 0.5    # coverage = intersection over GT area
     negative_coverage: 0.0    # exactly zero overlap
     assignment: "greedy_one_to_one"
@@ -117,7 +119,8 @@ ruled:
   negatives:
     ratio: 2
     bands: 10
-    band_edge_rule: "deciles_of_positive_area_frac"
+    band_edge_rule: "global_deciles_of_positive_area_frac"
+    stratify_by: ["size_band", "scene"]
 
   training:
     optimiser: "sgd"

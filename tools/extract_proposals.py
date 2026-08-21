@@ -21,7 +21,9 @@ WHAT THE RULED VALUES MEAN, for a reader who has the config open.
   bgs.learning_rate is null and is NEVER passed to apply(). Passing any rate
     makes history inert, measured 15 August by tools/validate_mog2.py.
   proposals.min_area_frac is the measured 1080p minimum annotated box area
-    fraction. proposals.max_area_px is the measured maximum, per resolution.
+    fraction. proposals.max_area_frac is a SINGLE frame-area fraction,
+    ruled 19 August to sit between two measured anchors: above the largest
+    observed best-covering blob and below the frame-0 initialisation blob.
 
 LABELLING.
   POSITIVE  coverage >= proposals.positive_coverage, coverage being
@@ -74,7 +76,7 @@ NEEDED = [
     "bgs.method", "bgs.history", "bgs.learning_rate",
     "bgs.detect_shadows", "bgs.use_opencl", "bgs.morphology",
     "bgs.warmup_frames",
-    "proposals.min_area_frac", "proposals.max_area_px",
+    "proposals.min_area_frac", "proposals.max_area_frac",
     "proposals.positive_coverage", "proposals.negative_coverage",
     "proposals.assignment",
 ]
@@ -172,7 +174,7 @@ def main():
     morph = ruled(cfg, "bgs.morphology", allow_null=True)
     warmup = ruled(cfg, "bgs.warmup_frames")
     min_frac = ruled(cfg, "proposals.min_area_frac")
-    max_px = ruled(cfg, "proposals.max_area_px")
+    max_frac = ruled(cfg, "proposals.max_area_frac")
     pos_cov = ruled(cfg, "proposals.positive_coverage")
     neg_cov = ruled(cfg, "proposals.negative_coverage")
     assign = ruled(cfg, "proposals.assignment")
@@ -238,13 +240,10 @@ def main():
     for vi, name in enumerate(videos, 1):
         d = inv[name]
         res = d["res"]
-        if res not in max_px:
-            print(f"FAIL ruled.proposals.max_area_px has no entry for "
-                  f"resolution {res} ({name})")
-            sys.exit(1)
         fw, fh_ = (int(x) for x in res.split("x"))
         fa = float(fw * fh_)
-        lo, hi = min_frac * fa, float(max_px[res])
+        # Both limits are frame-area fractions.
+        lo, hi = min_frac * fa, max_frac * fa
 
         n_dec = decoded_length(root, d["path"])
         if n_dec is None:

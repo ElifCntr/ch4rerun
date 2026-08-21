@@ -18,3 +18,6 @@
 
 2026-08-19  tools/extract_proposals.py --include-test
   Authorised test access, 1b-E extraction authorised 18 Aug 2026. Decoded the test partition, read its annotations, and emitted proposal coordinates with labels. allow_test=True passed explicitly through src.splits.load_split.
+
+2026-08-21  tools/extract_proposals.py --include-test
+  Authorised test access, 1b-E extraction authorised 18 Aug 2026. Decoded the test partition, read its annotations, and emitted proposal coordinates with labels. allow_test=True passed explicitly through src.splits.load_split. Parameters from configs/ch4.yaml :: ruled.
