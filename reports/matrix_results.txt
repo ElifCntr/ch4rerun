@@ -1,0 +1,43 @@
+CHAPTER 4 CLASSIFIER MATRIX
+1 of 12 runs present.
+
+MISSING RUNS, averages below cover fewer seeds:
+  2d_single seed 2
+  2d_single seed 3
+  2d_tframe_logitavg seed 1
+  2d_tframe_logitavg seed 2
+  2d_tframe_logitavg seed 3
+  tsm seed 1
+  tsm seed 2
+  tsm seed 3
+  r3d_18 seed 1
+  r3d_18 seed 2
+  r3d_18 seed 3
+
+1. PROPOSAL RECALL, THE CEILING EVERY ARM INHERITS
+   No classifier can exceed this. It is a property of the motion proposals, measured before any arm was trained.
+   val, pooled      0.8363  over 5,242 ground-truth boxes
+   val, gopro_fisheye 0.4664  over 804
+   val, industrial   0.9781  over 2,517
+   val, meadow       0.8053  over 1,921
+
+2. VAL AP BY ARM, full uncapped pass at the best checkpoint
+   arm                  AP across seeds                       ceiling  headroom used
+   2d_single            0.7651 (1 seed)                        0.8363   91.5%
+
+3. VAL AP BY SCENE, mean across seeds, against each ceiling
+   arm                     gopro_fisheye        industrial            meadow
+   ceiling                        0.4664            0.9781            0.8053
+   2d_single                      0.4470            0.9728            0.5996
+   A small gap to the ceiling means the scene is PROPOSAL-limited; a large one means it is CLASSIFIER-limited.
+
+4. APPENDIX RUN TABLE
+   The schedule steps at epochs 10 and 20. A run stopping before 20 never reaches the second step; this table is where that is visible.
+   arm                  seed  best  stop  subset AP  full AP    gap    train_s   eval_s
+   2d_single               1     7    12     0.7684   0.7651  +0.0032       396      1159
+
+   SUBSET BIAS: mean gap +0.0032, range [+0.0032, +0.0032]
+   A gap near zero means the subset was not a biased estimate of the full pass. It is reported per run rather than assumed.
+
+   Runs reaching the second learning-rate step: 0 of 1
+   MEASURED WALL CLOCK across 1 runs: 0.4 hours of training and subset evaluation, excluding the final full passes.
