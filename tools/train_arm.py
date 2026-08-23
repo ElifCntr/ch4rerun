@@ -44,7 +44,7 @@ HERE = Path(__file__).resolve()
 sys.path.insert(0, str(HERE.parent))
 sys.path.insert(0, str(HERE.parents[1]))
 
-from epoch_timing import build_arm  # noqa: E402
+from src.arms import build_arm  # noqa: E402
 from measure_instances import read_boxes  # noqa: E402
 from src import metrics, streaming_eval  # noqa: E402
 from src.config import load_config  # noqa: E402
@@ -208,7 +208,7 @@ def main():
         t1 = time.time()
         res = streaming_eval.evaluate(
             model, args.arm, LAYOUTS[args.arm], props_sub, videos,
-            root, mean, std, device, progress=False)
+            root, mean, std, device, batch=64, progress=False)
         ap, _, _, _, _ = metrics.average_precision(
             res["scores"], res["labels"], n_gt_sub, res["gt_key"])
         ceil_sub = metrics.proposal_ceiling(res["labels"], n_gt_sub)
@@ -241,7 +241,7 @@ def main():
     print(f"full uncapped val pass at epoch {ck['epoch']}")
     res = streaming_eval.evaluate(
         model, args.arm, LAYOUTS[args.arm], props_all, videos,
-        root, mean, std, device)
+        root, mean, std, device, batch=64)
     ap, prec, rec, n_scored, n_ign = metrics.average_precision(
         res["scores"], res["labels"], n_gt_all, res["gt_key"])
     per_scene = metrics.by_group(
