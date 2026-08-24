@@ -1,15 +1,7 @@
 CHAPTER 4 CLASSIFIER MATRIX
-1 of 12 runs present.
+9 of 12 runs present.
 
 MISSING RUNS, averages below cover fewer seeds:
-  2d_single seed 2
-  2d_single seed 3
-  2d_tframe_logitavg seed 1
-  2d_tframe_logitavg seed 2
-  2d_tframe_logitavg seed 3
-  tsm seed 1
-  tsm seed 2
-  tsm seed 3
   r3d_18 seed 1
   r3d_18 seed 2
   r3d_18 seed 3
@@ -23,21 +15,33 @@ MISSING RUNS, averages below cover fewer seeds:
 
 2. VAL AP BY ARM, full uncapped pass at the best checkpoint
    arm                  AP across seeds                       ceiling  headroom used
-   2d_single            0.7651 (1 seed)                        0.8363   91.5%
+   2d_single            0.7572 +/- 0.0188 [0.7357, 0.7707]     0.8363   90.5%
+   2d_tframe_logitavg   0.6950 +/- 0.0166 [0.6826, 0.7139]     0.8363   83.1%
+   tsm                  0.7907 +/- 0.0044 [0.7865, 0.7954]     0.8363   94.6%
 
 3. VAL AP BY SCENE, mean across seeds, against each ceiling
    arm                     gopro_fisheye        industrial            meadow
    ceiling                        0.4664            0.9781            0.8053
-   2d_single                      0.4470            0.9728            0.5996
+   2d_single                      0.4189            0.9737            0.5919
+   2d_tframe_logitavg             0.3009            0.9743            0.4135
+   tsm                            0.4314            0.9774            0.6658
    A small gap to the ceiling means the scene is PROPOSAL-limited; a large one means it is CLASSIFIER-limited.
 
 4. APPENDIX RUN TABLE
    The schedule steps at epochs 10 and 20. A run stopping before 20 never reaches the second step; this table is where that is visible.
-   arm                  seed  best  stop  subset AP  full AP    gap    train_s   eval_s
-   2d_single               1     7    12     0.7684   0.7651  +0.0032       396      1159
+   arm                  seed  best  stop  subset AP  full AP    gap   plateau_sd   train_s   eval_s
+   2d_single               1     7    12     0.7684   0.7651  +0.0032      0.0471       396      1159
+   2d_single               2     8    13     0.7706   0.7707  -0.0001      0.0174       422      1167
+   2d_single               3     4     9     0.7369   0.7357  +0.0012      0.0388       292       809
+   2d_tframe_logitavg      1     4     9     0.6888   0.6826  +0.0063      0.0317      2020      2314
+   2d_tframe_logitavg      2     8    13     0.7154   0.7139  +0.0015      0.0111      2902      3355
+   2d_tframe_logitavg      3     7    12     0.6898   0.6886  +0.0012      0.0235      2678      3102
+   tsm                     1     9    14     0.7956   0.7954  +0.0002      0.0044      3980      3748
+   tsm                     2    12    17     0.7877   0.7903  -0.0026      0.0016      4814      4549
+   tsm                     3     6    11     0.7873   0.7865  +0.0008      0.0046      3109      2934
 
-   SUBSET BIAS: mean gap +0.0032, range [+0.0032, +0.0032]
+   SUBSET BIAS: mean gap +0.0013, sd 0.0024, range [-0.0026, +0.0063]
    A gap near zero means the subset was not a biased estimate of the full pass. It is reported per run rather than assumed.
 
-   Runs reaching the second learning-rate step: 0 of 1
-   MEASURED WALL CLOCK across 1 runs: 0.4 hours of training and subset evaluation, excluding the final full passes.
+   Runs reaching the second learning-rate step: 0 of 9
+   MEASURED WALL CLOCK across 9 runs: 12.2 hours of training and subset evaluation, excluding the final full passes.

@@ -151,7 +151,7 @@ def main():
              "before 20 never reaches the second step; this table is where "
              "that is visible.")
     L.append("   arm                  seed  best  stop  subset AP  full AP  "
-             "  gap    train_s   eval_s")
+             "  gap   plateau_sd   train_s   eval_s")
     for arm in ARMS:
         for s in seeds:
             r = runs.get((arm, s))
@@ -160,10 +160,17 @@ def main():
             gap = r["best_subset_ap"] - r["val_ap_full"]
             tr = sum(float(e["train_s"]) for e in r["_epochs"])
             ev = sum(float(e["eval_s"]) for e in r["_epochs"])
+            # Spread of subset AP over the last five epochs. Once a run has
+            # fitted the training set, val AP moves on its own, so an epoch
+            # selected as best is close to arbitrary. A plateau spread near
+            # the arm's seed spread means the checkpoint was a draw rather
+            # than a decision.
+            tail = [float(e["subset_ap"]) for e in r["_epochs"]][-5:]
+            psd = st.stdev(tail) if len(tail) > 1 else 0.0
             L.append(f"   {arm:<20} {s:>4}  {r['best_epoch']:>4}  "
                      f"{r['epochs_run']:>4}  {r['best_subset_ap']:>9.4f}  "
                      f"{r['val_ap_full']:>7.4f}  {gap:>+7.4f}  "
-                     f"{tr:>8.0f}  {ev:>8.0f}")
+                     f"{psd:>10.4f}  {tr:>8.0f}  {ev:>8.0f}")
     L.append("")
     gaps = [r["best_subset_ap"] - r["val_ap_full"] for r in runs.values()]
     if gaps:
