@@ -89,6 +89,8 @@ def main():
     ap.add_argument("--stats", default="reports/extraction_stats.csv")
     ap.add_argument("--out", default="runs")
     ap.add_argument("--workers", type=int, default=4)
+    ap.add_argument("--weights", default="pretrained",
+                    choices=["pretrained", "scratch"])
     args = ap.parse_args()
 
     cfg = load_config(args.config)
@@ -171,7 +173,8 @@ def main():
     print(f"val subset: {n_gt_sub:,} ground-truth boxes; "
           f"full val: {n_gt_all:,}")
 
-    model, _ = build_arm(args.arm, T)
+    pre = args.weights == "pretrained"
+    model, _ = build_arm(args.arm, T, verify=pre, pretrained=pre)
     model = model.to(device)
     opt = torch.optim.SGD(
         model.parameters(), lr=ruled(cfg, "training.base_lr"),

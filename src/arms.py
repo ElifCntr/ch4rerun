@@ -142,12 +142,18 @@ def verify_pretrained(model, arm, verbose=True):
     return stats
 
 
-def build_arm(name: str, t: int, verify: bool = True):
+def build_arm(name: str, t: int, verify: bool = True,
+              pretrained: bool = True):
     """Return (model, input shape without batch). Mirrors epoch_timing's
     build_arm exactly, except that weights are loaded and checked."""
     if name not in WEIGHTS_FOR:
         raise ValueError(f"unknown arm '{name}'; expected one of {ARMS}")
     kind, weights = WEIGHTS_FOR[name]
+    # The from-scratch appendix baseline needs the same architectures
+    # with no transferred weights. The preflight guard is skipped there
+    # BECAUSE init defaults are the correct state, not a fault.
+    if not pretrained:
+        weights = None
 
     if name == "2d_single":
         m = _backbone(kind, weights)
@@ -173,7 +179,7 @@ def build_arm(name: str, t: int, verify: bool = True):
         m.fc = nn.Linear(m.fc.in_features, N_CLASSES)
         model, shape = m, (3, t, CROP, CROP)
 
-    if verify:
+    if verify and pretrained:
         # the classification head is replaced above and is deliberately NOT
         # pretrained; the guard checks the backbone, which is what transfers
         verify_pretrained(model, name)
