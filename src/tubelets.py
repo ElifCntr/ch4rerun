@@ -108,9 +108,11 @@ class TubeletDataset(Dataset):
         clip = np.asarray(self._array()[idx], dtype=np.float32) / 255.0
 
         if self.augment:
-            g = torch.Generator()
-            # one draw per tubelet, all frames share it
-            if torch.rand(1, generator=g).item() < self.hflip_p:
+            # One draw per tubelet, all frames share it. NOT via a fresh
+            # torch.Generator(): that carries a fixed default seed, so
+            # torch.rand through it returns the same value every call and the
+            # flip becomes a constant rather than a coin toss.
+            if np.random.random() < self.hflip_p:
                 clip = clip[:, :, ::-1, :]
             b = np.random.uniform(*self.brightness)
             c = np.random.uniform(*self.contrast)
