@@ -1,0 +1,2 @@
+epoch,lr,train_loss,subset_ap,subset_ceiling,best_ap,epochs_since_best,train_s,eval_s
+1,0.001,0.5808557737980754,0.005111591111429088,0.838150289017341,0.005111591111429088,0,1542.8,631.2
