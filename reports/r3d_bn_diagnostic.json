@@ -1,0 +1,29 @@
+{
+  "frozen": {
+    "losses": [
+      0.5774516964061729
+    ],
+    "bn_layers": 20,
+    "first_bn_stats": {
+      "observed_mean": 0.023035986348986626,
+      "observed_var": 0.10040459036827087,
+      "running_mean": 0.0,
+      "running_var": 1.0,
+      "channels": 64
+    }
+  },
+  "unfrozen": {
+    "losses": [
+      0.24913546887123816
+    ],
+    "bn_layers": 20,
+    "first_bn_stats": null
+  },
+  "reset": {
+    "losses": [
+      0.24913546887123816
+    ],
+    "bn_layers": 20,
+    "first_bn_stats": null
+  }
+}
