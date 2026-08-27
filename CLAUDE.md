@@ -20,3 +20,8 @@
 
 ## Writing
 - British academic English. No em-dashes. Fact first.
+
+## Where the record lives
+- Stage and item scope: docs/STAGE_SCOPE.md
+- Ruled parameters: the `ruled` block of configs/ch4.yaml, read via src/ruled.py
+- A committed report always beats the README.
