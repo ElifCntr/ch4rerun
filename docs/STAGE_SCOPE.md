@@ -261,6 +261,10 @@ the scoring path would be changed to get them. The pass runs as committed.
 - The six videos could be evaluated as separate processes, which would still be
   serialised on a single card.
 
+**The val rehearsal record, ruled 30 August.** A contemporaneous report of a
+rehearsal killed mid-video on 26 August is not supported by any on-disk trace,
+and the completed pass of 26 August 22:22:36 is taken as the record.
+
 **GPU utilisation during the 26 August val rehearsal, unverifiable.** A 1 per
 cent utilisation figure was reported for that evaluation, but no utilisation
 log exists for the run; `reports/gpu_thermal.csv` samples 24 August training

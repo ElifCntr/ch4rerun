@@ -103,12 +103,15 @@ def max_f1_threshold(scores, labels, n_gt_boxes):
 
 @torch.no_grad()
 def evaluate_all(models, layouts, proposals, videos, data_root, means, stds,
-                 device, batch=64):
+                 device, batch=256):
     """Score every proposal with every model in ONE decode pass.
 
     models maps run tag -> model. Returns per-tag score arrays plus the
     per-proposal metadata, which is shared since every model sees the same
     proposals in the same order.
+
+    batch is 256 because that is the configuration val was rehearsed at, and
+    per-proposal cost was measured flat between 64 and 256.
     """
     for m in models.values():
         m.eval()

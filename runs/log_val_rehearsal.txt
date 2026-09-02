@@ -1,0 +1,30 @@
+nohup: ignoring input
+/home/elif/PycharmProjects/ch4rerun/tools/evaluate_final.py:238: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  torch.load(ck, map_location="cpu")["model"])
+  preflight 2d_single: 20 BatchNorm layers, 0 at init defaults; first BN mean +0.000847 var 3.020486; first conv checksum 716.4541, matches checkpoint True
+  preflight 2d_single: 20 BatchNorm layers, 0 at init defaults; first BN mean +0.000847 var 3.020486; first conv checksum 716.4541, matches checkpoint True
+  preflight 2d_single: 20 BatchNorm layers, 0 at init defaults; first BN mean +0.000847 var 3.020486; first conv checksum 716.4541, matches checkpoint True
+  preflight 2d_tframe_logitavg: 20 BatchNorm layers, 0 at init defaults; first BN mean +0.000847 var 3.020486; first conv checksum 716.4541, matches checkpoint True
+  preflight 2d_tframe_logitavg: 20 BatchNorm layers, 0 at init defaults; first BN mean +0.000847 var 3.020486; first conv checksum 716.4541, matches checkpoint True
+  preflight 2d_tframe_logitavg: 20 BatchNorm layers, 0 at init defaults; first BN mean +0.000847 var 3.020486; first conv checksum 716.4541, matches checkpoint True
+  preflight tsm: 20 BatchNorm layers, 0 at init defaults; first BN mean +0.000847 var 3.020486; first conv checksum 716.4541, matches checkpoint True
+  preflight tsm: 20 BatchNorm layers, 0 at init defaults; first BN mean +0.000847 var 3.020486; first conv checksum 716.4541, matches checkpoint True
+  preflight tsm: 20 BatchNorm layers, 0 at init defaults; first BN mean +0.000847 var 3.020486; first conv checksum 716.4541, matches checkpoint True
+  preflight r3d_18: 20 BatchNorm layers, 0 at init defaults; first BN mean -0.012338 var 9.006020; first conv checksum 913.4152, matches checkpoint True
+  preflight r3d_18: 20 BatchNorm layers, 0 at init defaults; first BN mean -0.012338 var 9.006020; first conv checksum 913.4152, matches checkpoint True
+  preflight r3d_18: 20 BatchNorm layers, 0 at init defaults; first BN mean -0.012338 var 9.006020; first conv checksum 913.4152, matches checkpoint True
+12 checkpoints loaded
+val: 5,242 ground-truth boxes, 6 videos
+  [1/6] 2019_11_14_C0001_3922_matrice               2601 frames     35,840 scored per model
+  [2/6] GOPR5843_002                                 424 frames     77,312 scored per model
+  [3/6] GOPR5843_005                                 571 frames    179,200 scored per model
+  [4/6] GOPR5846_002                                 686 frames    272,128 scored per model
+  [5/6] GOPR5846_005                                 450 frames    294,656 scored per model
+  [6/6] gopro_005                                    811 frames    712,704 scored per model
+
+VAL: proposal ceiling 0.8363 over 5,242 boxes, 585.0 min for 12 checkpoints in one pass
+  2d_single            AP 0.7397 +/- 0.0281  over 3 seeds
+  2d_tframe_logitavg   AP 0.7407 +/- 0.0340  over 3 seeds
+  tsm                  AP 0.7795 +/- 0.0232  over 3 seeds
+  r3d_18               AP 0.7909 +/- 0.0151  over 3 seeds
+written to reports/val_final_results.json
