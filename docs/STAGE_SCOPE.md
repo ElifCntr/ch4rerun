@@ -246,6 +246,27 @@ has been seen, the fix and the re-run are documented rather than silent.
 
 Any other test access needs its own ruling and its own log line.
 
+## Declined, logged as future work
+
+Ruled 27 August, after the crop equivalence report attributed 67 per cent of
+the val pass wall clock to the twelve model forwards, which are intrinsic to a
+twelve-model pass. Each was declined for this week: minutes to a couple of
+hours would be trimmed from a pass that no longer races a fixed deadline, and
+the scoring path would be changed to get them. The pass runs as committed.
+
+- Clips could be transferred to the card as uint8 and converted and normalised
+  there, removing the host-side float conversion and quartering the transfer.
+- The host-to-device copy could be hoisted out of the per-model loop, since the
+  same clips are at present transferred once per resident checkpoint.
+- The six videos could be evaluated as separate processes, which would still be
+  serialised on a single card.
+
+**GPU utilisation during the 26 August val rehearsal, unverifiable.** A 1 per
+cent utilisation figure was reported for that evaluation, but no utilisation
+log exists for the run; `reports/gpu_thermal.csv` samples 24 August training
+and not this pass. Measured stage timings attribute the wall clock to the
+twelve model forwards. The discrepancy is recorded, not explained.
+
 ## Open, not yet ruled
 
 - **The from-scratch `r3d_18` cell.** `src/arms.py` is always-pretrained by
