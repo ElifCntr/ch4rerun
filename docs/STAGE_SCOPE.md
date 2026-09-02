@@ -261,6 +261,34 @@ the scoring path would be changed to get them. The pass runs as committed.
 - The six videos could be evaluated as separate processes, which would still be
   serialised on a single card.
 
+**The test proposal count, ruled 30 August.** The committed
+`data/proposals/proposals.csv` governs: 2,563,843 test proposals across seven
+videos. A figure of 2,553,294 was carried in a contemporaneous report and is
+superseded. The projection is unchanged.
+
+**The flip regime, ruled 30 August.** The horizontal-flip defect fixed in
+`008b7bf` divides the runs into two regimes. The twelve pretrained matrix runs
+of 24 and 25 August and the nine standing scratch runs of 23 August were
+trained under the constant flip; only the three `r3d_18` scratch runs of 27 and
+28 August were trained under the honoured coin toss. The scratch-versus-
+pretrained comparisons for the three 2D arms are same-regime and stand. The
+`r3d_18` cell crosses regimes and is reported with that named: no evidence is
+found that Kinetics pretraining helps the 3D arm, 0.7929 +/- 0.0098 coin-toss
+against 0.7909 +/- 0.0151 constant-flip, heavily overlapping at three seeds.
+
+Judgement, one seed, stated as such: the only measurement of the fix's effect,
+`runs_flipfix/2d_single_seed2` at full val AP 0.7522 against 0.7708 for the
+same arm and seed under the constant flip, moved AP down by 0.0186, so a
+matched-regime comparison would more plausibly widen than close the scratch
+cell's position.
+
+Closed, so that nothing re-holds. No standing run is retrained under any flip
+reasoning. The nine standing scratch runs are not re-run to chase regime
+matching. Reintroducing the defect to match regimes is prohibited. The 26
+August probe was pre-registered to settle whether the constant-flip matrix
+stands and passed inside its declared band, and that gate binds in both
+directions.
+
 **The val rehearsal record, ruled 30 August.** A contemporaneous report of a
 rehearsal killed mid-video on 26 August is not supported by any on-disk trace,
 and the completed pass of 26 August 22:22:36 is taken as the record.
