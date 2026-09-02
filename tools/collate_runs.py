@@ -26,6 +26,13 @@ WHAT IT PRODUCES
   4. THE SUBSET-VERSUS-FULL AP GAP per run, the measured bias check on
      early-stopping selection. Both numbers already exist per run.
 
+  4a. THE FLIP REGIME PER RUN, constant or coin-toss. The horizontal flip was
+     a constant until 008b7bf, so runs trained before it flipped every
+     tubelet while runs trained after it honoured hflip_p as the ruled coin
+     toss. Which regime a run belongs to is a property of the run and belongs
+     beside it, not in prose a reader has to carry. The column says only
+     which regime; any comparison caveat lives in the chapter.
+
   5. Per-scene AP against per-scene ceiling, which is where the proposal-
      limited and classifier-limited scenes separate.
 
@@ -44,9 +51,24 @@ import os
 import statistics as st
 import sys
 from collections import defaultdict
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 ARMS = ["2d_single", "2d_tframe_logitavg", "tsm", "r3d_18"]
+
+# The horizontal flip was drawn through a freshly constructed torch.Generator()
+# and so returned the same value every call: every training tubelet was
+# flipped. Fixed in 008b7bf, committed at the timestamp below. A run trained
+# before it is CONSTANT, a run trained after it is COIN-TOSS, and the regime is
+# read from the mtime of the run's epochs.csv, which is when its training loop
+# last wrote. This is the same basis the 30 August ruling was made on.
+FLIP_FIX = datetime(2026, 8, 26, 1, 46, 36,
+                    tzinfo=timezone(timedelta(hours=1))).timestamp()
+
+# Ruled 30 August 2026: the standing pretrained matrix under runs/ is constant
+# flip throughout. Asserted rather than assumed, because a disagreement means
+# either the derivation or the ruling is wrong and a person has to say which.
+RULED_CONSTANT_RUNS = "runs"
 
 
 def load_runs(root, seeds):
@@ -63,8 +85,31 @@ def load_runs(root, seeds):
                 r = json.load(fh)
             ep = d / "epochs.csv"
             r["_epochs"] = list(csv.DictReader(open(ep))) if ep.exists() else []
+            if not ep.exists():
+                print(f"FAIL {ep} is missing, so the flip regime of "
+                      f"{arm} seed {s} cannot be determined")
+                sys.exit(1)
+            r["_flip"] = ("coin-toss" if ep.stat().st_mtime > FLIP_FIX
+                          else "constant")
             runs[(arm, s)] = r
     return runs, missing
+
+
+def assert_ruled_regime(root, runs):
+    """The 30 August ruling recorded runs/ as constant flip throughout. Exit
+    non-zero with the diff if the derivation disagrees."""
+    if Path(root).name != RULED_CONSTANT_RUNS:
+        return
+    wrong = {f"{arm} seed {s}": r["_flip"]
+             for (arm, s), r in runs.items() if r["_flip"] != "constant"}
+    if wrong:
+        print("FAIL the 30 August ruling records runs/ as constant flip "
+              "throughout, and the derivation disagrees:")
+        for k, v in sorted(wrong.items()):
+            print(f"  {k}: ruled constant, derived {v}")
+        print(f"  cutoff: 008b7bf at "
+              f"{datetime.fromtimestamp(FLIP_FIX).isoformat()}")
+        sys.exit(1)
 
 
 def spread(xs):
@@ -88,6 +133,7 @@ def main():
     if not runs:
         print(f"FAIL no summary.json found under {args.runs}/")
         sys.exit(1)
+    assert_ruled_regime(args.runs, runs)
 
     L = ["CHAPTER 4 CLASSIFIER MATRIX",
          f"{len(runs)} of {len(ARMS) * len(seeds)} runs present.", ""]
@@ -151,7 +197,7 @@ def main():
              "before 20 never reaches the second step; this table is where "
              "that is visible.")
     L.append("   arm                  seed  best  stop  subset AP  full AP  "
-             "  gap   plateau_sd   train_s   eval_s")
+             "  gap   plateau_sd   train_s   eval_s  flip")
     for arm in ARMS:
         for s in seeds:
             r = runs.get((arm, s))
@@ -170,7 +216,8 @@ def main():
             L.append(f"   {arm:<20} {s:>4}  {r['best_epoch']:>4}  "
                      f"{r['epochs_run']:>4}  {r['best_subset_ap']:>9.4f}  "
                      f"{r['val_ap_full']:>7.4f}  {gap:>+7.4f}  "
-                     f"{psd:>10.4f}  {tr:>8.0f}  {ev:>8.0f}")
+                     f"{psd:>10.4f}  {tr:>8.0f}  {ev:>8.0f}  "
+                     f"{r['_flip']}")
     L.append("")
     gaps = [r["best_subset_ap"] - r["val_ap_full"] for r in runs.values()]
     if gaps:
@@ -180,6 +227,11 @@ def main():
         L.append("   A gap near zero means the subset was not a biased "
                  "estimate of the full pass. It is reported per run rather "
                  "than assumed.")
+    L.append("")
+    L.append("   FLIP REGIME: constant means every training tubelet was "
+             "flipped, the defect fixed in 008b7bf; coin-toss means hflip_p "
+             "was honoured. Read from each run's epochs.csv mtime against "
+             "that commit.")
     L.append("")
 
     reached = [r for r in runs.values() if r["epochs_run"] >= 20]

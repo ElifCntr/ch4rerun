@@ -26,22 +26,24 @@ CHAPTER 4 CLASSIFIER MATRIX
 
 4. APPENDIX RUN TABLE
    The schedule steps at epochs 10 and 20. A run stopping before 20 never reaches the second step; this table is where that is visible.
-   arm                  seed  best  stop  subset AP  full AP    gap   plateau_sd   train_s   eval_s
-   2d_single               1     4     9     0.7098   0.7160  -0.0062      0.0461       288       795
-   2d_single               2     1     6     0.7649   0.7708  -0.0059      0.0363       193       531
-   2d_single               3     1     6     0.7292   0.7323  -0.0031      0.0213       196       533
-   2d_tframe_logitavg      1     9    14     0.6821   0.7027  -0.0206      0.0056      3143      3607
-   2d_tframe_logitavg      2     1     6     0.7599   0.7683  -0.0084      0.0253      1342      1533
-   2d_tframe_logitavg      3     1     6     0.7431   0.7510  -0.0079      0.0235      1342      1538
-   tsm                     1     7    12     0.7524   0.7533  -0.0009      0.0133      3412      3210
-   tsm                     2     1     6     0.7856   0.7877  -0.0021      0.0231      1700      1601
-   tsm                     3     1     6     0.7934   0.7975  -0.0041      0.0259      1700      1602
-   r3d_18                  1     5    10     0.7946   0.8000  -0.0053      0.0170     15367      6437
-   r3d_18                  2     8    13     0.7765   0.7734  +0.0031      0.0123     19810      8318
-   r3d_18                  3     5    10     0.7970   0.7992  -0.0022      0.0221     15357      6342
+   arm                  seed  best  stop  subset AP  full AP    gap   plateau_sd   train_s   eval_s  flip
+   2d_single               1     4     9     0.7098   0.7160  -0.0062      0.0461       288       795  constant
+   2d_single               2     1     6     0.7649   0.7708  -0.0059      0.0363       193       531  constant
+   2d_single               3     1     6     0.7292   0.7323  -0.0031      0.0213       196       533  constant
+   2d_tframe_logitavg      1     9    14     0.6821   0.7027  -0.0206      0.0056      3143      3607  constant
+   2d_tframe_logitavg      2     1     6     0.7599   0.7683  -0.0084      0.0253      1342      1533  constant
+   2d_tframe_logitavg      3     1     6     0.7431   0.7510  -0.0079      0.0235      1342      1538  constant
+   tsm                     1     7    12     0.7524   0.7533  -0.0009      0.0133      3412      3210  constant
+   tsm                     2     1     6     0.7856   0.7877  -0.0021      0.0231      1700      1601  constant
+   tsm                     3     1     6     0.7934   0.7975  -0.0041      0.0259      1700      1602  constant
+   r3d_18                  1     5    10     0.7946   0.8000  -0.0053      0.0170     15367      6437  constant
+   r3d_18                  2     8    13     0.7765   0.7734  +0.0031      0.0123     19810      8318  constant
+   r3d_18                  3     5    10     0.7970   0.7992  -0.0022      0.0221     15357      6342  constant
 
    SUBSET BIAS: mean gap -0.0053, sd 0.0058, range [-0.0206, +0.0031]
    A gap near zero means the subset was not a biased estimate of the full pass. It is reported per run rather than assumed.
+
+   FLIP REGIME: constant means every training tubelet was flipped, the defect fixed in 008b7bf; coin-toss means hflip_p was honoured. Read from each run's epochs.csv mtime against that commit.
 
    Runs reaching the second learning-rate step: 0 of 12
    MEASURED WALL CLOCK across 12 runs: 27.7 hours of training and subset evaluation, excluding the final full passes.
