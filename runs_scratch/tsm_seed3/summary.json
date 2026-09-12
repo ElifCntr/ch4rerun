@@ -1,0 +1,78 @@
+{
+  "arm": "tsm",
+  "seed": 3,
+  "best_epoch": 6,
+  "best_subset_ap": 0.78732389749928,
+  "epochs_run": 11,
+  "stopped_early": true,
+  "val_ap_full": 0.7865376196840037,
+  "val_proposal_ceiling": 0.8363220144982831,
+  "val_gt_boxes": 5242,
+  "val_scored": 712208,
+  "val_ignored": 717,
+  "per_scene": {
+    "gopro_fisheye": {
+      "ap": 0.43194184699496385,
+      "ceiling": 0.4664179104477612,
+      "n_gt": 804,
+      "n_scored": 417759,
+      "n_ignored": 278
+    },
+    "industrial": {
+      "ap": 0.9771597283818568,
+      "ceiling": 0.9781485895907827,
+      "n_gt": 2517,
+      "n_scored": 35841,
+      "n_ignored": 37
+    },
+    "meadow": {
+      "ap": 0.6462787743330681,
+      "ceiling": 0.8053097345132744,
+      "n_gt": 1921,
+      "n_scored": 258608,
+      "n_ignored": 402
+    }
+  },
+  "ruled": {
+    "window.T": 8,
+    "window.batch": 162,
+    "training.optimiser": "sgd",
+    "training.momentum": 0.9,
+    "training.weight_decay": 0.0001,
+    "training.base_lr": 0.001,
+    "training.lr_steps": [
+      10,
+      20
+    ],
+    "training.lr_gamma": 0.1,
+    "training.epoch_ceiling": 30,
+    "training.patience": 5,
+    "training.seeds": [
+      1,
+      2,
+      3
+    ],
+    "augmentation.hflip_p": 0.5,
+    "augmentation.brightness": [
+      0.9,
+      1.1
+    ],
+    "augmentation.contrast": [
+      0.9,
+      1.1
+    ],
+    "augmentation.per": "tubelet"
+  },
+  "normalisation": {
+    "mean": [
+      0.485,
+      0.456,
+      0.406
+    ],
+    "std": [
+      0.229,
+      0.224,
+      0.225
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+  frozen    epoch 1  loss 0.5775  1512s
+  unfrozen  epoch 1  loss 0.2491  1540s
+  reset     epoch 1  loss 0.2491  1540s
+
+r3d_18 BATCHNORM DIAGNOSTIC
+seed 1, 1 epoch(s), batch 162, everything else from the ruled block.
+Loss for a model predicting the class prior is about 0.6365.
+For reference the matrix runs gave loss 0.576, 0.581 and 0.581 with subset AP 0.0084, 0.0051 and 0.0104, against chance AP of roughly 0.006.
+
+  frozen    losses ['0.5775']  (20 BatchNorm layers)
+  unfrozen  losses ['0.2491']  (20 BatchNorm layers)
+  reset     losses ['0.2491']  (20 BatchNorm layers)
+
+FIRST BATCHNORM, what it carries against what it receives
+  running mean +0.0000   observed mean +0.0230
+  running var  1.0000   observed var  0.1004
+  averaged over 64 channels
+  A wide gap means the frozen estimates do not describe this data, which is the mechanism the hypothesis names.
+
+READING. If unfrozen and reset fall well below frozen, the freeze is the cause and unfreezing for this arm becomes a decision with a measured basis. If all three sit together near the prior loss, the cause is elsewhere and this rules the freeze out.
+
+written to reports/r3d_bn_diagnostic.txt

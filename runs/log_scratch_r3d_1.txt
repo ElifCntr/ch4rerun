@@ -1,0 +1,39 @@
+r3d_18_seed1: 37,503 tubelets, 13,347 positive
+val subset: 519 ground-truth boxes; full val: 5,242
+  epoch  1  loss 0.5850  subset AP 0.0041  best 0.0041 (ep 1)  1551s + 655s
+  epoch  2  loss 0.5543  subset AP 0.0087  best 0.0087 (ep 2)  1547s + 647s
+  epoch  3  loss 0.4428  subset AP 0.5006  best 0.5006 (ep 3)  1543s + 651s
+  epoch  4  loss 0.2586  subset AP 0.7346  best 0.7346 (ep 4)  1554s + 646s
+  epoch  5  loss 0.1446  subset AP 0.7865  best 0.7865 (ep 5)  1536s + 643s
+  epoch  6  loss 0.2468  subset AP 0.7500  best 0.7865 (ep 5)  1535s + 643s
+  epoch  7  loss 0.1003  subset AP 0.7853  best 0.7865 (ep 5)  1535s + 643s
+  epoch  8  loss 0.0747  subset AP 0.7329  best 0.7865 (ep 5)  1537s + 644s
+  epoch  9  loss 0.0692  subset AP 0.7898  best 0.7898 (ep 9)  1536s + 645s
+  epoch 10  loss 0.0537  subset AP 0.7839  best 0.7898 (ep 9)  1535s + 643s
+  epoch 11  loss 0.0390  subset AP 0.7922  best 0.7922 (ep 11)  1535s + 645s
+  epoch 12  loss 0.0349  subset AP 0.7859  best 0.7922 (ep 11)  1536s + 644s
+  epoch 13  loss 0.0341  subset AP 0.7924  best 0.7924 (ep 13)  1536s + 645s
+  epoch 14  loss 0.0335  subset AP 0.7902  best 0.7924 (ep 13)  1535s + 643s
+  epoch 15  loss 0.0314  subset AP 0.7940  best 0.7940 (ep 15)  1537s + 644s
+  epoch 16  loss 0.0309  subset AP 0.7978  best 0.7978 (ep 16)  1536s + 645s
+  epoch 17  loss 0.0296  subset AP 0.7805  best 0.7978 (ep 16)  1536s + 645s
+  epoch 18  loss 0.0292  subset AP 0.7851  best 0.7978 (ep 16)  1538s + 646s
+  epoch 19  loss 0.0282  subset AP 0.7941  best 0.7978 (ep 16)  1537s + 645s
+  epoch 20  loss 0.0271  subset AP 0.7754  best 0.7978 (ep 16)  1538s + 645s
+/home/elif/PycharmProjects/ch4rerun/tools/train_arm.py:242: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ck = torch.load(out / "best.pt", map_location=device)
+  epoch 21  loss 0.0262  subset AP 0.7910  best 0.7978 (ep 16)  1536s + 645s
+  early stop: 5 epochs without improvement
+full uncapped val pass at epoch 16
+  [1/6] 2019_11_14_C0001_3922_matrice               2601 frames     35,840 scored
+  [2/6] GOPR5843_002                                 424 frames     77,504 scored
+  [3/6] GOPR5843_005                                 571 frames    179,200 scored
+  [4/6] GOPR5846_002                                 686 frames    272,128 scored
+  [5/6] GOPR5846_005                                 450 frames    294,848 scored
+  [6/6] gopro_005                                    811 frames    712,896 scored
+
+r3d_18_seed1: full val AP 0.8040 against a proposal ceiling of 0.8363 over 5,242 ground-truth boxes
+  gopro_fisheye   AP 0.4507  ceiling 0.4664  n_gt 804
+  industrial      AP 0.9757  ceiling 0.9781  n_gt 2,517
+  meadow          AP 0.6863  ceiling 0.8053  n_gt 1,921
+written to runs_scratch/r3d_18_seed1/
