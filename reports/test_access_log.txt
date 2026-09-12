@@ -21,3 +21,6 @@
 
 2026-08-21  tools/extract_proposals.py --include-test
   Authorised test access, 1b-E extraction authorised 18 Aug 2026. Decoded the test partition, read its annotations, and emitted proposal coordinates with labels. allow_test=True passed explicitly through src.splits.load_split. Parameters from configs/ch4.yaml :: ruled.
+
+2026-09-04  tools/evaluate_final.py --split test
+  The single test pass. 12 checkpoints scored in one decode pass over 7 videos, 6,877 ground-truth boxes. Thresholds selected on uncapped val per run, never on test.
