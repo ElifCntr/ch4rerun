@@ -27,8 +27,12 @@ is in git, and none is reproducible without a re-run, which is closed.
 
 ## Console logs
 
-The twelve per-run console logs under `runs/`, `log_2d_single_{1,2,3}.txt`,
+Committed 12 September 2026 under the same `-f` override. The twelve per-run
+console logs under `runs/`, `log_2d_single_{1,2,3}.txt`,
 `log_2d_tframe_logitavg_{1,2,3}.txt`, `log_tsm_{1,2,3}.txt` and
-`log_r3d_18_{1,2,3}.txt`, together with `runs/queue.log`, remain uncommitted.
-They were not within the scope of the 12 September ruling and no ruling covers
-them.
+`log_r3d_18_{1,2,3}.txt`, together with `runs/queue.log`.
+
+Every run in this repository now has its text artefacts committed: summary,
+epoch trace and console log, for the twelve pretrained runs, the nine standing
+scratch runs, the three from-scratch `r3d_18` runs, and the one flip-fix probe
+run. Nothing textual remains named-but-omitted.

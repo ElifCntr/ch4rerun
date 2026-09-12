@@ -1,0 +1,33 @@
+2d_tframe_logitavg_seed1: 37,503 tubelets, 13,347 positive
+val subset: 519 ground-truth boxes; full val: 5,242
+  preflight 2d_tframe_logitavg: 20 BatchNorm layers, 0 at init defaults; first BN mean +0.000847 var 3.020486; first conv checksum 716.4541, matches checkpoint True
+  epoch  1  loss 0.0827  subset AP 0.5012  best 0.5012 (ep 1)  225s + 258s
+  epoch  2  loss 0.0224  subset AP 0.5841  best 0.5841 (ep 2)  225s + 259s
+  epoch  3  loss 0.0148  subset AP 0.4085  best 0.5841 (ep 2)  227s + 260s
+  epoch  4  loss 0.0108  subset AP 0.6142  best 0.6142 (ep 4)  227s + 259s
+  epoch  5  loss 0.0091  subset AP 0.6192  best 0.6192 (ep 5)  225s + 260s
+  epoch  6  loss 0.0054  subset AP 0.6279  best 0.6279 (ep 6)  225s + 258s
+  epoch  7  loss 0.0044  subset AP 0.6176  best 0.6279 (ep 6)  225s + 258s
+  epoch  8  loss 0.0029  subset AP 0.5076  best 0.6279 (ep 6)  224s + 257s
+  epoch  9  loss 0.0032  subset AP 0.6821  best 0.6821 (ep 9)  224s + 256s
+  epoch 10  loss 0.0024  subset AP 0.5909  best 0.6821 (ep 9)  223s + 255s
+  epoch 11  loss 0.0017  subset AP 0.5920  best 0.6821 (ep 9)  223s + 256s
+  epoch 12  loss 0.0011  subset AP 0.5946  best 0.6821 (ep 9)  224s + 257s
+  epoch 13  loss 0.0011  subset AP 0.5958  best 0.6821 (ep 9)  224s + 257s
+/home/elif/PycharmProjects/ch4rerun/tools/train_arm.py:239: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  ck = torch.load(out / "best.pt", map_location=device)
+  epoch 14  loss 0.0009  subset AP 0.6050  best 0.6821 (ep 9)  224s + 257s
+  early stop: 5 epochs without improvement
+full uncapped val pass at epoch 9
+  [1/6] 2019_11_14_C0001_3922_matrice               2601 frames     35,840 scored
+  [2/6] GOPR5843_002                                 424 frames     77,504 scored
+  [3/6] GOPR5843_005                                 571 frames    179,200 scored
+  [4/6] GOPR5846_002                                 686 frames    272,128 scored
+  [5/6] GOPR5846_005                                 450 frames    294,848 scored
+  [6/6] gopro_005                                    811 frames    712,896 scored
+
+2d_tframe_logitavg_seed1: full val AP 0.7027 against a proposal ceiling of 0.8363 over 5,242 ground-truth boxes
+  gopro_fisheye   AP 0.4646  ceiling 0.4664  n_gt 804
+  industrial      AP 0.9734  ceiling 0.9781  n_gt 2,517
+  meadow          AP 0.4750  ceiling 0.8053  n_gt 1,921
+written to runs/2d_tframe_logitavg_seed1/
