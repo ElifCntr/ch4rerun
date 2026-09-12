@@ -330,12 +330,23 @@ twelve model forwards. The discrepancy is recorded, not explained.
   beyond those samples and states timing conditions without them. Full account
   at `reports/gpu_thermal_note.md`.
 
+- **The from-scratch appendix table's mixed flip regimes. CLOSED, ruled 30
+  August 2026**, restated here because it was briefly reopened as an open item
+  and should not have been. The regime split is already recorded under "The
+  flip regime, ruled 30 August" above, and `reports/matrix_results.txt` carries
+  the per-run `flip` column that makes it visible per row. The three 2D arms'
+  scratch-versus-pretrained comparisons are same-regime and stand; the
+  `r3d_18` cell crosses regimes and is reported as cross-regime with that
+  caveat named. No standing run is retrained under any flip reasoning.
+
+- **The flip-fix matrix re-run standing at one of twelve. CLOSED, ruled 26
+  August 2026.** `runs_flipfix/2d_single_seed2` is a probe, not the first cell
+  of a re-run matrix. The 26 August probe was pre-registered to settle whether
+  the constant-flip matrix stands, and it passed inside its declared band. That
+  gate binds in both directions, so the remaining eleven cells are not run.
+
 ## Open, not yet ruled
 
-- **The from-scratch appendix table mixes flip regimes.** The nine non-r3d
-  scratch runs predate `008b7bf` and carry the constant flip; the three
-  `r3d_18` runs postdate it and carry the coin toss. A twelve-cell table drawn
-  from both is not uniform on augmentation. Not ruled.
-- **The flip-fix matrix re-run is one of twelve.** `runs_flipfix/` holds
-  `2d_single_seed2` alone. Whether the remaining eleven run, given that
-  evaluation is closed, is not ruled.
+None. This repository's experimental programme is complete: the matrix, the
+from-scratch appendix, the single test pass and the val rehearsal are all
+executed and recorded, and no further evaluation of any kind runs here.
