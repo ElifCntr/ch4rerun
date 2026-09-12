@@ -72,12 +72,36 @@ two.
 
 ## 4. Test fisheye is saturated at its ceiling
 
-Test fisheye carries a proposal ceiling of 0.9344. Three arms reach exactly
-0.9344 and `r3d_18` reaches 0.9334, so the scene is proposal-limited for every
-arm and separates none of them. The scene is a single video, `gopro_004`,
-carrying 671 ground-truth boxes, per
-`data/splits/dvb_splits_v2.0-static.csv` line 8.
+Test fisheye comprises a single video, `gopro_004`, carrying 671 ground-truth
+boxes, whose proposal stream contains **1.885 proposals per frame against
+47.262 to 559.401 for the other six test videos**, so the scene is
+proposal-limited at a ceiling of 0.9344 which three arms meet exactly and
+`r3d_18` misses by 0.0010; the scene therefore separates no arm on test.
 
-Why that video's ceiling is so much higher than val fisheye's 0.4664 is not
-established by any committed artefact in this repository. No explanation is
-offered here.
+Measured 12 September 2026 from `reports/extraction_stats.csv`, per-video
+counts already committed by the authorised 1b-E extraction. No video was
+decoded and no annotation file was read.
+
+| Video | Scene | Frames | Proposals/frame | Negatives/frame | GT boxes/frame |
+| --- | --- | --- | --- | --- | --- |
+| **gopro_004** | **gopro_fisheye** | **751** | **1.885** | **0.989** | **0.893** |
+| 2019_08_19_C0001_5319_phantom | industrial | 2,951 | 559.401 | 558.074 | 0.953 |
+| 2019_08_19_GOPR5869_1530_phantom | industrial | 1,000 | 437.091 | 435.885 | 0.960 |
+| 2019_08_19_GP015869_1520_inspire | industrial | 876 | 420.215 | 417.904 | 0.992 |
+| GOPR5842_002 | meadow | 612 | 85.711 | 84.703 | 0.972 |
+| GOPR5842_005 | meadow | 526 | 56.711 | 55.686 | 0.935 |
+| GOPR5842_007 | meadow | 511 | 47.262 | 46.313 | 0.933 |
+
+Proposals per frame is positive plus negative plus ignored over decoded frames;
+negatives per frame is the negative count over decoded frames; ground-truth
+boxes per frame is `gt_boxes_in_valid_window` over decoded frames.
+
+`gopro_004` is an outlier on the proposal stream by a factor of 25 against the
+lowest of the other six, and by a factor of 297 against the highest. It is NOT
+an outlier on target density: its 0.893 ground-truth boxes per frame sits just
+below a range of 0.933 to 0.992 across the other six. The contrast is in how
+many negatives the ranking must separate the targets from, not in how many
+targets there are.
+
+The val fisheye ceiling of 0.4664 is not explained here. Nothing in this table
+bears on it and no explanation is offered.
