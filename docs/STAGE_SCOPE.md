@@ -299,11 +299,43 @@ log exists for the run; `reports/gpu_thermal.csv` samples 24 August training
 and not this pass. Measured stage timings attribute the wall clock to the
 twelve model forwards. The discrepancy is recorded, not explained.
 
+## Closed, 12 September 2026
+
+- **The from-scratch `r3d_18` cell. FILLED.** Three runs completed on 27 and 28
+  August 2026 and stopped on patience, at subset AP 0.7978, 0.7881 and 0.7853
+  and full uncapped val AP 0.8040, 0.7895 and 0.7853. Records in
+  `runs_scratch/r3d_18_seed{1,2,3}/`.
+
+  How the always-pretrained guard was handled. `src/arms.py` remains
+  always-pretrained by default and the preflight guard is not weakened. A
+  `--weights scratch` path was added at `fdaa841`, which passes
+  `pretrained=False` and `verify=False` into `build_arm`, so the backbone is
+  built with `weights=None` and the guard is skipped rather than defeated. The
+  guard is skipped BECAUSE initialisation defaults are the correct state for a
+  from-scratch run and would otherwise raise. Any run without that flag still
+  meets the full check. No preflight line is printed for a scratch run, which
+  is why the scratch logs carry none.
+
+  The three earlier attempts at this cell were terminated by CUDA out of memory
+  after one epoch each and are not convergence outcomes. Preserved with their
+  README in `runs_terminated/`, and the correction to the figures that were
+  quoted from them is at `reports/r3d_bn_diagnostic_correction.md`.
+
+- **Thermal logging. CLOSED AS A DOCUMENTED FAILURE.** Sustained capture was
+  attempted and failed silently: the sampling loop's output file was recreated
+  shortly after launch, so nineteen days of samples were written to an unlinked
+  inode. Six lines of `reports/gpu_thermal.csv`, five samples from 24 August
+  2026 02:38 to 02:42, are the only thermal record and no re-collection is
+  possible, evaluation being closed. The cost material makes no thermal claim
+  beyond those samples and states timing conditions without them. Full account
+  at `reports/gpu_thermal_note.md`.
+
 ## Open, not yet ruled
 
-- **The from-scratch `r3d_18` cell.** `src/arms.py` is always-pretrained by
-  design, so filling it needs a scratch mode that does not weaken the preflight
-  guard.
-- **Thermal logging.** Per-arm cost is a chapter figure, so the comparability
-  claim wants a temperature and clock record per epoch rather than a
-  recollection that the card seemed fine. Not yet implemented.
+- **The from-scratch appendix table mixes flip regimes.** The nine non-r3d
+  scratch runs predate `008b7bf` and carry the constant flip; the three
+  `r3d_18` runs postdate it and carry the coin toss. A twelve-cell table drawn
+  from both is not uniform on augmentation. Not ruled.
+- **The flip-fix matrix re-run is one of twelve.** `runs_flipfix/` holds
+  `2d_single_seed2` alone. Whether the remaining eleven run, given that
+  evaluation is closed, is not ruled.
