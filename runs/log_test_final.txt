@@ -1,0 +1,29 @@
+2026-09-02T14:15:39+01:00  SINGLE TEST PASS starting
+  preflight 2d_single: 20 BatchNorm layers, 0 at init defaults; first BN mean +0.000847 var 3.020486; first conv checksum 716.4541, matches checkpoint True
+  preflight 2d_single: 20 BatchNorm layers, 0 at init defaults; first BN mean +0.000847 var 3.020486; first conv checksum 716.4541, matches checkpoint True
+  preflight 2d_single: 20 BatchNorm layers, 0 at init defaults; first BN mean +0.000847 var 3.020486; first conv checksum 716.4541, matches checkpoint True
+  preflight 2d_tframe_logitavg: 20 BatchNorm layers, 0 at init defaults; first BN mean +0.000847 var 3.020486; first conv checksum 716.4541, matches checkpoint True
+  preflight 2d_tframe_logitavg: 20 BatchNorm layers, 0 at init defaults; first BN mean +0.000847 var 3.020486; first conv checksum 716.4541, matches checkpoint True
+  preflight 2d_tframe_logitavg: 20 BatchNorm layers, 0 at init defaults; first BN mean +0.000847 var 3.020486; first conv checksum 716.4541, matches checkpoint True
+  preflight tsm: 20 BatchNorm layers, 0 at init defaults; first BN mean +0.000847 var 3.020486; first conv checksum 716.4541, matches checkpoint True
+  preflight tsm: 20 BatchNorm layers, 0 at init defaults; first BN mean +0.000847 var 3.020486; first conv checksum 716.4541, matches checkpoint True
+  preflight tsm: 20 BatchNorm layers, 0 at init defaults; first BN mean +0.000847 var 3.020486; first conv checksum 716.4541, matches checkpoint True
+  preflight r3d_18: 20 BatchNorm layers, 0 at init defaults; first BN mean -0.012338 var 9.006020; first conv checksum 913.4152, matches checkpoint True
+  preflight r3d_18: 20 BatchNorm layers, 0 at init defaults; first BN mean -0.012338 var 9.006020; first conv checksum 913.4152, matches checkpoint True
+  preflight r3d_18: 20 BatchNorm layers, 0 at init defaults; first BN mean -0.012338 var 9.006020; first conv checksum 913.4152, matches checkpoint True
+12 checkpoints loaded
+test: 6,877 ground-truth boxes, 7 videos
+  [1/7] 2019_08_19_C0001_5319_phantom               2951 frames  1,650,688 scored per model
+  [2/7] 2019_08_19_GOPR5869_1530_phantom            1000 frames  2,087,680 scored per model
+  [3/7] 2019_08_19_GP015869_1520_inspire             876 frames  2,455,808 scored per model
+  [4/7] GOPR5842_002                                 612 frames  2,508,288 scored per model
+  [5/7] GOPR5842_005                                 526 frames  2,538,240 scored per model
+  [6/7] GOPR5842_007                                 511 frames  2,562,304 scored per model
+  [7/7] gopro_004                                    751 frames  2,563,840 scored per model
+
+TEST: proposal ceiling 0.8899 over 6,877 boxes, 2102.4 min for 12 checkpoints in one pass
+  2d_single            AP 0.7561 +/- 0.0210  over 3 seeds
+  2d_tframe_logitavg   AP 0.6892 +/- 0.0395  over 3 seeds
+  tsm                  AP 0.7365 +/- 0.0249  over 3 seeds
+  r3d_18               AP 0.8137 +/- 0.0068  over 3 seeds
+written to reports/test_final_results.json

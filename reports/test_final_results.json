@@ -1,0 +1,531 @@
+{
+  "split": "test",
+  "n_gt_boxes": 6877,
+  "proposal_ceiling": 0.8899229315108332,
+  "n_gt_by_scene": {
+    "industrial": 4642,
+    "meadow": 1564,
+    "gopro_fisheye": 671
+  },
+  "seconds": 126145.4,
+  "checkpoints": 12,
+  "missing": [],
+  "runs": {
+    "2d_single_seed1": {
+      "ap": 0.7323321251945597,
+      "n_scored": 2560503,
+      "n_ignored": 3340,
+      "per_scene": {
+        "gopro_fisheye": {
+          "ap": 0.9343907680727996,
+          "ceiling": 0.9344262295081968,
+          "n_gt": 671,
+          "n_scored": 1370,
+          "n_ignored": 46
+        },
+        "industrial": {
+          "ap": 0.6278896529071019,
+          "ceiling": 0.8694528220594572,
+          "n_gt": 4642,
+          "n_scored": 2452881,
+          "n_ignored": 3110
+        },
+        "meadow": {
+          "ap": 0.9006870389370799,
+          "ceiling": 0.9315856777493606,
+          "n_gt": 1564,
+          "n_scored": 106252,
+          "n_ignored": 184
+        }
+      },
+      "val_threshold": {
+        "threshold": 0.9613165855407715,
+        "f1": 0.730840735385251,
+        "precision": 0.7968468468468468,
+        "recall": 0.6749332315909958,
+        "rank": 4440
+      },
+      "at_threshold": {
+        "threshold": 0.9613165855407715,
+        "tp": 4480,
+        "fp": 839,
+        "recall": 0.6514468518249237,
+        "precision": 0.8422635833803347,
+        "n_selected": 5319
+      }
+    },
+    "2d_single_seed2": {
+      "ap": 0.7638302623203702,
+      "n_scored": 2560503,
+      "n_ignored": 3340,
+      "per_scene": {
+        "gopro_fisheye": {
+          "ap": 0.9343002968559463,
+          "ceiling": 0.9344262295081968,
+          "n_gt": 671,
+          "n_scored": 1370,
+          "n_ignored": 46
+        },
+        "industrial": {
+          "ap": 0.6743097014390681,
+          "ceiling": 0.8694528220594572,
+          "n_gt": 4642,
+          "n_scored": 2452881,
+          "n_ignored": 3110
+        },
+        "meadow": {
+          "ap": 0.9042811628778672,
+          "ceiling": 0.9315856777493606,
+          "n_gt": 1564,
+          "n_scored": 106252,
+          "n_ignored": 184
+        }
+      },
+      "val_threshold": {
+        "threshold": 0.8545408844947815,
+        "f1": 0.7778349984550417,
+        "precision": 0.8453100514886949,
+        "recall": 0.7203357497138497,
+        "rank": 4467
+      },
+      "at_threshold": {
+        "threshold": 0.8545408844947815,
+        "tp": 5033,
+        "fp": 2270,
+        "recall": 0.7318598225970627,
+        "precision": 0.6891688347254553,
+        "n_selected": 7303
+      }
+    },
+    "2d_single_seed3": {
+      "ap": 0.7720819289345312,
+      "n_scored": 2560503,
+      "n_ignored": 3340,
+      "per_scene": {
+        "gopro_fisheye": {
+          "ap": 0.934381326885822,
+          "ceiling": 0.9344262295081968,
+          "n_gt": 671,
+          "n_scored": 1370,
+          "n_ignored": 46
+        },
+        "industrial": {
+          "ap": 0.6945319327576969,
+          "ceiling": 0.8694528220594572,
+          "n_gt": 4642,
+          "n_scored": 2452881,
+          "n_ignored": 3110
+        },
+        "meadow": {
+          "ap": 0.8992777257548975,
+          "ceiling": 0.9315856777493606,
+          "n_gt": 1564,
+          "n_scored": 106252,
+          "n_ignored": 184
+        }
+      },
+      "val_threshold": {
+        "threshold": 0.9646634459495544,
+        "f1": 0.7386076588865312,
+        "precision": 0.7851772287862513,
+        "recall": 0.6972529568866844,
+        "rank": 4655
+      },
+      "at_threshold": {
+        "threshold": 0.9646634459495544,
+        "tp": 4888,
+        "fp": 1016,
+        "recall": 0.7107750472589792,
+        "precision": 0.8279132791327913,
+        "n_selected": 5904
+      }
+    },
+    "2d_tframe_logitavg_seed1": {
+      "ap": 0.643641927872297,
+      "n_scored": 2560503,
+      "n_ignored": 3340,
+      "per_scene": {
+        "gopro_fisheye": {
+          "ap": 0.9344262295081968,
+          "ceiling": 0.9344262295081968,
+          "n_gt": 671,
+          "n_scored": 1370,
+          "n_ignored": 46
+        },
+        "industrial": {
+          "ap": 0.5437347197749487,
+          "ceiling": 0.8694528220594572,
+          "n_gt": 4642,
+          "n_scored": 2452881,
+          "n_ignored": 3110
+        },
+        "meadow": {
+          "ap": 0.8642362827041746,
+          "ceiling": 0.9315856777493606,
+          "n_gt": 1564,
+          "n_scored": 106252,
+          "n_ignored": 184
+        }
+      },
+      "val_threshold": {
+        "threshold": 0.9999147653579712,
+        "f1": 0.7127235564639756,
+        "precision": 0.7675544794188862,
+        "recall": 0.6652041205646699,
+        "rank": 4543
+      },
+      "at_threshold": {
+        "threshold": 0.9999147653579712,
+        "tp": 4435,
+        "fp": 2043,
+        "recall": 0.6449033008579322,
+        "precision": 0.6846248842235257,
+        "n_selected": 6478
+      }
+    },
+    "2d_tframe_logitavg_seed2": {
+      "ap": 0.714429880958057,
+      "n_scored": 2560503,
+      "n_ignored": 3340,
+      "per_scene": {
+        "gopro_fisheye": {
+          "ap": 0.9344214908342199,
+          "ceiling": 0.9344262295081968,
+          "n_gt": 671,
+          "n_scored": 1370,
+          "n_ignored": 46
+        },
+        "industrial": {
+          "ap": 0.6126315139241821,
+          "ceiling": 0.8694528220594572,
+          "n_gt": 4642,
+          "n_scored": 2452881,
+          "n_ignored": 3110
+        },
+        "meadow": {
+          "ap": 0.8838319260996447,
+          "ceiling": 0.9315856777493606,
+          "n_gt": 1564,
+          "n_scored": 106252,
+          "n_ignored": 184
+        }
+      },
+      "val_threshold": {
+        "threshold": 0.8779022693634033,
+        "f1": 0.7826885781361641,
+        "precision": 0.8417124039517014,
+        "recall": 0.7314002289202595,
+        "rank": 4555
+      },
+      "at_threshold": {
+        "threshold": 0.8779022693634033,
+        "tp": 5188,
+        "fp": 6886,
+        "recall": 0.7543987203722553,
+        "precision": 0.4296836176909061,
+        "n_selected": 12074
+      }
+    },
+    "2d_tframe_logitavg_seed3": {
+      "ap": 0.7093937640858066,
+      "n_scored": 2560503,
+      "n_ignored": 3340,
+      "per_scene": {
+        "gopro_fisheye": {
+          "ap": 0.9344191327797886,
+          "ceiling": 0.9344262295081968,
+          "n_gt": 671,
+          "n_scored": 1370,
+          "n_ignored": 46
+        },
+        "industrial": {
+          "ap": 0.6041727455105059,
+          "ceiling": 0.8694528220594572,
+          "n_gt": 4642,
+          "n_scored": 2452881,
+          "n_ignored": 3110
+        },
+        "meadow": {
+          "ap": 0.8683564571046286,
+          "ceiling": 0.9315856777493606,
+          "n_gt": 1564,
+          "n_scored": 106252,
+          "n_ignored": 184
+        }
+      },
+      "val_threshold": {
+        "threshold": 0.9424409866333008,
+        "f1": 0.7579851293329144,
+        "precision": 0.840260041792431,
+        "recall": 0.6903853491033957,
+        "rank": 4307
+      },
+      "at_threshold": {
+        "threshold": 0.9424409866333008,
+        "tp": 4837,
+        "fp": 2820,
+        "recall": 0.7033590228297223,
+        "precision": 0.6317095468199033,
+        "n_selected": 7657
+      }
+    },
+    "tsm_seed1": {
+      "ap": 0.7098013337400245,
+      "n_scored": 2560503,
+      "n_ignored": 3340,
+      "per_scene": {
+        "gopro_fisheye": {
+          "ap": 0.9344167332478992,
+          "ceiling": 0.9344262295081968,
+          "n_gt": 671,
+          "n_scored": 1370,
+          "n_ignored": 46
+        },
+        "industrial": {
+          "ap": 0.5785505357719789,
+          "ceiling": 0.8694528220594572,
+          "n_gt": 4642,
+          "n_scored": 2452881,
+          "n_ignored": 3110
+        },
+        "meadow": {
+          "ap": 0.9114269956393691,
+          "ceiling": 0.9315856777493606,
+          "n_gt": 1564,
+          "n_scored": 106252,
+          "n_ignored": 184
+        }
+      },
+      "val_threshold": {
+        "threshold": 0.6116742491722107,
+        "f1": 0.7784757118927972,
+        "precision": 0.8626450116009281,
+        "recall": 0.7092712705074399,
+        "rank": 4310
+      },
+      "at_threshold": {
+        "threshold": 0.6116742491722107,
+        "tp": 4608,
+        "fp": 2324,
+        "recall": 0.6700596190199215,
+        "precision": 0.6647432198499712,
+        "n_selected": 6932
+      }
+    },
+    "tsm_seed2": {
+      "ap": 0.7405293949294517,
+      "n_scored": 2560503,
+      "n_ignored": 3340,
+      "per_scene": {
+        "gopro_fisheye": {
+          "ap": 0.9344262295081968,
+          "ceiling": 0.9344262295081968,
+          "n_gt": 671,
+          "n_scored": 1370,
+          "n_ignored": 46
+        },
+        "industrial": {
+          "ap": 0.6328807215592834,
+          "ceiling": 0.8694528220594572,
+          "n_gt": 4642,
+          "n_scored": 2452881,
+          "n_ignored": 3110
+        },
+        "meadow": {
+          "ap": 0.8995309494288471,
+          "ceiling": 0.9315856777493606,
+          "n_gt": 1564,
+          "n_scored": 106252,
+          "n_ignored": 184
+        }
+      },
+      "val_threshold": {
+        "threshold": 0.9589767456054688,
+        "f1": 0.8079811199313452,
+        "precision": 0.9230392156862746,
+        "recall": 0.7184280808851583,
+        "rank": 4080
+      },
+      "at_threshold": {
+        "threshold": 0.9589767456054688,
+        "tp": 4917,
+        "fp": 2640,
+        "recall": 0.7149920023265959,
+        "precision": 0.6506550218340611,
+        "n_selected": 7557
+      }
+    },
+    "tsm_seed3": {
+      "ap": 0.7591727565771962,
+      "n_scored": 2560503,
+      "n_ignored": 3340,
+      "per_scene": {
+        "gopro_fisheye": {
+          "ap": 0.9344238563983788,
+          "ceiling": 0.9344262295081968,
+          "n_gt": 671,
+          "n_scored": 1370,
+          "n_ignored": 46
+        },
+        "industrial": {
+          "ap": 0.6693732522642042,
+          "ceiling": 0.8694528220594572,
+          "n_gt": 4642,
+          "n_scored": 2452881,
+          "n_ignored": 3110
+        },
+        "meadow": {
+          "ap": 0.8948628714871794,
+          "ceiling": 0.9315856777493606,
+          "n_gt": 1564,
+          "n_scored": 106252,
+          "n_ignored": 184
+        }
+      },
+      "val_threshold": {
+        "threshold": 0.8015173077583313,
+        "f1": 0.8295771624812192,
+        "precision": 0.9482335623159961,
+        "recall": 0.7373140022892026,
+        "rank": 4076
+      },
+      "at_threshold": {
+        "threshold": 0.8015173077583313,
+        "tp": 5041,
+        "fp": 2068,
+        "recall": 0.73302312054675,
+        "precision": 0.7091011394007596,
+        "n_selected": 7109
+      }
+    },
+    "r3d_18_seed1": {
+      "ap": 0.8193197163592845,
+      "n_scored": 2560503,
+      "n_ignored": 3340,
+      "per_scene": {
+        "gopro_fisheye": {
+          "ap": 0.9322456359495295,
+          "ceiling": 0.9344262295081968,
+          "n_gt": 671,
+          "n_scored": 1370,
+          "n_ignored": 46
+        },
+        "industrial": {
+          "ap": 0.7646152458945492,
+          "ceiling": 0.8694528220594572,
+          "n_gt": 4642,
+          "n_scored": 2452881,
+          "n_ignored": 3110
+        },
+        "meadow": {
+          "ap": 0.9199804680940162,
+          "ceiling": 0.9315856777493606,
+          "n_gt": 1564,
+          "n_scored": 106252,
+          "n_ignored": 184
+        }
+      },
+      "val_threshold": {
+        "threshold": 0.7008087635040283,
+        "f1": 0.8198757763975156,
+        "precision": 0.8963331824354912,
+        "recall": 0.7554368561617704,
+        "rank": 4418
+      },
+      "at_threshold": {
+        "threshold": 0.7008087635040283,
+        "tp": 5372,
+        "fp": 941,
+        "recall": 0.7811545732150648,
+        "precision": 0.8509424996039917,
+        "n_selected": 6313
+      }
+    },
+    "r3d_18_seed2": {
+      "ap": 0.8061571493874149,
+      "n_scored": 2560503,
+      "n_ignored": 3340,
+      "per_scene": {
+        "gopro_fisheye": {
+          "ap": 0.9340909184696355,
+          "ceiling": 0.9344262295081968,
+          "n_gt": 671,
+          "n_scored": 1370,
+          "n_ignored": 46
+        },
+        "industrial": {
+          "ap": 0.7503946823893987,
+          "ceiling": 0.8694528220594572,
+          "n_gt": 4642,
+          "n_scored": 2452881,
+          "n_ignored": 3110
+        },
+        "meadow": {
+          "ap": 0.9186160666815146,
+          "ceiling": 0.9315856777493606,
+          "n_gt": 1564,
+          "n_scored": 106252,
+          "n_ignored": 184
+        }
+      },
+      "val_threshold": {
+        "threshold": 0.9823421835899353,
+        "f1": 0.7789795918367347,
+        "precision": 0.8374286967968407,
+        "recall": 0.7281571919114842,
+        "rank": 4558
+      },
+      "at_threshold": {
+        "threshold": 0.9823421835899353,
+        "tp": 4945,
+        "fp": 523,
+        "recall": 0.7190635451505016,
+        "precision": 0.9043525969275786,
+        "n_selected": 5468
+      }
+    },
+    "r3d_18_seed3": {
+      "ap": 0.8155274328277204,
+      "n_scored": 2560503,
+      "n_ignored": 3340,
+      "per_scene": {
+        "gopro_fisheye": {
+          "ap": 0.9339866166801372,
+          "ceiling": 0.9344262295081968,
+          "n_gt": 671,
+          "n_scored": 1370,
+          "n_ignored": 46
+        },
+        "industrial": {
+          "ap": 0.7663202704433919,
+          "ceiling": 0.8694528220594572,
+          "n_gt": 4642,
+          "n_scored": 2452881,
+          "n_ignored": 3110
+        },
+        "meadow": {
+          "ap": 0.9142295078722953,
+          "ceiling": 0.9315856777493606,
+          "n_gt": 1564,
+          "n_scored": 106252,
+          "n_ignored": 184
+        }
+      },
+      "val_threshold": {
+        "threshold": 0.6912561058998108,
+        "f1": 0.8307851239669422,
+        "precision": 0.9060387561964849,
+        "recall": 0.7670736360167875,
+        "rank": 4438
+      },
+      "at_threshold": {
+        "threshold": 0.6912561058998108,
+        "tp": 5144,
+        "fp": 639,
+        "recall": 0.7480005816489749,
+        "precision": 0.8895037177935328,
+        "n_selected": 5783
+      }
+    }
+  }
+}
