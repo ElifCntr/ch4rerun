@@ -24,3 +24,14 @@
 
 2026-09-04  tools/evaluate_final.py --split test
   The single test pass. 12 checkpoints scored in one decode pass over 7 videos, 6,877 ground-truth boxes. Thresholds selected on uncapped val per run, never on test.
+
+2026-09-16  tools/check_fisheye_session.py --allow-test
+  Authorised provenance verification, authorised 16 Sep 2026. Decoded video
+  frames from gopro_004 only: 50 frames for a median background and 5 for a
+  contact sheet, 55 frames of 751. No annotation file was read. No label, no
+  score, no threshold and no model output was involved, and nothing measured
+  here feeds the evaluation. allow_test=True passed explicitly through
+  src.splits.load_split from the top-level --allow-test flag.
+  Purpose: establish whether gopro_004 (test) and gopro_005 (val) are one
+  recording occasion, the two being singleton sessions in the committed split.
+  Artefacts: reports/fisheye_session/.

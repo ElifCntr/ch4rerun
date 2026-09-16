@@ -1,0 +1,195 @@
+ffprobe evidence, gopro_004 (test) and gopro_005 (val)
+Generated 16 Sep 2026 by the commands shown. ffprobe 4.4.2-0ubuntu0.22.04.1
+Source: configs/ch4.yaml :: data.root + data.video_dir
+
+=============== gopro_004.mp4 ===============
+$ stat -c '%s %y' gopro_004.mp4
+62835805 bytes   mtime 2020-03-06 00:13:32.000000000 +0000
+
+$ ffprobe -show_format
+[FORMAT]
+filename=/home/elif/Desktop/Drone-vs-Bird/videos-and-labels/videos/gopro_004.mp4
+nb_streams=1
+nb_programs=0
+format_name=mov,mp4,m4a,3gp,3g2,mj2
+format_long_name=QuickTime / MOV
+start_time=0.000000
+duration=25.058000
+size=62835805
+bit_rate=20060916
+probe_score=100
+TAG:major_brand=isom
+TAG:minor_version=512
+TAG:compatible_brands=isomiso2avc1mp41
+TAG:encoder=Lavf57.56.101
+[/FORMAT]
+
+$ ffprobe -show_streams
+[STREAM]
+index=0
+codec_name=h264
+codec_long_name=H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10
+profile=High
+codec_type=video
+codec_tag_string=avc1
+codec_tag=0x31637661
+width=1920
+height=1080
+coded_width=1920
+coded_height=1080
+closed_captions=0
+has_b_frames=1
+sample_aspect_ratio=1:1
+display_aspect_ratio=16:9
+pix_fmt=yuvj420p
+level=41
+color_range=pc
+color_space=bt709
+color_transfer=bt709
+color_primaries=bt709
+chroma_location=left
+field_order=unknown
+refs=1
+is_avc=true
+nal_length_size=4
+id=N/A
+r_frame_rate=29971/1000
+avg_frame_rate=22508221/751013
+time_base=1/29971
+start_pts=0
+start_time=0.000000
+duration_ts=751013
+duration=25.057989
+bit_rate=20059445
+max_bit_rate=N/A
+bits_per_raw_sample=8
+nb_frames=751
+nb_read_frames=N/A
+nb_read_packets=N/A
+DISPOSITION:default=1
+DISPOSITION:dub=0
+DISPOSITION:original=0
+DISPOSITION:comment=0
+DISPOSITION:lyrics=0
+DISPOSITION:karaoke=0
+DISPOSITION:forced=0
+DISPOSITION:hearing_impaired=0
+DISPOSITION:visual_impaired=0
+DISPOSITION:clean_effects=0
+DISPOSITION:attached_pic=0
+DISPOSITION:timed_thumbnails=0
+TAG:language=und
+TAG:handler_name=VideoHandler
+TAG:vendor_id=[0][0][0][0]
+[/STREAM]
+
+$ ffprobe -show_frames (first frame side data)
+TAG:timecode=00:00:00:00
+side_data_type=SMPTE 12-1 timecode
+
+GOP: keyframe interval and picture types
+  decoded frame entries : 751
+  picture types         :      51 I     700 P 
+  keyframe gaps (count x gap):      50 15 
+  first 32 picture types: IPPPPPPPPPPPPPPIPPPPPPPPPPPPPPIP
+
+=============== gopro_005.mp4 ===============
+$ stat -c '%s %y' gopro_005.mp4
+67896881 bytes   mtime 2020-03-06 00:13:40.000000000 +0000
+
+$ ffprobe -show_format
+[FORMAT]
+filename=/home/elif/Desktop/Drone-vs-Bird/videos-and-labels/videos/gopro_005.mp4
+nb_streams=1
+nb_programs=0
+format_name=mov,mp4,m4a,3gp,3g2,mj2
+format_long_name=QuickTime / MOV
+start_time=0.000000
+duration=27.060000
+size=67896881
+bit_rate=20072987
+probe_score=100
+TAG:major_brand=isom
+TAG:minor_version=512
+TAG:compatible_brands=isomiso2avc1mp41
+TAG:encoder=Lavf57.56.101
+[/FORMAT]
+
+$ ffprobe -show_streams
+[STREAM]
+index=0
+codec_name=h264
+codec_long_name=H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10
+profile=High
+codec_type=video
+codec_tag_string=avc1
+codec_tag=0x31637661
+width=1920
+height=1080
+coded_width=1920
+coded_height=1080
+closed_captions=0
+has_b_frames=1
+sample_aspect_ratio=1:1
+display_aspect_ratio=16:9
+pix_fmt=yuvj420p
+level=41
+color_range=pc
+color_space=bt709
+color_transfer=bt709
+color_primaries=bt709
+chroma_location=left
+field_order=unknown
+refs=1
+is_avc=true
+nal_length_size=4
+id=N/A
+r_frame_rate=29971/1000
+avg_frame_rate=24306481/811015
+time_base=1/29971
+start_pts=0
+start_time=0.000000
+duration_ts=811015
+duration=27.059991
+bit_rate=20071533
+max_bit_rate=N/A
+bits_per_raw_sample=8
+nb_frames=811
+nb_read_frames=N/A
+nb_read_packets=N/A
+DISPOSITION:default=1
+DISPOSITION:dub=0
+DISPOSITION:original=0
+DISPOSITION:comment=0
+DISPOSITION:lyrics=0
+DISPOSITION:karaoke=0
+DISPOSITION:forced=0
+DISPOSITION:hearing_impaired=0
+DISPOSITION:visual_impaired=0
+DISPOSITION:clean_effects=0
+DISPOSITION:attached_pic=0
+DISPOSITION:timed_thumbnails=0
+TAG:language=und
+TAG:handler_name=VideoHandler
+TAG:vendor_id=[0][0][0][0]
+[/STREAM]
+
+$ ffprobe -show_frames (first frame side data)
+TAG:timecode=00:00:00:00
+side_data_type=SMPTE 12-1 timecode
+
+GOP: keyframe interval and picture types
+  decoded frame entries : 811
+  picture types         :      55 I     756 P 
+  keyframe gaps (count x gap):      54 15 
+  first 32 picture types: IPPPPPPPPPPPPPPIPPPPPPPPPPPPPPIP
+
+=============== derived rates ===============
+video              bytes  container_s   stream_s  nb_frames     bytes/s  bytes/frame
+gopro_004       62835805    25.058000  25.057989        751   2507614.5      83669.5
+gopro_005       67896881    27.060000  27.059991        811   2509123.5      83720.0
+
+bytes/s   ratio 005/004 : 1.000602
+bytes/frame ratio 005/004: 1.000603
+duration difference      : 2.002000 s
+frame count difference   : 60
