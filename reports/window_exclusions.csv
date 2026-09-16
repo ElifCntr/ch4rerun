@@ -1,0 +1,14 @@
+split,video,scene,split_boxes,decoded_frames,valid_centres,counted_in_window,excluded,excluded_head_frames,excluded_tail_frames
+test,2019_08_19_C0001_5319_phantom,industrial,2820,2951,2944,2813,7,0..2,2947..2950
+test,2019_08_19_GOPR5869_1530_phantom,industrial,964,1000,993,960,4,0..2,996..999
+test,2019_08_19_GP015869_1520_inspire,industrial,876,876,869,869,7,0..2,872..875
+test,GOPR5842_002,meadow,598,612,605,595,3,0..2,608..611
+test,GOPR5842_005,meadow,492,526,519,492,0,0..2,522..525
+test,GOPR5842_007,meadow,481,511,504,477,4,0..2,507..510
+test,gopro_004,gopro_fisheye,674,751,744,671,3,0..2,747..750
+val,2019_11_14_C0001_3922_matrice,industrial,2524,2601,2594,2517,7,0..2,2597..2600
+val,GOPR5843_002,meadow,393,424,417,389,4,0..2,420..423
+val,GOPR5843_005,meadow,524,571,564,524,0,0..2,567..570
+val,GOPR5846_002,meadow,629,686,679,629,0,0..2,682..685
+val,GOPR5846_005,meadow,379,450,443,379,0,0..2,446..449
+val,gopro_005,gopro_fisheye,810,811,804,804,6,0..2,807..810

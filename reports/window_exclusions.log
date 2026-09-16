@@ -1,0 +1,42 @@
+T = 8, LEAD = 3, TRAIL = 4   (src/streaming_eval.py:41-43)
+evaluated centres = range(LEAD, n - TRAIL) = frames 3 .. n-5   (src/streaming_eval.py:176)
+excluded per video = LEAD + TRAIL = 7 frames (first 3, last 4)
+
+===== TEST =====
+video                               boxes  decoded  centres  counted excluded
+2019_08_19_C0001_5319_phantom        2820     2951     2944     2813        7
+2019_08_19_GOPR5869_1530_phantom      964     1000      993      960        4
+2019_08_19_GP015869_1520_inspire      876      876      869      869        7
+GOPR5842_002                          598      612      605      595        3
+GOPR5842_005                          492      526      519      492        0
+GOPR5842_007                          481      511      504      477        4
+gopro_004                             674      751      744      671        3
+TOTAL                                6905                       6877       28
+  6905 - 28 = 6877;  evaluator reported 6877
+  closes exactly: True
+
+===== VAL =====
+video                               boxes  decoded  centres  counted excluded
+2019_11_14_C0001_3922_matrice        2524     2601     2594     2517        7
+GOPR5843_002                          393      424      417      389        4
+GOPR5843_005                          524      571      564      524        0
+GOPR5846_002                          629      686      679      629        0
+GOPR5846_005                          379      450      443      379        0
+gopro_005                             810      811      804      804        6
+TOTAL                                5259                       5242       17
+  5259 - 17 = 5242;  evaluator reported 5242
+  closes exactly: True
+
+===== VAL, independent frame-level derivation (reports/instances_boxes.csv) =====
+video                               head  tail  excl  aggregate   excluded frames carrying boxes
+2019_11_14_C0001_3922_matrice          3     4     7          7   [0, 1, 2, 2597, 2598, 2599, 2600]
+GOPR5843_002                           0     4     4          4   [420, 421, 422, 423]
+GOPR5843_005                           0     0     0          0   
+GOPR5846_002                           0     0     0          0   
+GOPR5846_005                           0     0     0          0   
+gopro_005                              3     3     6          6   [0, 1, 2, 807, 808, 809]
+TOTAL                                             17
+
+OK test deficit 28 and val deficit 17 both close exactly, and the val
+   frame-level derivation agrees with the aggregate video by video.
+   Written to reports/window_exclusions.csv
