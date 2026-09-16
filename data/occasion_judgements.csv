@@ -1,0 +1,24 @@
+# Occasion judgements for flagged cross-subset scene boundaries.
+#
+# A flag raised by tools/cross_subset_sessions.py says the committed metadata
+# CANNOT SEPARATE two sessions that sit either side of the val/test boundary.
+# A row here records the author's disposition of that flag. These are
+# JUDGEMENT LABELS, single rater, on the same footing as the camera-motion
+# labels in data/dvb_camera_motion.csv. They are not measurements and nothing
+# here is derived from a measured quantity.
+#
+# basis vocabulary:
+#   inspection              author's visual inspection alone
+#   inspection+measurement  inspection with a committed measurement alongside
+#   documentary             settled by metadata, no judgement required
+#
+# verdict vocabulary:
+#   distinct_occasions | same_occasion | none_stated
+#
+# none_stated means the flag was worked and a basis is on record, and the
+# author has NOT recorded a verdict. It is not the same as an unexamined flag,
+# which has no row here at all.
+#
+scene,session_a,session_b,verdict,basis,rater,date,note
+meadow,meadow_5842,meadow_5843,distinct_occasions,inspection,author,2026-09-16,Different scene conditions. Stated without qualification.
+gopro_fisheye,gopro_004,gopro_005,none_stated,inspection+measurement,author,2026-09-16,Inspected and measured; see reports/fisheye_session/FINDINGS.md. No verdict recorded; the occasion judgement remains the author's.

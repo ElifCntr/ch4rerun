@@ -1,0 +1,14 @@
+video,scene,session,split,fps,resolution,duration_s,filename_date,camera_series,camera_number,camera_token,creation_time
+gopro_004,gopro_fisheye,gopro_004,test,29.97,1920x1080,25.058,-,gopro,4,gopro_004,-
+gopro_005,gopro_fisheye,gopro_005,val,29.97,1920x1080,27.06,-,gopro,5,gopro_005,-
+2019_08_19_C0001_5319_phantom,industrial,ind_2019_08_19,test,25.0,3840x2160,118.04,2019-08-19,C,1,C0001,-
+2019_08_19_GOPR5869_1530_phantom,industrial,ind_2019_08_19,test,25.0,1920x1080,40.0,2019-08-19,GOPR,5869,GOPR5869,-
+2019_08_19_GP015869_1520_inspire,industrial,ind_2019_08_19,test,25.0,1920x1080,35.04,2019-08-19,GOPR,5869,GP015869,-
+2019_11_14_C0001_3922_matrice,industrial,ind_2019_11_14,val,25.0,3840x2160,104.04,2019-11-14,C,1,C0001,-
+GOPR5842_002,meadow,meadow_5842,test,29.971,1920x1080,20.42,-,GOPR,5842,GOPR5842,-
+GOPR5842_005,meadow,meadow_5842,test,29.97,1920x1080,17.551,-,GOPR,5842,GOPR5842,-
+GOPR5842_007,meadow,meadow_5842,test,29.971,1920x1080,17.05,-,GOPR,5842,GOPR5842,-
+GOPR5843_002,meadow,meadow_5843,val,29.969,1920x1080,14.148,-,GOPR,5843,GOPR5843,-
+GOPR5843_005,meadow,meadow_5843,val,29.971,1920x1080,19.052,-,GOPR,5843,GOPR5843,-
+GOPR5846_002,meadow,meadow_5846,val,29.971,1920x1080,22.889,-,GOPR,5846,GOPR5846,-
+GOPR5846_005,meadow,meadow_5846,val,29.97,1920x1080,15.015,-,GOPR,5846,GOPR5846,-

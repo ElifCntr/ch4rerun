@@ -1,0 +1,93 @@
+== val and test videos, from the committed split ==
+   data/splits/dvb_splits_v2.0-static.csv
+
+video                             scene          session          split      fps    dur_s  resolution date        cam         
+   ---------------------------------------------------------------------------------------------------------------------------
+gopro_004                         gopro_fisheye  gopro_004        test    29.970   25.058  1920x1080  -           gopro_004   
+gopro_005                         gopro_fisheye  gopro_005        val     29.970   27.060  1920x1080  -           gopro_005   
+2019_08_19_C0001_5319_phantom     industrial     ind_2019_08_19   test    25.000  118.040  3840x2160  2019-08-19  C0001       
+2019_08_19_GOPR5869_1530_phantom  industrial     ind_2019_08_19   test    25.000   40.000  1920x1080  2019-08-19  GOPR5869    
+2019_08_19_GP015869_1520_inspire  industrial     ind_2019_08_19   test    25.000   35.040  1920x1080  2019-08-19  GP015869    
+2019_11_14_C0001_3922_matrice     industrial     ind_2019_11_14   val     25.000  104.040  3840x2160  2019-11-14  C0001       
+GOPR5842_002                      meadow         meadow_5842      test    29.971   20.420  1920x1080  -           GOPR5842    
+GOPR5842_005                      meadow         meadow_5842      test    29.970   17.551  1920x1080  -           GOPR5842    
+GOPR5842_007                      meadow         meadow_5842      test    29.971   17.050  1920x1080  -           GOPR5842    
+GOPR5843_002                      meadow         meadow_5843      val     29.969   14.148  1920x1080  -           GOPR5843    
+GOPR5843_005                      meadow         meadow_5843      val     29.971   19.052  1920x1080  -           GOPR5843    
+GOPR5846_002                      meadow         meadow_5846      val     29.971   22.889  1920x1080  -           GOPR5846    
+GOPR5846_005                      meadow         meadow_5846      val     29.970   15.015  1920x1080  -           GOPR5846    
+
+   creation_time across all 13 videos: ['-']  (none survives the dataset re-encode)
+
+== what each evaluated session's assignment rests on ==
+   session          scene          split   n  corroborating metadata
+   gopro_004        gopro_fisheye  test    1  NONE, audit only
+   gopro_005        gopro_fisheye  val     1  NONE, audit only
+   ind_2019_08_19   industrial     test    3  shared filename date 2019-08-19
+   ind_2019_11_14   industrial     val     1  filename date 2019-11-14 only
+   meadow_5842      meadow         test    3  shared camera file number 5842
+   meadow_5843      meadow         val     2  shared camera file number 5843
+   meadow_5846      meadow         val     2  shared camera file number 5846
+
+== flags, by scene, val against test ==
+
+   gopro_fisheye:
+     FLAG  ADJACENT: gopro_004 (test) and gopro_005 (val) differ by 1 in gopro numbering
+     FLAG  AUDIT: session(s) ['gopro_004', 'gopro_005'] rest on the audit alone
+     WORKED  gopro_004 vs gopro_005, basis inspection+measurement, author, 2026-09-16. NO VERDICT RECORDED.
+             Inspected and measured; see reports/fisheye_session/FINDINGS.md. No verdict recorded; the occasion judgement remains the author's.
+             Judgement label, not a measurement. Source data/occasion_judgements.csv.
+     gopro numbering across all splits: 0[train] 1[train] 2[train] 3[train] 4[TEST] 5[VAL] 6[train] 7[train] 8[train]
+
+   industrial:
+     no flag on any of the three criteria
+     the filename dates separate them: test ['2019-08-19'] against val ['2019-11-14']
+     C numbering across all splits: 1[TEST] 2[train] 3[train]
+     GOPR numbering across all splits: 5869[TEST] 5871[train]
+
+   meadow:
+     FLAG  ADJACENT: GOPR5842 (test) and GOPR5843 (val) differ by 1 in GOPR numbering
+     JUDGED  distinct_occasions (meadow_5842 vs meadow_5843), basis inspection, author, 2026-09-16
+             Different scene conditions. Stated without qualification.
+             Judgement label, not a measurement. Source data/occasion_judgements.csv.
+     GOPR numbering across all splits: 5842[TEST] 5843[VAL] 5844[train] 5845[train] 5846[VAL] 5848[train]
+
+== how much an ADJACENT flag is worth ==
+   Only the industrial videos carry filename dates, so they are the only
+   place the numbering can be calibrated against a known date. Two facts,
+   pulling in opposite directions:
+
+   C numbering RESETS. 2019_08_19_C0001_5319_phantom and
+   2019_11_14_C0001_3922_matrice share the token C0001 yet carry dates 2019-08-19 and 2019-11-14,
+   87 days apart. Equal numbers do not imply one occasion.
+
+   C numbering PERSISTS across outings. 2019_08_19_C0001_5319_phantom
+   and 2019_09_02_C0002_2527_inspire are 1 apart in
+   numbering yet carry dates 2019-08-19 and 2019-09-02, 14 days apart.
+   A gap of 1 therefore spans more than one occasion here.
+
+   GOPR numbering PERSISTS across outings. 2019_08_19_GOPR5869_1530_phantom
+   and 2019_09_02_GOPR5871_1058_solo are 2 apart in
+   numbering yet carry dates 2019-08-19 and 2019-09-02, 14 days apart.
+   A gap of 2 therefore spans more than one occasion here.
+
+   Taken together: a small numbering gap is CONSISTENT with one occasion and
+   does not establish it, and the meadow and fisheye videos carry no date at
+   all against which to check. The flag marks what the disk cannot separate,
+   not what it joins.
+
+== one caveat on the fisheye numbering ==
+   gopro_000 to gopro_008 are dataset-assigned names. No committed artefact
+   records whether that order reflects camera recording order, so the
+   ADJACENT flag on gopro_004 and gopro_005 rests on an ordering whose
+   provenance is not established. reports/gopro_continuity_findings.md and
+   reports/fisheye_session/FINDINGS.md carry what has been measured on that pair.
+
+13 videos, 3 scenes. 2 flagged on metadata, 2 dispositioned in the
+register, 0 flagged with no disposition recorded.
+Dispositioned WITHOUT a verdict, basis on record only: ['gopro_fisheye'].
+This script draws no verdict of its own. Where a scene carries a judgement it is
+the author's, read from the committed register and reproduced verbatim.
+No flagged scene is left without a recorded disposition: the cross-subset
+session check is COMPLETE.
+Written to reports/cross_subset_sessions.csv
