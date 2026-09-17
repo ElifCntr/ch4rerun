@@ -10,8 +10,16 @@ ruling is the authorisation for this run. 55 frames of `gopro_004` were
 decoded, no annotation file was read, and the access is logged in
 `reports/test_access_log.txt`.
 
-No verdict is offered below. The occasion judgement is the author's, single
-rater, consistent with the chapter's other judgement labels.
+**Verdict, 16 September 2026: `gopro_004` and `gopro_005` are distinct
+recording occasions.** The author's, single rater, consistent with the
+chapter's other judgement labels. Recorded in
+`data/occasion_judgements.csv`; the reasoning is in section 6.
+
+The measurement sections below were written before that verdict and are
+unchanged by it. Nothing in sections 2 to 5 was revised, reweighted or
+reordered to agree with the verdict, and no number moved. The verdict rests on
+the author's visual inspection and precedes the measurement; the measurement
+corroborates it and did not produce it.
 
 Everything here is reproduced by:
 
@@ -234,5 +242,39 @@ The measures disagree about where the pair falls, and the direction of that
 disagreement is systematic: the measures most sensitive to shared layout place
 it nearest the same-occasion band, the measures most sensitive to scene content
 place it further away. Which of those better matches the author's meaning of
-"one recording occasion" is a judgement, not a measurement, and it is not made
-here.
+"one recording occasion" is a judgement, not a measurement.
+
+## 6. The verdict, and how it reads the measurement
+
+**`gopro_004` and `gopro_005` are distinct recording occasions.** Author, single
+rater, 16 September 2026. Judgement label, recorded in
+`data/occasion_judgements.csv` with basis `inspection+measurement`.
+
+The verdict rests on the author's visual inspection of both videos:
+
+- different cloud and light,
+- different background composition,
+- the operator vehicle present only in `gopro_004`.
+
+It is corroborated by the background comparison in section 3, specifically the
+ground state, pasture in `gopro_004` against ploughed soil in `gopro_005`.
+
+The verdict PRECEDES the measurement and is not derived from it. This matters
+for how section 3 should be read, because that section's headline number does
+not point the same way. SSIM 0.6828 placed the pair inside the same-occasion
+reference band. The author reads that layout similarity as **similar rig
+siting, not a shared occasion**: the two arcs, the common horizon placement and
+the shared fisheye geometry say the camera stood in a comparable position and
+pointed a comparable way, which is what a whole-image structural measure is
+sensitive to, and not that the two recordings happened on one occasion.
+
+That reading selects the content-sensitive side of the systematic disagreement
+section 5 identified, rather than resolving it. On that reading the MAE of
+38.08 and the 57 px skyline offset are the informative figures and the SSIM is
+measuring the rig rather than the occasion. This is an interpretation of the
+measurement, offered as the author's, and it is not itself a measured result.
+
+Section 5's account of what is and is not established on disk stands unchanged.
+In particular the disk still does not fix the camera bearing, so it remains
+true that the two videos need not show the same field, and the verdict does not
+rest on their doing so.

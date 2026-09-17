@@ -39,6 +39,7 @@ import sys
 from datetime import date as _date
 from collections import defaultdict
 from pathlib import Path
+from textwrap import wrap
 
 SPLIT = "data/splits/dvb_splits_v2.0-static.csv"
 INVENTORY = "reports/video_inventory.csv"
@@ -230,7 +231,13 @@ def main() -> None:
                 print(f"     JUDGED  {j['verdict']} ({j['session_a']} vs "
                       f"{j['session_b']}), basis {j['basis']}, {j['rater']}, "
                       f"{j['date']}")
-            print(f"             {j['note']}")
+            for line in wrap(j["note"], 68):
+                print(f"             {line}")
+            if j.get("corroboration"):
+                print(f"             Corroborated by {j['corroboration']}. The "
+                      f"verdict rests on the")
+                print(f"             inspection and precedes that measurement; "
+                      f"it is not derived from it.")
             print(f"             Judgement label, not a measurement. "
                   f"Source {JUDGEMENTS}.")
         elif flags:

@@ -34,8 +34,15 @@ GOPR5846_005                      meadow         meadow_5846      val     29.970
    gopro_fisheye:
      FLAG  ADJACENT: gopro_004 (test) and gopro_005 (val) differ by 1 in gopro numbering
      FLAG  AUDIT: session(s) ['gopro_004', 'gopro_005'] rest on the audit alone
-     WORKED  gopro_004 vs gopro_005, basis inspection+measurement, author, 2026-09-16. NO VERDICT RECORDED.
-             Inspected and measured; see reports/fisheye_session/FINDINGS.md. No verdict recorded; the occasion judgement remains the author's.
+     JUDGED  distinct_occasions (gopro_004 vs gopro_005), basis inspection+measurement, author, 2026-09-16
+             Verdict on the author's visual inspection of both videos: different
+             cloud and light, different background composition, and the operator
+             vehicle present only in gopro_004. Corroborated by the committed
+             background comparison: ground state pasture against ploughed soil.
+             The layout similarity in that comparison is read as similar rig
+             siting, not as a shared occasion.
+             Corroborated by reports/fisheye_session/FINDINGS.md. The verdict rests on the
+             inspection and precedes that measurement; it is not derived from it.
              Judgement label, not a measurement. Source data/occasion_judgements.csv.
      gopro numbering across all splits: 0[train] 1[train] 2[train] 3[train] 4[TEST] 5[VAL] 6[train] 7[train] 8[train]
 
@@ -85,7 +92,6 @@ GOPR5846_005                      meadow         meadow_5846      val     29.970
 
 13 videos, 3 scenes. 2 flagged on metadata, 2 dispositioned in the
 register, 0 flagged with no disposition recorded.
-Dispositioned WITHOUT a verdict, basis on record only: ['gopro_fisheye'].
 This script draws no verdict of its own. Where a scene carries a judgement it is
 the author's, read from the committed register and reproduced verbatim.
 No flagged scene is left without a recorded disposition: the cross-subset

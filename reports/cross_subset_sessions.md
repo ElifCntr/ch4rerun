@@ -5,8 +5,14 @@ decoded and no annotation read. Reproduce with
 `python tools/cross_subset_sessions.py`. Artefacts:
 `reports/cross_subset_sessions.csv`, `reports/cross_subset_sessions.log`.
 
-**No verdict is offered.** A flag below says the disk cannot separate two
-sessions, not that they are one. Occasion judgements are the author's.
+**Two kinds of statement appear below and must not be read alike.** A FLAG is
+measured: it says the committed metadata cannot separate two sessions, not that
+they are one. A VERDICT is the author's judgement, single rater, recorded in
+`data/occasion_judgements.csv` with its rater, date and basis. No verdict here
+is derived from a flag or from any measurement; where a measurement
+corroborates a verdict, the verdict came first and the register says so.
+`tools/cross_subset_sessions.py` draws no verdict of its own, and prints the
+flag and the verdict side by side so the two can always be read apart.
 
 ## The table
 
@@ -150,9 +156,8 @@ joined.
 
 ## Status: COMPLETE
 
-Every val/test scene boundary in the three evaluated scenes has been put to a
-stated basis. Two carry a verdict; the fisheye boundary carries a basis and no
-verdict, as set out below.
+Every val/test scene boundary in the three evaluated scenes is resolved, and
+every one now carries a verdict. All three read distinct occasions.
 
 Dispositions are recorded in `data/occasion_judgements.csv` and reproduced by
 `tools/cross_subset_sessions.py`, which prints the metadata flag and the
@@ -163,22 +168,30 @@ position can always be read apart.
 | --- | --- | --- | --- |
 | industrial | none | documentary, dates 87 days apart | distinct occasions |
 | meadow | ADJACENT | inspection, author, 16 Sep 2026 | **distinct occasions** |
-| gopro_fisheye | ADJACENT, AUDIT | inspection and measurement | **none recorded** |
+| gopro_fisheye | ADJACENT, AUDIT | inspection, corroborated by measurement, author, 16 Sep 2026 | **distinct occasions** |
 
 - **industrial** is settled documentarily. The filename dates separate the
   partitions, 2019-08-19 against 2019-11-14, and no judgement was needed.
 - **meadow** is closed by the author's visual inspection above, single rater,
   16 September 2026: GOPR5842 and GOPR5843 are distinct recording occasions.
-- **gopro_fisheye** was both inspected and measured, and **no verdict has been
-  recorded**. The measurements are in `reports/fisheye_session/FINDINGS.md`,
-  which reports background and skyline agreement against calibrated reference
-  bands and draws no verdict, the occasion judgement there being the author's.
-  The register marks this `none_stated`, which means the flag was worked and a
-  basis is on record, not that a verdict was reached.
+- **gopro_fisheye** is closed by the author's visual inspection, single rater,
+  16 September 2026: gopro_004 and gopro_005 are distinct recording occasions.
+  The basis is different cloud and light, different background composition, and
+  the operator vehicle present only in gopro_004. The verdict is corroborated
+  by the committed background comparison in
+  `reports/fisheye_session/FINDINGS.md`, on the ground state, pasture against
+  ploughed soil. The verdict precedes that measurement and is not derived from
+  it, which the register records as basis `inspection+measurement`.
 
-Every flagged scene now carries a recorded disposition, so the cross-subset
-session check is complete. Complete here means each boundary has been put to a
-stated basis, not that every boundary has been given a verdict.
+  One point of that comparison needs reading with the verdict, and section 6 of
+  `FINDINGS.md` sets it out: SSIM placed the pair inside the same-occasion
+  reference band. The author reads that layout similarity as similar rig siting
+  rather than a shared occasion. That selects the content-sensitive side of the
+  disagreement the measurement reported; it does not overturn the measurement,
+  and no figure in that report was changed.
+
+Every flagged scene carries a recorded verdict, so the cross-subset session
+check is complete.
 
 This bears on the structure noted in `docs/STAGE_SCOPE.md`: val was carved to
 mirror test's scene mix, so both partitions hold videos from each of the three

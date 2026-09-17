@@ -9,7 +9,12 @@
 #
 # basis vocabulary:
 #   inspection              author's visual inspection alone
-#   inspection+measurement  inspection with a committed measurement alongside
+#   inspection+measurement  the verdict rests on the author's inspection and a
+#                           committed measurement corroborates it. The order is
+#                           not decorative: the verdict PRECEDES the
+#                           measurement and is never derived from it. A
+#                           measurement can corroborate a verdict here; it
+#                           cannot produce one.
 #   documentary             settled by metadata, no judgement required
 #
 # verdict vocabulary:
@@ -17,8 +22,11 @@
 #
 # none_stated means the flag was worked and a basis is on record, and the
 # author has NOT recorded a verdict. It is not the same as an unexamined flag,
-# which has no row here at all.
+# which has no row here at all. No boundary currently carries it.
 #
-scene,session_a,session_b,verdict,basis,rater,date,note
-meadow,meadow_5842,meadow_5843,distinct_occasions,inspection,author,2026-09-16,Different scene conditions. Stated without qualification.
-gopro_fisheye,gopro_004,gopro_005,none_stated,inspection+measurement,author,2026-09-16,Inspected and measured; see reports/fisheye_session/FINDINGS.md. No verdict recorded; the occasion judgement remains the author's.
+# corroboration is the committed artefact that supports the verdict, empty
+# where the verdict rests on inspection alone.
+#
+scene,session_a,session_b,verdict,basis,rater,date,corroboration,note
+meadow,meadow_5842,meadow_5843,distinct_occasions,inspection,author,2026-09-16,,"Different scene conditions. Stated without qualification."
+gopro_fisheye,gopro_004,gopro_005,distinct_occasions,inspection+measurement,author,2026-09-16,reports/fisheye_session/FINDINGS.md,"Verdict on the author's visual inspection of both videos: different cloud and light, different background composition, and the operator vehicle present only in gopro_004. Corroborated by the committed background comparison: ground state pasture against ploughed soil. The layout similarity in that comparison is read as similar rig siting, not as a shared occasion."
