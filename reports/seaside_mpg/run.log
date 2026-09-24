@@ -1,0 +1,96 @@
+== 1. name arithmetic ==
+   file                     00_02_45_to_00_03_10_cut.mpg
+   name parses as           00:02:45 to 00:03:10, 165 s to 190 s
+   source-timestamp span    25 s
+   rate                     50.000 fps (inventory and ffprobe agree)
+   frames implied by name   25 x 50 = 1,250
+   frames decoded           400
+   SHORTFALL                400/1,250 = 32.00% present
+   absent                   850 frames, 17.00 s of the named span
+   decoded duration         8.00 s
+
+== 1b. does the name predict the duration elsewhere in the session? ==
+   video                       span_s  decoded     fps   dur_s    ratio  suffix
+   00_01_52_to_00_01_58             6      175  29.970    5.84   97.32%  -
+   00_02_45_to_00_03_10_cut        25      400  50.000    8.00   32.00%  _cut
+   00_06_10_to_00_06_27            17      497  29.970   16.58   97.55%  -
+   00_09_30_to_00_10_09            39     1165  29.970   38.87   99.67%  -
+   00_10_09_to_00_10_40            31      924  29.970   30.83   99.45%  -
+   Every seaside name WITHOUT the _cut suffix predicts the duration
+   to within a second. The one name WITH it does not, and that file
+   is the subject of this investigation.
+
+== 2. annotation coverage, the decisive check ==
+   annotation file          /home/elif/Desktop/Drone-vs-Bird/videos-and-labels/labels/00_02_45_to_00_03_10_cut.txt
+   frame entries            400
+   annotated frame range    0 .. 399
+   MAXIMUM annotated frame  399
+   total boxes              399
+   frames carrying a box    399
+   frames with zero boxes   1 [399]
+   missing indices in range 0 []
+   decoded frames           400  (indices 0 .. 399)
+   BOXES ON FRAMES >= 400  0
+   Nothing is lost to truncation. The annotation ends exactly
+   where the decode ends, and every annotated box is inside the
+   decoded range.
+
+   cross-check against the committed artefacts:
+     split boxes                committed   399   recount   399   match
+     split annotated_frames     committed   399   recount   399   match
+     gt_boxes_in_valid_window   committed   393   recount   393   match
+     boxes excluded by window       6 (first 3 and last 4 decoded frames, T=8)
+
+== 3. contiguity ==
+   packets                  400   decoded 400   agree
+   packet durations         {1800: 400} ticks (expected 1800 at 50 fps, time_base 1/90000)
+   PTS first/last           46800 / 765000  = 0.520 s .. 8.500 s
+   packets with no PTS      1 at index [142]
+   PTS values absent        [306000]
+   DTS deltas               {1800: 399}
+   DTS monotonic            True
+   DTS last / expected      763200 / 763200
+   keyframes                3 at [0, 199, 397]
+   GOP gaps                 {199: 1, 198: 1}
+   CONTIGUOUS               True
+   The one absent PTS is a reordered frame whose timestamp the
+   MPEG-PS mux omits; DTS is unbroken across it, so it is a missing
+   timestamp and not a discontinuity. No gap and no reset.
+   contact sheet            reports/seaside_mpg/contact_sheet.png frames [0, 66, 133, 200, 266, 332, 399]
+
+== 4. the seaside session ==
+   video                     ext    container_n  decoded  over      fps  codec       encoder
+   00_01_52_to_00_01_58      .mp4           177      175     2   29.970  mpeg2video  Lavf57.56.101
+   00_02_45_to_00_03_10_cut  .mpg           400      400     0   50.000  mpeg2video  (none)
+   00_06_10_to_00_06_27      .mp4           499      497     2   29.970  mpeg2video  Lavf57.56.101
+   00_09_30_to_00_10_09      .mp4          1167     1165     2   29.970  mpeg2video  Lavf57.56.101
+   00_10_09_to_00_10_40      .mp4           926      924     2   29.970  mpeg2video  Lavf57.56.101
+
+   videos with an overcount, whole fleet: 4
+     00_01_52_to_00_01_58       +2
+     00_06_10_to_00_06_27       +2
+     00_09_30_to_00_10_09       +2
+     00_10_09_to_00_10_40       +2
+   00_02_45_to_00_03_10_cut carries an overcount: False
+
+   overcount against (codec, extension, encoder):
+     ('h264', '.mp4', 'Lavf57.56.101')                overcounts {0: 24}
+     ('h264', '.mp4', 'Lavf58.20.100')                overcounts {0: 8}
+     ('mpeg2video', '.mp4', 'Lavf57.56.101')          overcounts {2: 4}
+     ('mpeg2video', '.mpg', '(none)')                 overcounts {0: 1}
+
+== 5. the .mpg against the other 36 ==
+   container format_name  {'mov,mp4,m4a,3gp,3g2,mj2': 36, 'mpeg': 1}
+   extension              {'.mp4': 36, '.mpg': 1}
+   codec                  {'mpeg2video': 5, 'h264': 32}
+   encoder tag            {'Lavf57.56.101': 28, '(none)': 1, 'Lavf58.20.100': 8}
+   frame rate             {29.97: 13, 50.0: 1, 25.0: 10, 29.971: 12, 29.969: 1}
+
+   00_02_45_to_00_03_10_cut: mpeg2video in mpeg, encoder (none), 50.000 fps
+   It is the only MPEG-PS container, the only .mpg, the only file
+   with no encoder tag, and the only file at 50 fps. It did NOT go
+   through the Lavf re-encode that produced every other file.
+
+   written to reports/seaside_mpg/fleet_containers.csv
+
+No verdict on chapter wording is drawn here.
