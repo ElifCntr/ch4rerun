@@ -1,0 +1,129 @@
+STRATIFICATION BAND EDGES, negative draw
+Recorded 2026-09-24. Derived values, written because the draw does not write them.
+
+These are the SIZE-BAND edges used to stratify the training negative
+draw. They are recomputed here by the same expression the draw uses,
+from the same input under the same filter, and verified against the
+committed per-cell counts before being written. See the VERIFICATION
+section below.
+
+They are STRATIFICATION bands. They are not the benchmark-derived
+REPORTING bands, per tools/draw_negatives.py:30-31.
+
+RULE
+  configs/ch4.yaml :: ruled.negatives.band_edge_rule = 'global_deciles_of_positive_area_frac'
+  configs/ch4.yaml :: ruled.negatives.bands          = 10
+  configs/ch4.yaml :: ruled.negatives.ratio          = 2
+  Global deciles of the positive normalised area, taken over the whole
+  split rather than per scene.
+
+UNITS
+  Normalised area. Dimensionless fraction of frame area, in [0, 1].
+  The binned quantity is the area_frac column of proposals.csv, written
+  at tools/extract_proposals.py:309 as the connected-component blob
+  area in pixels divided by the frame area (fa = fw * fh,
+  tools/extract_proposals.py:244).
+  NOT equivalent side. No equivalent-side quantity enters the draw.
+
+EXPRESSION, tools/draw_negatives.py:109-112 verbatim
+  edges = np.percentile(pos_area, np.linspace(0, 100, n_bands + 1))
+  inner = edges[1:-1]
+  pos_band = np.digitize(pos_area, inner, right=False)
+  neg_band = np.digitize(neg_area, inner, right=False)
+
+INPUT
+  path         data/proposals/proposals.csv
+  split        train
+  filter       label == 'positive', column area_frac
+               (tools/draw_negatives.py:86-92)
+  positives    13,347
+  size_bytes   751,435,447
+  sha256       07506ed0da782a609776319425eb4217c26cb7961d7425da5bdf8bf9c1aa6ddd
+  NOT COMMITTED. Excluded at .gitignore:31. Pinned by the hash above
+  and in data/provenance/proposals_csv.md.
+
+EDGES, 11 values: the 0th to the 100th percentile in steps of 10
+  Of these, the nine INTERIOR values are the cut points that decide
+  band membership. The first and last are the observed minimum and
+  maximum of the positive area fractions and bound no band from
+  outside: np.digitize is called on inner, not on edges, so a value
+  below edge 0 would still fall in band 0 and a value above edge 10
+  would still fall in band 9. Ten bands, eleven edges, nine cut points.
+
+    i  percentile      edge (area fraction)  role
+    0          0%   7.23399999999999969e-06  minimum, not a cut point
+    1         10%   1.61550000000000003e-05  cut: band 0 | band 1
+    2         20%   2.36299999999999991e-05  cut: band 1 | band 2
+    3         30%   3.56869999999999990e-05  cut: band 2 | band 3
+    4         40%   4.91900000000000017e-05  cut: band 3 | band 4
+    5         50%   6.26930000000000044e-05  cut: band 4 | band 5
+    6         60%   8.87349999999999966e-05  cut: band 5 | band 6
+    7         70%   1.30208000000000011e-04  cut: band 6 | band 7
+    8         80%   2.50868000000000120e-04  cut: band 7 | band 8
+    9         90%   7.53279000000000036e-04  cut: band 8 | band 9
+   10        100%   1.66285689999999993e-02  maximum, not a cut point
+
+  Full precision, as float64 repr, in index order:
+    edges[ 0] = 7.234e-06
+    edges[ 1] = 1.6155e-05
+    edges[ 2] = 2.363e-05
+    edges[ 3] = 3.5687e-05
+    edges[ 4] = 4.919e-05
+    edges[ 5] = 6.2693e-05
+    edges[ 6] = 8.8735e-05
+    edges[ 7] = 0.000130208
+    edges[ 8] = 0.0002508680000000001
+    edges[ 9] = 0.000753279
+    edges[10] = 0.016628569
+
+  The nine cut points alone, as passed to np.digitize:
+    inner = [1.6155e-05, 2.363e-05, 3.5687e-05, 4.919e-05, 6.2693e-05, 8.8735e-05, 0.000130208, 0.0002508680000000001, 0.000753279]
+
+BAND MEMBERSHIP
+  np.digitize(..., right=False) puts a value v in band b where
+  inner[b-1] <= v < inner[b]. Left-closed, right-open. Band 0 is
+  v < inner[0] and band 9 is v >= inner[8].
+  band 0 holds 1,334 positives, band 9 holds 1,336.
+
+THE OUTER EDGES AGAINST THE RULED ANCHORS
+  Two independent cross-checks, recorded as observations. Both fall out
+  of the recomputation above and neither is hardcoded here.
+
+  edges[0], the observed minimum, is 7.234e-06.
+  configs/ch4.yaml:108 rules proposals.min_area_frac = 7.23e-06,
+  the extraction floor, applied at tools/extract_proposals.py:246 as
+  lo = min_frac * fa. The observed minimum sits just above that floor,
+  at 1.000553 times it, which is what a floor applied
+  at extraction produces.
+
+  edges[10], the observed maximum, is 0.016628569,
+  which is 1.6629e-02 to five significant figures.
+  configs/ch4.yaml:110-111 records a measured anchor of 1.6629e-02, the
+  "largest cover of a box at coverage >= 0.5". A proposal is positive
+  exactly when its coverage reaches proposals.positive_coverage = 0.5
+  (configs/ch4.yaml:114), so the largest positive area fraction and
+  that anchor are the same quantity. They agree.
+  This corroborates the anchor from which ruled.proposals.max_area_frac
+  was derived. It is a cross-check, not a new measurement, and it does
+  not revisit the max_area_frac ruling.
+
+VERIFICATION, run before this file was written
+  The nine cut points above were used to re-derive the positive count
+  of every band-by-scene cell, and each was asserted against the
+  committed cell lines of reports/negative_draw.txt.
+    cells checked        49
+    cells disagreeing    0
+    positives recomputed 13,347
+    positives committed  13,347
+  The script exits non-zero and writes nothing on any mismatch, because
+  an edge set that does not reproduce the committed counts is not the
+  edge set the draw used.
+
+PROVENANCE OF THIS FILE
+  Written by tools/record_band_edges.py. Reproduce with:
+    python tools/record_band_edges.py
+  Verify without writing:
+    python tools/record_band_edges.py --verify
+  Nothing in reports/negative_draw.txt was edited. These values are
+  DERIVED and recorded after the fact; they were not part of the
+  original draw's output.
