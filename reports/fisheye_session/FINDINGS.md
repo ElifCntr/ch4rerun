@@ -83,6 +83,11 @@ about recording: they are a signature of one packaging pass over the whole
 dataset. The prior finding already established that all 77 files share
 `Lavf57.56.101` with no `creation_time`.
 
+> **Corrected 24 September 2026.** The clause about all 77 files sharing
+> `Lavf57.56.101` is wrong and is corrected in section 7 below. The
+> `creation_time` half holds, and nothing in this section's reasoning or in
+> this report's verdict depends on the encoder tag.
+
 The two filesystem mtimes are 8 seconds apart. That is the time the files were
 written during packaging, not recording time, and the ordering follows the
 filename sequence.
@@ -278,3 +283,37 @@ Section 5's account of what is and is not established on disk stands unchanged.
 In particular the disk still does not fix the camera bearing, so it remains
 true that the two videos need not show the same field, and the verdict does not
 rest on their doing so.
+
+## 7. Correction, 24 September 2026
+
+Section 2 repeats a claim from `reports/gopro_continuity_findings.md`: that all
+77 files share `encoder=Lavf57.56.101` with no `creation_time`. The encoder
+half is wrong, and this report should not have repeated it without measuring
+it.
+
+Measured over the 37 videos of the static subset on 24 September 2026 by
+`tools/investigate_seaside_mpg.py`, output at `reports/seaside_mpg/run.log`:
+28 carry `Lavf57.56.101`, 8 industrial files carry `Lavf58.20.100`, and
+`00_02_45_to_00_03_10_cut.mpg` carries no encoder tag. No `creation_time`
+survives on any of the 37. The 40 dynamic videos are unmeasured on this point.
+The original claim was about 77 files and the check behind it read 9.
+
+**This report's findings and verdict are unaffected**, for a reason that can
+be checked rather than asserted:
+
+- The nine fisheye videos do all carry `Lavf57.56.101` and no
+  `creation_time`. That is shown directly, file by file, in this report's own
+  `ffprobe_evidence.txt`, which was generated from the two videos in question
+  and not inherited from the earlier claim.
+- Section 2's argument is that the metadata agreements between `gopro_004` and
+  `gopro_005` are explained by a shared transcode and therefore carry no
+  information about recording. A tag shared by 28 of 37 files supports that
+  argument exactly as a tag shared by 77 would. The correction narrows the
+  tag's reach; it does not make the tag discriminating.
+- The verdict in section 6 rests on the author's visual inspection,
+  corroborated by the background comparison in section 3. Neither involves the
+  encoder tag.
+
+No figure in sections 1 to 5 changes, and
+`tools/verify_fisheye_findings.py` still passes against the unmodified CSVs.
+The original sentence in section 2 has not been rewritten.

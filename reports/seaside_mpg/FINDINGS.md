@@ -158,6 +158,65 @@ h264 files share that encoder tag and count correctly. It tracks the
 combination: MPEG-2 in an MP4 container. The four are one signature, not four
 coincidences.
 
+## 4b. The +2 signature accounts for the 31,646 against 31,654 discrepancy
+
+Recorded 24 September 2026, on the ruling that the mechanism in section 4
+joins these findings as the explanation of that discrepancy.
+
+| quantity | value | source |
+| --- | ---: | --- |
+| sum of `decoded_frames`, 37 static videos | 31,646 | `reports/extraction_stats.csv` |
+| `frames` in the extraction metadata | 31,646 | `data/proposals/extraction_meta.json` |
+| sum of `inventory_frames`, 37 static videos | 31,654 | `reports/extraction_stats.csv` |
+| sum of `cv2_frame_count`, 37 static videos | 31,654 | `reports/video_inventory.csv` |
+| **difference** | **8** | |
+| sum of per-video overcount | 8 | `reports/seaside_mpg/fleet_containers.csv` |
+
+The difference is 8 and the overcount total is 8. They are the same eight
+frames. Four files carry +2 each, and they are the four seaside `.mp4` files
+listed in section 4, every one of them MPEG-2 video muxed into MP4:
+
+    00_01_52_to_00_01_58     +2
+    00_06_10_to_00_06_27     +2
+    00_09_30_to_00_10_09     +2
+    00_10_09_to_00_10_40     +2
+
+The account closes exactly, with no residual and no video unexplained. The
+container frame count overstates by two in each of those four files and by
+nothing anywhere else in the subset. The `.mpg` contributes nothing to the
+discrepancy: its container and decoded counts are both 400.
+
+Note which figure is the honest one. 31,646 is the count of frames actually
+decoded and is what the pipeline saw; 31,654 is what the containers claim.
+The eight-frame gap is a container-metadata artefact, not missing data.
+
+## 4c. Why the name is wrong rather than the file
+
+Recorded 24 September 2026, on the ruling that the reliability table in
+section 1 is the warrant for that reading.
+
+The table in section 1 is what licenses calling the filename wrong rather than
+the file truncated. Every seaside name without the `_cut` suffix predicts its
+own duration to within 3 per cent:
+
+| video | named span | duration | ratio | deviation |
+| --- | ---: | ---: | ---: | ---: |
+| 00_01_52_to_00_01_58 | 6 s | 5.84 s | 97.32% | 2.68% |
+| 00_06_10_to_00_06_27 | 17 s | 16.58 s | 97.55% | 2.45% |
+| 00_09_30_to_00_10_09 | 39 s | 38.87 s | 99.67% | 0.33% |
+| 00_10_09_to_00_10_40 | 31 s | 30.83 s | 99.45% | 0.55% |
+| **00_02_45_to_00_03_10_cut** | **25 s** | **8.00 s** | **32.00%** | **68.00%** |
+
+Four of five names are duration labels accurate to within 3 per cent. The
+fifth is out by 68 per cent, and it is the only one carrying the `_cut`
+suffix, and the only one at 50 fps.
+
+This is the warrant, not the proof. What settles the matter is section 2: the
+annotation covers frames 0 to 399 and stops, so the labels were made against
+the 400-frame file and the named 25 s span never entered the labelling. The
+table establishes that a seaside filename is normally a reliable duration
+label, which is what makes its failure here a fact about the name.
+
 ## 5. The .mpg against the fleet
 
 | property | 00_02_45_to_00_03_10_cut | the other 36 |
@@ -199,5 +258,14 @@ generalisation past its evidence. The fisheye conclusions that rest on it are
 unaffected, because those nine files do all carry `Lavf57.56.101` and no
 `creation_time`, as `reports/fisheye_session/ffprobe_evidence.txt` shows
 directly. The same overstated sentence is repeated in
-`reports/fisheye_session/FINDINGS.md` section 2 and should be corrected there
-too. Both are flagged, neither is edited here.
+`reports/fisheye_session/FINDINGS.md` section 2.
+
+**Both were corrected on 24 September 2026**, on the ruling of that date, by
+dated correction rather than silent rewrite. Neither original sentence was
+altered; each is marked in place and answered in a dated section:
+`reports/gopro_continuity_findings.md`, "Correction, 24 September 2026", and
+`reports/fisheye_session/FINDINGS.md` section 7. The corrected statement is
+that of the 37 static videos 28 carry `Lavf57.56.101`, 8 industrial files
+carry `Lavf58.20.100` and the `.mpg` carries no encoder tag, with no
+`creation_time` on any of the 37, so every timestamp conclusion stands and the
+fisheye conclusions are unaffected.
